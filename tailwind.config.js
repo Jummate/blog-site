@@ -2,6 +2,9 @@
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    boxShadow: {
+      pref: "1px 1px 15px 4px rgba(0,0,0,0.1)",
+    },
     extend: {},
     fontFamily: {
       // mono: ["Share Tech Mono", "Ubuntu Mono", "Roboto Mono"],

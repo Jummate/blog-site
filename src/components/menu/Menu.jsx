@@ -2,7 +2,7 @@ import { FaTimes } from "react-icons/fa";
 
 const Menu = ({ onClick }) => {
   return (
-    <nav className=" md:hidden fixed z-10 flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-slate-300 py-5">
+    <nav className=" md:hidden fixed z-10 flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-slate-200 py-5">
       <div className="flex justify-end text-2xl">
         <FaTimes
           className="cursor-pointer text-2xl"
