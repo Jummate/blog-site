@@ -8,7 +8,7 @@ export default {
     extend: {},
     fontFamily: {
       // mono: ["Share Tech Mono", "Ubuntu Mono", "Roboto Mono"],
-      sans: ["Inter", "Montserrat", "sans"],
+      sans: ["Inter", "Montserrat", "sans-serif"],
     },
   },
   plugins: [],

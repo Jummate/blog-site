@@ -1,7 +1,7 @@
 import IMAGE_TWO from "../../assets/image2.jpg";
 const Topics = () => {
   return (
-    <section className="bg-slate-100/70 h-40 rounded-lg m-5">
+    <section className="mb-10">
       <h1 className="mb-3 text-lg font-bold text-sky-900">Popular Topics</h1>
 
       <div className="flex gap-2 border-2 rounded-xl mb-4">
