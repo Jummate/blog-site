@@ -1,4 +1,5 @@
 import { FaTimes } from "react-icons/fa";
+import { mobileMenuData } from "../../data";
 
 const Menu = ({ onClick }) => {
   return (
@@ -9,55 +10,23 @@ const Menu = ({ onClick }) => {
           onClick={onClick}
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg mb-2 text-sky-800">Main Menu</h3>
-        <a
-          href=""
-          className=""
+      {Object.keys(mobileMenuData).map((heading, index) => (
+        <div
+          key={index}
+          className="flex flex-col gap-2"
         >
-          Home
-        </a>
-        <a
-          href=""
-          className=""
-        >
-          Log In
-        </a>
-        <a
-          href=""
-          className=""
-        >
-          Dashboard
-        </a>
-        <a
-          href=""
-          className=""
-        >
-          Log Out
-        </a>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg mb-2 text-sky-800">Topics</h3>
-        <a
-          href=""
-          className=""
-        >
-          Science & Nature
-        </a>
-        <a
-          href=""
-          className=""
-        >
-          Politics
-        </a>
-        <a
-          href=""
-          className=""
-        >
-          Environment
-        </a>
-      </div>
+          <h3 className="text-lg mb-2 text-sky-800">{heading}</h3>
+          {Object.keys(mobileMenuData[`${heading}`]).map((item) => (
+            <a
+              key={index}
+              href={`${mobileMenuData[`${heading}`][`${item}`].link}`}
+              className=""
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+      ))}
     </nav>
   );
 };
