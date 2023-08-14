@@ -3,14 +3,40 @@ import viteLogo from "/vite.svg";
 import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 import Footer from "./components/footer/Footer";
+import PostPage from "./pages/post/PostPage";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 
 function App() {
-  return (
-    <div>
+  const Layout = () => (
+    <>
       <Header />
-      <Home />
+      <Outlet />
       <Footer />
-    </div>
+    </>
+  );
+  return (
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={<Layout />}
+        >
+          <Route
+            index
+            element={<Home />}
+          />
+          <Route
+            path="/post/:id"
+            element={<PostPage />}
+          />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

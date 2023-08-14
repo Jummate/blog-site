@@ -1,6 +1,7 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "../../components/button/Button";
 import { postData } from "../../data";
+import { Link } from "react-router-dom";
 
 const RecentPost = () => {
   return (
@@ -35,9 +36,11 @@ const RecentPost = () => {
               </span>
             </div>
 
-            <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3">
-              {post.title}
-            </h1>
+            <Link to={`post/${post.id}`}>
+              <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3">
+                {post.title}
+              </h1>
+            </Link>
 
             <p className="text-slate-600 text-sm">{post.summary}</p>
 
