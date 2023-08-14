@@ -1,5 +1,6 @@
 import { FaTimes } from "react-icons/fa";
 import { mobileMenuData } from "../../data";
+import { Link } from "react-router-dom";
 
 const Menu = ({ onClick }) => {
   return (
@@ -17,13 +18,12 @@ const Menu = ({ onClick }) => {
         >
           <h3 className="text-lg mb-2 text-sky-800">{heading}</h3>
           {Object.keys(mobileMenuData[`${heading}`]).map((item) => (
-            <a
-              key={index}
-              href={`${mobileMenuData[`${heading}`][`${item}`].link}`}
+            <Link
+              to={`${mobileMenuData[`${heading}`][`${item}`].link}`}
               className=""
             >
               {item}
-            </a>
+            </Link>
           ))}
         </div>
       ))}

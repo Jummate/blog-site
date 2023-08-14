@@ -10,6 +10,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import CreatePost from "./pages/create/Create";
 
 function App() {
   const Layout = () => (
@@ -33,6 +34,10 @@ function App() {
           <Route
             path="/post/:id"
             element={<PostPage />}
+          />
+          <Route
+            path="/create"
+            element={<CreatePost />}
           />
         </Route>
       </Routes>

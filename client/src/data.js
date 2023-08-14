@@ -7,6 +7,7 @@ export const mobileMenuData = {
     "Log In": { link: "login" },
     Dashboard: { link: "dashboard" },
     "Log Out": { link: "" },
+    "Create New Post": { link: "create" },
   },
   Topics: {
     "Science & Nature": { link: "" },
