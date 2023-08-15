@@ -1,4 +1,5 @@
 import IMAGE_ONE from "../../assets/image1.jpg";
+import Button from "../../components/button/Button";
 import { useParams } from "react-router-dom";
 import { postData } from "../../data";
 
@@ -8,6 +9,16 @@ const PostPage = () => {
     <section className="">
       <article>
         <header>
+          <div className="flex items-center justify-center p-3 gap-3 text-sm">
+            <Button
+              text="Edit Post"
+              extraStyles={"bg-sky-600 text-white"}
+            />{" "}
+            <Button
+              text="Delete Post"
+              extraStyles={"bg-red-600 text-white"}
+            />
+          </div>
           <img
             className="h-60 container"
             src={IMAGE_ONE}

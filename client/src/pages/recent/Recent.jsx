@@ -11,13 +11,13 @@ const RecentPost = () => {
       {postData.map((post, index) => (
         <article
           key={index}
-          className="w-full h-100 shadow-pref cursor-pointer rounded-2xl p-2 flex flex-col gap-4 md:flex-row mb-7 hover:opacity-80"
+          className="w-full h-100 shadow-pref cursor-pointer rounded-2xl p-2 flex flex-col gap-4 md:flex-row mb-7"
         >
           <div className="w-full h-1/2">
             <img
               src={post.bannerImage}
               alt="Image One"
-              className="rounded-2xl h-auto w-full"
+              className="rounded-2xl h-auto w-full hover:opacity-80"
             />
           </div>
           <div className="p-2">
@@ -37,7 +37,7 @@ const RecentPost = () => {
             </div>
 
             <Link to={`post/${post.id}`}>
-              <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3">
+              <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3 hover:underline">
                 {post.title}
               </h1>
             </Link>
@@ -55,6 +55,17 @@ const RecentPost = () => {
                   <time dateTime="2023-04-20">{post.createdAt}</time>
                 </p>
               </div>
+            </div>
+
+            <div className="flex items-center p-2 mt-3 gap-3 text-xs">
+              <Button
+                text="Edit Post"
+                extraStyles={"bg-sky-600 text-white"}
+              />{" "}
+              <Button
+                text="Delete Post"
+                extraStyles={"bg-red-600 text-white"}
+              />
             </div>
           </div>
         </article>
