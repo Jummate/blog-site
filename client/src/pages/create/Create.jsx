@@ -34,14 +34,17 @@ const CreatePost = () => {
         <Input
           placeholder={"Title"}
           extraStyles={"shadow-pref"}
+          ariaLabel={"Title"}
         />
         <Input
           placeholder={"Summary"}
           extraStyles={"shadow-pref"}
+          ariaLabel={"Summary"}
         />
         <Input
           type={"file"}
           extraStyles={"shadow-pref"}
+          ariaLabel={"Banner"}
         />
         <ReactQuill
           theme="snow"

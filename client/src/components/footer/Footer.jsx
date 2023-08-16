@@ -9,7 +9,7 @@ const Footer = () => {
       <section className="flex flex-col justify-center items-center">
         <img
           src={IMAGE_THREE}
-          alt="Image Three"
+          alt=""
           className="h-20 w-20 rounded-full z-0"
         ></img>
         <h1 className="text-lg font-bold">Olawale Jumat</h1>
@@ -57,7 +57,7 @@ const Footer = () => {
           />
           <Button
             text="Subscribe"
-            extraStyles="md:rounded-s-none shadow-pref bg-sky-600 text-slate-100"
+            extraStyles="md:rounded-s-none shadow-pref bg-sky-500 text-white"
           />
         </form>
       </section>

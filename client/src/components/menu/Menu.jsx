@@ -19,8 +19,10 @@ const Menu = ({ onClick }) => {
           <h3 className="text-lg mb-2 text-sky-800">{heading}</h3>
           {Object.keys(mobileMenuData[`${heading}`]).map((item) => (
             <Link
+              key={`${index}${item}`}
               to={`${mobileMenuData[`${heading}`][`${item}`].link}`}
               className=""
+              onClick={onClick}
             >
               {item}
             </Link>

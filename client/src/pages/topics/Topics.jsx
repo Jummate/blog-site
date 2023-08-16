@@ -12,7 +12,7 @@ const Topics = () => {
           <img
             src={topicData[`${topic}`]}
             className="w-12 h-auto rounded-s-lg"
-            alt="Image Two"
+            alt=""
           />
           <span className="p-3 text-sky-900">{topic}</span>
         </div>

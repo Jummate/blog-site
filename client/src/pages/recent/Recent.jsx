@@ -16,7 +16,7 @@ const RecentPost = () => {
           <div className="w-full h-1/2">
             <img
               src={post.bannerImage}
-              alt="Image One"
+              alt=""
               className="rounded-2xl h-auto w-full hover:opacity-80"
             />
           </div>
@@ -47,6 +47,7 @@ const RecentPost = () => {
             <div className="mt-6 flex gap-2">
               <img
                 src={post.authorImage}
+                alt=""
                 className="h-10 w-10 rounded-full"
               />
               <div>

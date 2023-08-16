@@ -3,7 +3,7 @@ import IMAGE_ONE from "./assets/image1.jpg";
 
 export const mobileMenuData = {
   "Main Menu": {
-    Home: { link: "" },
+    Home: { link: "/" },
     "Log In": { link: "login" },
     Dashboard: { link: "dashboard" },
     "Log Out": { link: "" },

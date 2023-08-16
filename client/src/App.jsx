@@ -11,6 +11,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import CreatePost from "./pages/create/Create";
+import LogIn from "./pages/login/LogIn";
 
 function App() {
   const Layout = () => (
@@ -38,6 +39,10 @@ function App() {
           <Route
             path="/create"
             element={<CreatePost />}
+          />
+          <Route
+            path="/login"
+            element={<LogIn />}
           />
         </Route>
       </Routes>

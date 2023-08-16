@@ -29,6 +29,7 @@ const PostPage = () => {
           <div className="mt-6 flex gap-2">
             <img
               src={IMAGE_ONE}
+              alt=""
               className="h-10 w-10 rounded-full"
             />
             <div>
