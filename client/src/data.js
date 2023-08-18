@@ -5,7 +5,6 @@ export const mobileMenuData = {
   "Main Menu": {
     Home: { link: "/" },
     "Log In": { link: "login" },
-    Dashboard: { link: "dashboard" },
     "Log Out": { link: "" },
     "Create New Post": { link: "create" },
   },
