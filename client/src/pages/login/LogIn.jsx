@@ -3,10 +3,13 @@ import Button from "../../components/button/Button";
 import { loginPageData } from "../../data";
 const LogIn = () => {
   return (
-    <section className="h-96 p-10 flex flex-col justify-center items-center gap-5">
-      <h1 className="text-sky-900 font-bold text-3xl">LOG IN</h1>
+    <section className="h-96 p-6 flex flex-col justify-center items-center gap-5">
+      <div className="flex flex-col justify-center items-center gap-3 p-7 font-bold bg-sky-100 text-sky-900 w-full -mb-16 rounded-3xl">
+        <h1 className="font-bold text-3xl">Sign in</h1>
+        <h3 className="mb-7 text-sm">Login to your account</h3>
+      </div>
 
-      <form className="flex flex-col gap-4 w-full max-w-96">
+      <form className="flex flex-col gap-4 w-full max-w-96 p-3">
         {loginPageData.map((data) => (
           <div className="flex text-sm">
             <label
@@ -22,7 +25,10 @@ const LogIn = () => {
           </div>
         ))}
 
-        <Button text={"Sign In"} />
+        <Button
+          text={"SIGN IN"}
+          extraStyles={"bg-sky-700"}
+        />
       </form>
     </section>
   );
