@@ -11,7 +11,7 @@ const LogIn = () => {
           <div className="flex text-sm">
             <label
               htmlFor={data.id}
-              className="p-2 bg-sky-900 rounded-s-lg w-4/12 text-sky-100 font-bold text-center"
+              className="p-2 bg-sky-600 rounded-s-lg w-4/12 text-sky-100 font-bold text-center"
             >
               {data.label}
             </label>
