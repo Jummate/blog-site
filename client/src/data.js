@@ -31,6 +31,11 @@ export const topicData = {
   Technology: IMAGE_TWO,
 };
 
+export const loginPageData = [
+  { element: "input", label: "Email", type: "text", id: "email" },
+  { element: "input", label: "Password", type: "password", id: "email" },
+];
+
 export const postData = [
   {
     id: "qaAb23456ZCVhjk",
