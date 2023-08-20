@@ -20,6 +20,7 @@ const LogIn = () => {
             </label>
             <Input
               id={data.id}
+              type={data.type}
               extraStyles={"shadow-pref rounded-e-lg w-8/12"}
             />
           </div>

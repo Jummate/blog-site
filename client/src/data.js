@@ -32,7 +32,7 @@ export const topicData = {
 
 export const loginPageData = [
   { element: "input", label: "Email", type: "text", id: "email" },
-  { element: "input", label: "Password", type: "password", id: "email" },
+  { element: "input", label: "Password", type: "password", id: "password" },
 ];
 
 export const postData = [
