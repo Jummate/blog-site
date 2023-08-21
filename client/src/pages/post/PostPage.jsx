@@ -6,17 +6,17 @@ import { postData } from "../../data";
 const PostPage = () => {
   console.log(useParams());
   return (
-    <section className="">
+    <section className="dark:bg-sky-900/90">
       <article>
         <header>
           <div className="flex items-center justify-center p-3 gap-3 text-sm">
             <Button
               text="Edit Post"
-              extraStyles={"bg-sky-600 text-white"}
+              extraStyles={"bg-sky-400 text-white"}
             />{" "}
             <Button
               text="Delete Post"
-              extraStyles={"bg-red-600 text-white"}
+              extraStyles={"bg-red-700 text-white"}
             />
           </div>
           <img
@@ -33,17 +33,19 @@ const PostPage = () => {
               className="h-10 w-10 rounded-full"
             />
             <div>
-              <p className="text-sky-900 font-bold text-md">Olawale Jumat</p>
-              <p className="text-sm text-sky-600/80">
+              <p className="text-sky-900 font-bold text-md dark:text-sky-100">
+                Olawale Jumat
+              </p>
+              <p className="text-sm text-sky-600/80 text-sky-300">
                 Posted on <time dateTime="2023-04-20">April 20, 2023</time>
               </p>
             </div>
           </div>
-          <div className="">
-            <h1 className="text-3xl text-center leading-relaxed font-bold text-sky-900">
+          <div>
+            <h1 className="text-3xl text-center leading-relaxed mb-5 font-bold text-sky-900 dark:text-sky-100">
               My First Foray Into Lazy Loading With JavaScript
             </h1>
-            <div>
+            <div className="dark:text-sky-100 leading-7 flex flex-col p-2 gap-5">
               <p>
                 Lorem ipsum lorem ipsum lore ipsum lorem Most web applications
                 always have one way or the other to display large data sets on

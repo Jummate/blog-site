@@ -3,7 +3,7 @@ import Input from "../../components/input/Input";
 
 const Hero = () => {
   return (
-    <section className="text-sky-900 p-10 bg-slate-100">
+    <section className="bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 p-10">
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-2xl">
           Hi, I'm <span className="font-bold text-3xl">Olawale Jumat</span>
@@ -19,7 +19,7 @@ const Hero = () => {
           />
           <Button
             text="Subscribe"
-            extraStyles="md:rounded-s-none shadow-pref"
+            extraStyles="md:rounded-s-none shadow-pref dark:bg-sky-600 dark:text-slate-50"
           />
         </div>
       </div>

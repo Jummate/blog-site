@@ -57,7 +57,7 @@ const Footer = () => {
           />
           <Button
             text="Subscribe"
-            extraStyles="md:rounded-s-none shadow-pref bg-sky-500 text-white"
+            extraStyles="md:rounded-s-none shadow-pref bg-sky-400 text-white"
           />
         </form>
       </section>

@@ -11,7 +11,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import CreatePost from "./pages/create/Create";
-import LogIn from "./pages/login/LogIn";
+import Login from "./pages/login/Login";
 
 function App() {
   const Layout = () => (
@@ -42,7 +42,7 @@ function App() {
           />
           <Route
             path="/login"
-            element={<LogIn />}
+            element={<Login />}
           />
         </Route>
       </Routes>

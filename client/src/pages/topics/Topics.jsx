@@ -2,7 +2,9 @@ import { topicData } from "../../data";
 const Topics = () => {
   return (
     <section className="mb-10">
-      <h1 className="mb-3 text-lg font-bold text-sky-900">Popular Topics</h1>
+      <h1 className="mb-3 text-lg font-bold text-sky-900 dark:text-sky-100">
+        Popular Topics
+      </h1>
 
       {Object.keys(topicData).map((topic, index) => (
         <div
@@ -14,7 +16,7 @@ const Topics = () => {
             className="w-12 h-auto rounded-s-lg"
             alt=""
           />
-          <span className="p-3 text-sky-900">{topic}</span>
+          <span className="p-3 text-sky-900 dark:text-sky-100">{topic}</span>
         </div>
       ))}
     </section>
