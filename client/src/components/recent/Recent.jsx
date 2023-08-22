@@ -1,5 +1,5 @@
 import { IoTimeOutline } from "react-icons/io5";
-import Button from "../../components/button/Button";
+import Button from "../button/Button";
 import { postData } from "../../data";
 import { Link } from "react-router-dom";
 
