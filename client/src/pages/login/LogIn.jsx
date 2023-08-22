@@ -3,8 +3,8 @@ import Button from "../../components/button/Button";
 import { loginPageData } from "../../data";
 const Login = () => {
   return (
-    <section className="h-96 p-6 flex flex-col justify-center items-center gap-5">
-      <div className="flex flex-col justify-center items-center gap-3 p-7 font-bold bg-sky-100 text-sky-900 w-full -mb-16 rounded-3xl">
+    <section className="h-96 p-6 flex flex-col justify-center items-center gap-5 dark:bg-sky-800">
+      <div className="flex flex-col justify-center items-center gap-3 p-7 font-bold bg-sky-100 text-sky-900 w-full -mb-16 rounded-3xl dark:bg-sky-200">
         <h1 className="font-bold text-3xl">Sign in</h1>
         <h3 className="mb-7 text-sm">Login to your account</h3>
       </div>
@@ -31,7 +31,7 @@ const Login = () => {
 
         <Button
           text={"SIGN IN"}
-          extraStyles={"bg-sky-700"}
+          extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}
         />
       </form>
     </section>
