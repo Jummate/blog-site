@@ -65,10 +65,12 @@ const RecentPost = () => {
             </div>
 
             <div className="flex items-center p-2 mt-3 gap-3 text-xs">
-              <Button
-                text="Edit Post"
-                extraStyles={"bg-sky-400 text-white"}
-              />{" "}
+              <Link to={`edit/${post.id}`}>
+                <Button
+                  text="Edit Post"
+                  extraStyles={"bg-sky-400 text-white"}
+                />
+              </Link>
               <Button
                 text="Delete Post"
                 extraStyles={"bg-red-700 text-white"}

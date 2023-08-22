@@ -1,19 +1,21 @@
 import IMAGE_ONE from "../../assets/image1.jpg";
 import Button from "../../components/button/Button";
-import { useParams } from "react-router-dom";
-import { postData } from "../../data";
+import { Link, useParams } from "react-router-dom";
+// import { postData } from "../../data";
 
 const PostPage = () => {
-  console.log(useParams());
+  const { id } = useParams();
   return (
     <section className="dark:bg-sky-900/90">
       <article>
         <header>
           <div className="flex items-center justify-center p-3 gap-3 text-sm">
-            <Button
-              text="Edit Post"
-              extraStyles={"bg-sky-400 text-white"}
-            />{" "}
+            <Link to={`/edit/${id}`}>
+              <Button
+                text="Edit Post"
+                extraStyles={"bg-sky-400 text-white"}
+              />
+            </Link>
             <Button
               text="Delete Post"
               extraStyles={"bg-red-700 text-white"}
