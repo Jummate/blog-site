@@ -1,5 +1,5 @@
 import { FaTimes } from "react-icons/fa";
-import { mobileMenuData } from "../../data";
+import { menuData } from "../../data";
 import { Link } from "react-router-dom";
 
 const Menu = ({ onClick }) => {
@@ -12,7 +12,7 @@ const Menu = ({ onClick }) => {
           onClick={onClick}
         />
       </div>
-      {Object.keys(mobileMenuData).map((heading, index) => (
+      {Object.keys(menuData).map((heading, index) => (
         <div
           key={index}
           className="flex flex-col gap-2"
@@ -20,11 +20,11 @@ const Menu = ({ onClick }) => {
           <h3 className="text-lg mb-2 text-sky-800 dark:text-sky-200">
             {heading}
           </h3>
-          {Object.keys(mobileMenuData[`${heading}`]).map((item) => (
+          {Object.keys(menuData[`${heading}`]).map((item) => (
             <Link
               key={`${index}${item}`}
-              to={`${mobileMenuData[`${heading}`][`${item}`].link}`}
-              className="dark:hover:underline"
+              to={`${menuData[`${heading}`][`${item}`].link}`}
+              className="hover:underline"
               onClick={onClick}
             >
               {item}

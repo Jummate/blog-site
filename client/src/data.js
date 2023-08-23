@@ -1,7 +1,7 @@
 import IMAGE_TWO from "./assets/image2.jpg";
 import IMAGE_ONE from "./assets/image1.jpg";
 
-export const mobileMenuData = {
+export const menuData = {
   "Main Menu": {
     Home: { link: "/" },
     "Log In": { link: "login" },
