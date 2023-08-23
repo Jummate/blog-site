@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 const Menu = ({ onClick }) => {
   return (
     <nav className=" md:hidden fixed z-10 font-sans flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-sky-100 text-sky-600 dark:bg-sky-800 dark:text-sky-100 py-5">
-      <div className="flex justify-end text-2xl">
+      <div className="flex justify-end text-2xl gap-3">
+        {/* {ColorMode} */}
         <FaTimes
           className="cursor-pointer text-2xl bg-sky-800 dark:bg-sky-100 rounded-full text-sky-100 dark:text-sky-800 hover:bg-inherit dark:hover:bg-inherit hover:text-sky-800 dark:hover:text-sky-100"
           onClick={onClick}

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { BsSun, BsMoon } from "react-icons/bs";
 import Menu from "../menu/Menu";
-import useRootElementClass from "../../hooks/useRootElementClass";
+import ColorMode from "../ColorMode";
+
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [colorMode, setColorMode] = useState(null);
-
-  useRootElementClass(colorMode);
 
   return (
     <header className="w-full p-5 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
@@ -19,17 +17,10 @@ const Header = () => {
           <a href="">Dashboard</a>
         </div>
         <div className="flex gap-3">
-          {colorMode === "dark" ? (
-            <BsMoon
-              className="cursor-pointer text-xl"
-              onClick={() => setColorMode(null)}
-            />
-          ) : (
-            <BsSun
-              className="cursor-pointer text-xl"
-              onClick={() => setColorMode("dark")}
-            />
-          )}
+          <ColorMode
+            colorMode={colorMode}
+            setColorMode={setColorMode}
+          />
 
           <FaBars
             className="md:hidden cursor-pointer text-xl"
@@ -37,7 +28,17 @@ const Header = () => {
           />
         </div>
       </nav>
-      {openMenu ? <Menu onClick={() => setOpenMenu(false)} /> : null}
+      {openMenu ? (
+        <Menu
+          // ColorMode={
+          //   <ColorMode
+          //     colorMode={colorMode}
+          //     setColorMode={setColorMode}
+          //   />
+          // }
+          onClick={() => setOpenMenu(false)}
+        />
+      ) : null}
     </header>
   );
 };
