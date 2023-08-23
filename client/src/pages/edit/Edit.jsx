@@ -2,6 +2,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
+import { FaEdit } from "react-icons/fa";
 
 const modules = {
   toolbar: [
@@ -26,11 +27,11 @@ const formats = [
   "link",
   "image",
 ];
-const CreatePost = () => {
+const EditPost = () => {
   return (
     <section className="p-3 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100">
-      <h1 className="text-center text-xl p-3 font-extrabold">
-        +Create New Post
+      <h1 className="text-xl text-center p-3 font-extrabold">
+        <FaEdit className="inline text-md" /> Edit Post
       </h1>
       <form className="flex flex-col gap-2">
         <Input
@@ -63,4 +64,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;

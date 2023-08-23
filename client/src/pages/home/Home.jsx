@@ -1,6 +1,6 @@
-import Hero from "../hero/Hero";
-import RecentPost from "../recent/Recent";
-import Aside from "../aside/Aside";
+import Hero from "../../components/hero/Hero";
+import RecentPost from "../../components/recent/Recent";
+import Aside from "../../components/aside/Aside";
 
 const Home = () => {
   return (

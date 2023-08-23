@@ -3,7 +3,7 @@ import Tag from "../tag/Tag";
 
 const Aside = () => {
   return (
-    <aside className="bg-slate-100/70 p-5 mb-10">
+    <aside className="bg-sky-100/70 p-5 pb-10 dark:bg-sky-800">
       <Topics />
       <Tag />
     </aside>

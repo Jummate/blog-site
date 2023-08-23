@@ -3,9 +3,8 @@ import IMAGE_ONE from "./assets/image1.jpg";
 
 export const mobileMenuData = {
   "Main Menu": {
-    Home: { link: "" },
+    Home: { link: "/" },
     "Log In": { link: "login" },
-    Dashboard: { link: "dashboard" },
     "Log Out": { link: "" },
     "Create New Post": { link: "create" },
   },
@@ -30,6 +29,11 @@ export const topicData = {
   Nature: IMAGE_TWO,
   Technology: IMAGE_TWO,
 };
+
+export const loginPageData = [
+  { element: "input", label: "Email", type: "text", id: "email" },
+  { element: "input", label: "Password", type: "password", id: "password" },
+];
 
 export const postData = [
   {

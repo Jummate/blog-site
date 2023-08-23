@@ -1,13 +1,26 @@
 import IMAGE_ONE from "../../assets/image1.jpg";
-import { useParams } from "react-router-dom";
-import { postData } from "../../data";
+import Button from "../../components/button/Button";
+import { Link, useParams } from "react-router-dom";
+// import { postData } from "../../data";
 
 const PostPage = () => {
-  console.log(useParams());
+  const { id } = useParams();
   return (
-    <section className="">
+    <section className="dark:bg-sky-900/90">
       <article>
         <header>
+          <div className="flex items-center justify-center p-3 gap-3 text-sm">
+            <Link to={`/edit/${id}`}>
+              <Button
+                text="Edit Post"
+                extraStyles={"bg-sky-400 text-white"}
+              />
+            </Link>
+            <Button
+              text="Delete Post"
+              extraStyles={"bg-red-700 text-white"}
+            />
+          </div>
           <img
             className="h-60 container"
             src={IMAGE_ONE}
@@ -18,20 +31,23 @@ const PostPage = () => {
           <div className="mt-6 flex gap-2">
             <img
               src={IMAGE_ONE}
+              alt=""
               className="h-10 w-10 rounded-full"
             />
             <div>
-              <p className="text-sky-900 font-bold text-md">Olawale Jumat</p>
-              <p className="text-sm text-sky-600/80">
+              <p className="text-sky-900 font-bold text-md dark:text-sky-100">
+                Olawale Jumat
+              </p>
+              <p className="text-sm text-sky-600/80 text-sky-300">
                 Posted on <time dateTime="2023-04-20">April 20, 2023</time>
               </p>
             </div>
           </div>
-          <div className="">
-            <h1 className="text-3xl text-center leading-relaxed font-bold text-sky-900">
+          <div>
+            <h1 className="text-3xl text-center leading-relaxed mb-5 font-bold text-sky-900 dark:text-sky-100">
               My First Foray Into Lazy Loading With JavaScript
             </h1>
-            <div>
+            <div className="dark:text-sky-100 leading-7 flex flex-col p-2 gap-5">
               <p>
                 Lorem ipsum lorem ipsum lore ipsum lorem Most web applications
                 always have one way or the other to display large data sets on

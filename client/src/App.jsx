@@ -11,6 +11,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import CreatePost from "./pages/create/Create";
+import Login from "./pages/login/Login";
+import EditPost from "./pages/edit/Edit";
 
 function App() {
   const Layout = () => (
@@ -38,6 +40,14 @@ function App() {
           <Route
             path="/create"
             element={<CreatePost />}
+          />
+          <Route
+            path="/edit/:id"
+            element={<EditPost />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
           />
         </Route>
       </Routes>
