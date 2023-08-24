@@ -61,5 +61,53 @@ export const postData = [
     bannerImage: IMAGE_TWO,
     authorImage: IMAGE_TWO,
   },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
 ];
 // module.exports = { mobileMenuData, tagData };

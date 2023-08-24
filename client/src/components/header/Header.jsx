@@ -8,19 +8,17 @@ import { menuData } from "../../data";
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [colorMode, setColorMode] = useState(null);
+
+  const [mainMenu, ,] = Object.values(menuData);
   return (
-    <header className="w-full p-5 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
+    <header className="w-full p-5 md:px-10 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
       <nav className="flex justify-between">
         <h1 className="cursor-pointer"> Leo's Blog</h1>
-        <div className="hidden md:flex md:text-lg gap-6">
-          {/* <Link to="/">Home</Link>
-          <Link to="login">Log In</Link>
-          <Link to="">Log Out</Link>
-          <Link to="/create">Create New Post</Link> */}
-          {Object.keys(menuData["Main Menu"]).map((item, index) => (
+        <div className="hidden md:flex md:text-md gap-6">
+          {Object.keys(mainMenu).map((item, index) => (
             <Link
               key={index}
-              to={menuData["Main Menu"][`${item}`].link}
+              to={mainMenu[`${item}`].link}
               className="hover:underline"
             >
               {item}
@@ -34,7 +32,7 @@ const Header = () => {
           />
 
           <FaBars
-            className="md:hidden cursor-pointer text-xl"
+            className="md:hidden cursor-pointer text-2xl hover:text-sky-300"
             onClick={() => setOpenMenu(true)}
           />
         </div>

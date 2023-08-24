@@ -20,7 +20,7 @@ const Hero = () => {
           />
           <Button
             text="Subscribe"
-            extraStyles="md:rounded-s-none shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
+            extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
           />
         </div>
       </div>

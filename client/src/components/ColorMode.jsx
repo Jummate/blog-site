@@ -7,12 +7,12 @@ const ColorMode = ({ colorMode, setColorMode }) => {
     <>
       {colorMode === "dark" ? (
         <BsMoon
-          className="cursor-pointer text-xl"
+          className="cursor-pointer text-2xl hover:text-sky-300"
           onClick={() => setColorMode(null)}
         />
       ) : (
         <BsSun
-          className="cursor-pointer text-xl"
+          className="cursor-pointer text-2xl hover:text-sky-300"
           onClick={() => setColorMode("dark")}
         />
       )}
