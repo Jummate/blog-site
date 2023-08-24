@@ -1,7 +1,7 @@
 import IMAGE_TWO from "./assets/image2.jpg";
 import IMAGE_ONE from "./assets/image1.jpg";
 
-export const mobileMenuData = {
+export const menuData = {
   "Main Menu": {
     Home: { link: "/" },
     "Log In": { link: "login" },
@@ -49,6 +49,54 @@ export const postData = [
     authorImage: IMAGE_ONE,
   },
 
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
+  {
+    id: "xaAb109836ZCVzct",
+    tag: "Nature",
+    title: "My First Foray Into Nature",
+    summary:
+      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
+    readTime: "6min",
+    author: "Olawale Jumat",
+    createdAt: "April 20, 2023",
+    bannerImage: IMAGE_TWO,
+    authorImage: IMAGE_TWO,
+  },
   {
     id: "xaAb109836ZCVzct",
     tag: "Nature",

@@ -3,8 +3,8 @@ const Button = ({ type = "button", text, extraStyles }) => {
     <button
       type={type}
       className={`${
-        extraStyles ? extraStyles : ""
-      } p-3 font-bold bg-sky-900 text-gray-200 block rounded-lg hover:opacity-80`}
+        extraStyles && extraStyles
+      } p-3 font-bold text-gray-200 block rounded-lg hover:opacity-80`}
     >
       {text}
     </button>

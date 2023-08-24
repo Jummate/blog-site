@@ -10,7 +10,7 @@ const Tag = () => {
         {tagData.map((tag, index) => (
           <button
             key={index}
-            className="text-sky-900 p-2 bg-sky-100 rounded-2xl hover:text-sky-100 hover:bg-sky-900 dark:hover:bg-sky-500"
+            className="text-sky-900 text-sm p-2 bg-sky-100 rounded-2xl hover:text-sky-100 hover:bg-sky-900 dark:hover:bg-sky-500"
           >
             #{tag}
           </button>

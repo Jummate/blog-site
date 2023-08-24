@@ -9,7 +9,7 @@ const Topics = () => {
       {Object.keys(topicData).map((topic, index) => (
         <div
           key={index}
-          className="flex gap-2 border-2 rounded-xl mb-4"
+          className="flex gap-2 border-2 rounded-xl mb-4 w-full text-sm"
         >
           <img
             src={topicData[`${topic}`]}

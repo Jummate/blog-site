@@ -1,43 +1,53 @@
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { BsSun, BsMoon } from "react-icons/bs";
 import Menu from "../menu/Menu";
-import useRootElementClass from "../../hooks/useRootElementClass";
+import ColorMode from "../ColorMode";
+import { Link } from "react-router-dom";
+import { menuData } from "../../data";
+
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [colorMode, setColorMode] = useState(null);
 
-  useRootElementClass(colorMode);
-
+  const [mainMenu, ,] = Object.values(menuData);
   return (
-    <header className="w-full p-5 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
+    <header className="w-full p-5 md:px-10 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
       <nav className="flex justify-between">
         <h1 className="cursor-pointer"> Leo's Blog</h1>
-        <div className="hidden md:flex">
-          <a href="">Home</a>
-          <a href="">Log In</a>
-          <a href="">Dashboard</a>
+        <div className="hidden md:flex md:text-md gap-6">
+          {Object.keys(mainMenu).map((item, index) => (
+            <Link
+              key={index}
+              to={mainMenu[`${item}`].link}
+              className="hover:underline"
+            >
+              {item}
+            </Link>
+          ))}
         </div>
         <div className="flex gap-3">
-          {colorMode === "dark" ? (
-            <BsMoon
-              className="cursor-pointer text-xl"
-              onClick={() => setColorMode(null)}
-            />
-          ) : (
-            <BsSun
-              className="cursor-pointer text-xl"
-              onClick={() => setColorMode("dark")}
-            />
-          )}
+          <ColorMode
+            colorMode={colorMode}
+            setColorMode={setColorMode}
+          />
 
           <FaBars
-            className="md:hidden cursor-pointer text-xl"
+            className="md:hidden cursor-pointer text-2xl hover:text-sky-300"
             onClick={() => setOpenMenu(true)}
           />
         </div>
       </nav>
-      {openMenu ? <Menu onClick={() => setOpenMenu(false)} /> : null}
+      {openMenu ? (
+        <Menu
+          // ColorMode={
+          //   <ColorMode
+          //     colorMode={colorMode}
+          //     setColorMode={setColorMode}
+          //   />
+          // }
+          onClick={() => setOpenMenu(false)}
+        />
+      ) : null}
     </header>
   );
 };
