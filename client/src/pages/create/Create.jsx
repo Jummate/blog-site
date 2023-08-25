@@ -55,10 +55,9 @@ const CreatePost = () => {
             formats={formats}
             className="border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md md:text-4xl tracking-wider"
           />
-          <Button
-            text="PUBLISH"
-            extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold"
-          />
+          <Button extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold">
+            PUBLISH
+          </Button>
         </form>
       </div>
     </section>

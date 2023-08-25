@@ -17,10 +17,9 @@ const Footer = () => {
               extraStyles="rounded-lg mb-2 shadow-pref"
               placeholder="Enter your email address"
             />
-            <Button
-              text="Subscribe"
-              extraStyles="shadow-pref bg-sky-400 text-white"
-            />
+            <Button extraStyles="shadow-pref bg-sky-400 text-white">
+              Subscribe
+            </Button>
           </form>
         </section>
         <section className="flex flex-col justify-center items-center gap-2">

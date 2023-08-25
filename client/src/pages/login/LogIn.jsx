@@ -30,10 +30,9 @@ const Login = () => {
             </div>
           ))}
 
-          <Button
-            text={"SIGN IN"}
-            extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}
-          />
+          <Button extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}>
+            SIGN IN
+          </Button>
         </form>
       </div>
     </section>

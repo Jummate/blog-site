@@ -18,10 +18,9 @@ const Hero = () => {
             placeholder="abc@gmail.com"
             ariaLabel={"Email address"}
           />
-          <Button
-            text="Subscribe"
-            extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
-          />
+          <Button extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50">
+            Subscribe
+          </Button>
         </div>
       </div>
       <div className="hidden md:flex justify-center items-center max-w-screen-sm">

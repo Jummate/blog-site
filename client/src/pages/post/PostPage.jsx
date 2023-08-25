@@ -11,15 +11,9 @@ const PostPage = () => {
         <header>
           <div className="flex items-center justify-center p-5 gap-3 text-sm">
             <Link to={`/edit/${id}`}>
-              <Button
-                text="Edit Post"
-                extraStyles="bg-sky-400 text-white"
-              />
+              <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
             </Link>
-            <Button
-              text="Delete Post"
-              extraStyles="bg-red-600 text-white"
-            />
+            <Button extraStyles="bg-red-600 text-white">Delete Post</Button>
           </div>
           <img
             className="max-h-80 w-full"
