@@ -8,7 +8,7 @@ const EditPost = () => {
         <h1 className="text-xl text-center p-3 font-extrabold">
           <FaEdit className="inline text-md" /> Edit Post
         </h1>
-        <Form buttonText="PUBLISH" />
+        <Form />
       </div>
     </section>
   );

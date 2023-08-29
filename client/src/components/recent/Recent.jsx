@@ -1,16 +1,31 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "../button/Button";
-import { postData } from "../../data";
+// import { postData } from "../../data";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const RecentPost = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3500/posts/");
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4">
       <h1 className="text-sky-900 dark:text-sky-100 font-bold text-xl mb-4">
         Recent Posts
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {postData.map((post, index) => (
+        {posts.map((post, index) => (
           <article
             key={index}
             className="w-full shadow-pref dark:bg-sky-900 cursor-pointer rounded-2xl p-5 flex flex-col gap-4 lg:flex-row mb-7"
