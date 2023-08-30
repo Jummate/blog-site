@@ -96,11 +96,12 @@ const RecentPost = () => {
 
         <div className="flex justify-center">
           <Button
-            text="Load More"
             extraStyles={
               "bg-sky-900 dark:bg-sky-500 dark:text-sky-100 dark:hover:bg-sky-200 dark:hover:text-sky-800"
             }
-          />
+          >
+            Load More
+          </Button>
         </div>
       </div>
     </section>
