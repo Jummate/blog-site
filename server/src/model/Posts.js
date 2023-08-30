@@ -31,6 +31,7 @@ class Post {
         author: "Olawale Jumat",
         createdAt: "April 20, 2023",
         bannerImage: newPath,
+        authorImage: newPath,
       };
 
       this.setPosts(newPost);

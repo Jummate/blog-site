@@ -8,7 +8,8 @@
     "readTime": "4min",
     "author": "Olawale Jumat",
     "createdAt": "April 20, 2023",
-    "bannerImage": "public\\uploads\\dd6a51f6d9045de09475508934a6ce33.png"
+    "bannerImage": "public\\uploads\\dd6a51f6d9045de09475508934a6ce33.png",
+    "authorImage": "public\\uploads\\dd6a51f6d9045de09475508934a6ce33.png"
   },
   {
     "id": "8476c314-0946-428d-81bb-1b4d63518f01",
@@ -19,6 +20,7 @@
     "readTime": "4min",
     "author": "Olawale Jumat",
     "createdAt": "April 20, 2023",
-    "bannerImage": "public\\uploads\\3f474e0e70e9b8a0602b6cf7373afdde.png"
+    "bannerImage": "public\\uploads\\3f474e0e70e9b8a0602b6cf7373afdde.png",
+    "authorImage": "public\\uploads\\3f474e0e70e9b8a0602b6cf7373afdde.png"
   }
 ]

@@ -4,6 +4,7 @@ import Button from "../button/Button";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import baseUrl from "../../config/baseUrl";
 
 const RecentPost = () => {
   const [posts, setPosts] = useState([]);
@@ -32,7 +33,7 @@ const RecentPost = () => {
           >
             <div className="w-full">
               <img
-                src={post.bannerImage}
+                src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
                 alt=""
                 className="rounded-2xl md:h-auto w-full hover:opacity-80"
               />
@@ -65,7 +66,7 @@ const RecentPost = () => {
 
               <div className="mt-6 flex gap-2">
                 <img
-                  src={post.authorImage}
+                  src={`${baseUrl.serverBaseUrl}/${post.authorImage}`}
                   alt=""
                   className="h-10 w-10 rounded-full"
                 />

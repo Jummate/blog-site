@@ -9,9 +9,14 @@ const PORT = process.env.PORT || 3500;
 
 //middleware
 app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: false }));
-app.use("/posts", express.static(path.join(__dirname, "/public/uploads")));
 app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }));
+console.log(__dirname);
+app.use(
+  "/public/uploads",
+  express.static(path.join(__dirname, "/public/uploads"))
+);
 
 // routes
 app.use("/posts", uploadMiddleware, require("./src/routes/posts"));
