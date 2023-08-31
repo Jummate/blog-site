@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useFormInput } from "../../hooks/useFormInput";
@@ -14,17 +15,34 @@ const EditPost = () => {
 
   const { id } = useParams();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl.serverBaseUrl}/posts/${id}`
+        );
+        const { title, summary, content } = response.data[0];
+        titleProps.setValue(title);
+        summaryProps.setValue(summary);
+        contentProps.setContent(content);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
   const editPost = async (e) => {
     e.preventDefault();
     const postFormData = new FormData();
-    postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
     postFormData.append("summary", summaryProps.value);
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
 
+    console.log("anvnnc");
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );

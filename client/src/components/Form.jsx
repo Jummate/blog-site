@@ -28,7 +28,7 @@ const formats = [
 ];
 
 const Form = ({
-  values: { titleProps, bannerProps, contentProps, summaryProps },
+  values: { titleProps, contentProps, summaryProps },
   onSubmit,
   children,
 }) => {
@@ -51,13 +51,6 @@ const Form = ({
         value={summaryProps.value}
         onChange={summaryProps.onChange}
       />
-      {/* <Input
-        type="file"
-        extraStyles="shadow-pref dark:bg-sky-100 rounded-md"
-        ariaLabel="Banner"
-        value={bannerProps.value}
-        onChange={bannerProps.onChange}
-      /> */}
       {children}
       <ReactQuill
         theme="snow"

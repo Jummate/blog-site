@@ -10,7 +10,24 @@ class Post {
   }
 
   setPosts(newPost) {
-    this.posts.push(newPost);
+    this.posts = [...newPost];
+  }
+
+  updatePost(id, bannerImage) {
+    const { title, summary, content } = this.req.body;
+
+    const postToEdit = this.posts.find((item) => item.id === id);
+
+    const editedPost = {
+      ...postToEdit,
+      title,
+      summary,
+      content,
+      bannerImage,
+    };
+    const filteredPosts = this.posts.filter((item) => item.id !== id);
+
+    this.setPosts([...filteredPosts, editedPost]);
   }
 
   async createPost() {
@@ -34,7 +51,7 @@ class Post {
         authorImage: newPath,
       };
 
-      this.setPosts(newPost);
+      this.setPosts([newPost]);
 
       await fsPromises.writeFile(
         path.join(__dirname, "..", "db", "posts.json"),
@@ -42,6 +59,25 @@ class Post {
       );
 
       this.res.status(201).json({ message: "Post created successfully" });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async editPost() {
+    const { id } = this.req.params;
+    const { originalname, path: filePath } = this.req.file;
+    const ext = originalname.split(".").slice(-1).toString();
+    const newPath = `${filePath}.${ext}`;
+
+    try {
+      await fsPromises.rename(filePath, newPath);
+      this.updatePost(id, newPath);
+      await fsPromises.writeFile(
+        path.join(__dirname, "..", "db", "posts.json"),
+        JSON.stringify(this.posts)
+      );
+      this.res.status(200).json({ message: "Post updated successfully" });
     } catch (err) {
       console.log(err);
     }

@@ -12,7 +12,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
-console.log(__dirname);
 app.use(
   "/public/uploads",
   express.static(path.join(__dirname, "/public/uploads"))

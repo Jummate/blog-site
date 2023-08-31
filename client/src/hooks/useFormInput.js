@@ -11,6 +11,8 @@ export function useFormInput(initialValue, inputType = undefined) {
   return {
     value,
     onChange: handleChange,
+    setValue,
+    setContent,
     content,
     onContentChange: handleContentChange,
   };
