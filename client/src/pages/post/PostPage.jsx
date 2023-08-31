@@ -1,17 +1,17 @@
-import IMAGE_ONE from "../../assets/image1.jpg";
 import Button from "../../components/button/Button";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
-// import { postData } from "../../data";
 
 const PostPage = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
+  console.log(id);
 
   useEffect(() => {
+    console.log(id);
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -37,7 +37,7 @@ const PostPage = () => {
           </div>
           <img
             className="max-h-80 w-full"
-            src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
+            src={`${baseUrl.serverBaseUrl}/${post?.bannerImage}`}
             alt=""
           />
         </header>
@@ -45,27 +45,27 @@ const PostPage = () => {
           <div className="flex flex-col md:w-11/12 gap-16 sm:p-12 md:p-16 ">
             <div className="flex gap-2 mt-6 ">
               <img
-                src={`${baseUrl.serverBaseUrl}/${post.authorImage}`}
+                src={`${baseUrl.serverBaseUrl}/${post?.authorImage}`}
                 alt=""
                 className="h-10 w-10 rounded-full"
               />
               <div>
                 <p className="text-sky-900 font-bold text-md dark:text-sky-100">
-                  {post.author}
+                  {post?.author}
                 </p>
                 <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                  Posted on <time dateTime="2023-04-20">{post.createdAt}</time>
+                  Posted on <time dateTime="2023-04-20">{post?.createdAt}</time>
                 </p>
               </div>
             </div>
             <div>
               <h1 className="text-3xl text-center leading-relaxed mb-5 font-bold text-sky-900 dark:text-sky-100">
-                {post.title}
+                {post?.title}
               </h1>
               <div
                 className="dark:text-sky-100 leading-7 flex flex-col p-2 gap-5 text-sm md:text-lg"
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(post.content),
+                  __html: DOMPurify.sanitize(post?.content),
                 }}
               />
             </div>

@@ -10,7 +10,7 @@ class Post {
   }
 
   setPosts(newPost) {
-    this.posts = [...newPost];
+    this.posts = [...this.posts, ...newPost];
   }
 
   updatePost(id, bannerImage) {

@@ -3,12 +3,18 @@ import Form from "../../components/Form";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
+// import { useNavigate, Navigate } from "react-router-dom";
+import { useState } from "react";
 
 const CreatePost = () => {
   const titleProps = useFormInput("");
   const summaryProps = useFormInput("");
   const bannerProps = useFormInput("", "file");
   const contentProps = useFormInput("");
+
+  // const [redirect, setRedirect] = useState(false);
+  // const navigate = useNavigate();
+  // const id = uuid();
 
   const createNewPost = async (e) => {
     e.preventDefault();
@@ -25,10 +31,18 @@ const CreatePost = () => {
         postFormData
       );
       console.log(response.data);
+      // if (response.status === 201) {
+      // setRedirect(true);
+      // navigate(`/post/${id}`);
+      // }
     } catch (err) {
       console.log(err);
     }
   };
+
+  // if (redirect) {
+  //   return <Navigate to={`/post/${id}`} />;
+  // }
 
   return (
     <section className="flex justify-center items-center p-5 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100 ">

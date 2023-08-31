@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
-import { v4 as uuid } from "uuid";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 
@@ -14,6 +13,7 @@ const EditPost = () => {
   const contentProps = useFormInput("");
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,13 +40,14 @@ const EditPost = () => {
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
 
-    console.log("anvnnc");
     try {
       const response = await axios.put(
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );
-      console.log(response.data);
+      if (response.status === 200) {
+        navigate(`/post/${id}`);
+      }
     } catch (err) {
       console.log(err);
     }
