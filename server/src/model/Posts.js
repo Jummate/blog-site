@@ -50,6 +50,12 @@ class Post {
   getAllPosts() {
     this.res.status(200).json(this.posts);
   }
+
+  getPost() {
+    const { id } = this.req.params;
+    const post = this.posts.filter((item) => item.id === id);
+    this.res.status(200).json(post);
+  }
 }
 
 module.exports = Post;

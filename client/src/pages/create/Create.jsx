@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
+import baseUrl from "../../config/baseUrl";
 
 const CreatePost = () => {
   const titleProps = useFormInput("");
@@ -11,8 +11,6 @@ const CreatePost = () => {
   const contentProps = useFormInput("");
 
   const createNewPost = async (e) => {
-    console.log(bannerProps.value);
-    console.log(contentProps);
     e.preventDefault();
     const postFormData = new FormData();
     postFormData.append("id", uuid());
@@ -21,11 +19,11 @@ const CreatePost = () => {
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
 
-    // {title:titleProps.value, summary:summaryProps.value, content:contentProps.value}
     try {
-      console.log(postFormData);
-      const baseURL = "http://localhost:3500/posts";
-      const response = await axios.post(baseURL, postFormData);
+      const response = await axios.post(
+        `${baseUrl.serverBaseUrl}/posts`,
+        postFormData
+      );
       console.log(response.data);
     } catch (err) {
       console.log(err);
