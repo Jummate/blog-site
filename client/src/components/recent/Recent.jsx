@@ -30,7 +30,7 @@ const RecentPost = () => {
     fetchData();
   }, []);
   return (
-    <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4">
+    <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4 h-92">
       <h1 className="text-sky-900 dark:text-sky-100 font-bold text-xl mb-4">
         Recent Posts
       </h1>
@@ -40,11 +40,11 @@ const RecentPost = () => {
             key={index}
             className="w-full shadow-pref dark:bg-sky-900 cursor-pointer rounded-2xl p-5 flex flex-col gap-4 lg:flex-row mb-7"
           >
-            <div className="w-full">
+            <div className="w-full lg:w-1/2">
               <img
                 src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
                 alt=""
-                className="rounded-2xl md:h-auto w-full hover:opacity-80"
+                className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
               />
             </div>
             <div className="p-2">
