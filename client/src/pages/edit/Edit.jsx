@@ -5,6 +5,7 @@ import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
+import clearFormContent from "../../utils/clearFormContent";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -48,9 +49,13 @@ const EditPost = () => {
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );
-      //   if (response.status === 200) {
-      //     navigate(`/post/${id}`);
-      //   }
+      if (response.status === 200) {
+        clearFormContent({
+          input: [titleProps, summaryProps, tagProps, bannerProps],
+          quill: [contentProps],
+        });
+        //   navigate(`/post/${id}`);
+      }
     } catch (err) {
       console.log(err);
     }

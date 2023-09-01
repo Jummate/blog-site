@@ -3,6 +3,7 @@ import Form from "../../components/Form";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
+import clearFormContent from "../../utils/clearFormContent";
 // import { useNavigate, Navigate } from "react-router-dom";
 // import { useState } from "react";
 
@@ -33,10 +34,18 @@ const CreatePost = () => {
         postFormData
       );
       // console.log(response.data);
-      // if (response.status === 201) {
-      //   // setRedirect(true);
-      //   navigate("/");
-      // }
+      if (response.status === 201) {
+        // titleProps.setValue("");
+        // summaryProps.setValue("");
+        // tagProps.setValue("");
+        // contentProps.setContent("");
+        clearFormContent({
+          input: [titleProps, summaryProps, tagProps, bannerProps],
+          quill: [contentProps],
+        });
+        // setRedirect(true);
+        // navigate("/");
+      }
     } catch (err) {
       console.log(err);
     }
