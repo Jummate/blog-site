@@ -86,12 +86,17 @@ class Post {
 
   async deletePost() {
     const { id } = this.req.params;
+    const postToDelete = this.posts.find((item) => item.id === id);
+    const bannerImage = path.parse(postToDelete.bannerImage).base;
+    const filteredPosts = this.posts.filter((item) => item.id !== id);
+    this.setPosts(filteredPosts);
     try {
-      const filteredPosts = this.posts.filter((item) => item.id !== id);
-      this.setPosts(filteredPosts);
       await fsPromises.writeFile(
         path.join(__dirname, "..", "db", "posts.json"),
         JSON.stringify(this.posts)
+      );
+      await fsPromises.unlink(
+        path.join(__dirname, "..", "..", "public", "uploads", bannerImage)
       );
       this.res.status(200).json({ message: "Post deleted successfully" });
     } catch (err) {

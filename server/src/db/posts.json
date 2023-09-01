@@ -1,1 +1,14 @@
-[{"id":"d8313de4-4c9a-4704-873e-77603021a154","tag":"Nature","title":"Beginning of A new Life","summary":"While this is just the beginning of a new life","content":"<p>This is my content. You can do anything with it. Ciao.</p>","readTime":"4min","author":"Olawale Jumat","createdAt":"April 20, 2023","bannerImage":"public\\uploads\\ef070c5485cfb38b28ca368e4a634355.png","authorImage":"public\\uploads\\ef070c5485cfb38b28ca368e4a634355.png"},{"id":"e8d44050-a03b-491c-8688-6f3b034bf2a3","tag":"mvkgk","title":"mccmcm","summary":"cmccmc","content":"<p>glkoqdbcnmj</p>","readTime":"4min","author":"Olawale Jumat","createdAt":"April 20, 2023","bannerImage":"public\\uploads\\26988cd4e771780982328d2c68e23001.jpg","authorImage":"public\\uploads\\26988cd4e771780982328d2c68e23001.jpg"},{"id":"fa96d2b8-cbfa-4c64-8b4e-fdf8860d85f5","tag":"vnvogo","title":"oyperte","summary":"mbroron","content":"<p>bmbmbmbmbbmb</p>","readTime":"4min","author":"Olawale Jumat","createdAt":"April 20, 2023","bannerImage":"public\\uploads\\425b2385cead7c13a3c85926f71b24ff.png","authorImage":"public\\uploads\\425b2385cead7c13a3c85926f71b24ff.png"}]
+[
+  {
+    "id": "d8313de4-4c9a-4704-873e-77603021a154",
+    "tag": "Nature",
+    "title": "Beginning of A new Life",
+    "summary": "While this is just the beginning of a new life",
+    "content": "<p>This is my content. You can do anything with it. Ciao.</p>",
+    "readTime": "4min",
+    "author": "Olawale Jumat",
+    "createdAt": "April 20, 2023",
+    "bannerImage": "public\\uploads\\ef070c5485cfb38b28ca368e4a634355.png",
+    "authorImage": "public\\uploads\\ef070c5485cfb38b28ca368e4a634355.png"
+  }
+]
