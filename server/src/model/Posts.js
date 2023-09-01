@@ -9,8 +9,8 @@ class Post {
     this.posts = [...posts];
   }
 
-  setPosts(newPost) {
-    this.posts = [...this.posts, ...newPost];
+  setPosts(newPosts) {
+    this.posts = newPosts;
   }
 
   updatePost(id, bannerImage) {
@@ -52,7 +52,7 @@ class Post {
         authorImage: newPath,
       };
 
-      this.setPosts([newPost]);
+      this.setPosts([...this.posts, newPost]);
 
       await fsPromises.writeFile(
         path.join(__dirname, "..", "db", "posts.json"),
@@ -79,6 +79,21 @@ class Post {
         JSON.stringify(this.posts)
       );
       this.res.status(200).json({ message: "Post updated successfully" });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async deletePost() {
+    const { id } = this.req.params;
+    try {
+      const filteredPosts = this.posts.filter((item) => item.id !== id);
+      this.setPosts(filteredPosts);
+      await fsPromises.writeFile(
+        path.join(__dirname, "..", "db", "posts.json"),
+        JSON.stringify(this.posts)
+      );
+      this.res.status(200).json({ message: "Post deleted successfully" });
     } catch (err) {
       console.log(err);
     }

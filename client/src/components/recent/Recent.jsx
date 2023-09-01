@@ -6,13 +6,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 
+const deletePost = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const RecentPost = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3500/posts/");
+        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`);
         setPosts(response.data);
       } catch (err) {
         console.log(err);
@@ -86,7 +95,10 @@ const RecentPost = () => {
                     Edit Post
                   </Button>
                 </Link>
-                <Button extraStyles={"bg-red-500 text-white"}>
+                <Button
+                  extraStyles={"bg-red-500 text-white"}
+                  onClick={() => deletePost(post.id)}
+                >
                   Delete Post
                 </Button>
               </div>

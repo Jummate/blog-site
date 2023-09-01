@@ -5,13 +5,20 @@ import baseUrl from "../../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
 
+const deletePost = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const PostPage = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
-  console.log(id);
 
   useEffect(() => {
-    console.log(id);
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -33,7 +40,12 @@ const PostPage = () => {
             <Link to={`/edit/${id}`}>
               <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
             </Link>
-            <Button extraStyles="bg-red-600 text-white">Delete Post</Button>
+            <Button
+              extraStyles="bg-red-600 text-white"
+              onClick={() => deletePost(id)}
+            >
+              Delete Post
+            </Button>
           </div>
           <img
             className="max-h-80 w-full"
