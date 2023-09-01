@@ -7,7 +7,13 @@ import { menuData } from "../../data";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [colorMode, setColorMode] = useState(null);
+  const [colorMode, setColorMode] = useState(
+    localStorage.hasOwnProperty("colorMode")
+      ? localStorage.getItem("colorMode")
+      : null
+  );
+
+  localStorage.setItem("colorMode", colorMode);
 
   const [mainMenu, ,] = Object.values(menuData);
   return (

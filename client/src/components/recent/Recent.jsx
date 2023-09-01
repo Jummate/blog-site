@@ -1,25 +1,50 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "../button/Button";
-import { postData } from "../../data";
+// import { postData } from "../../data";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import baseUrl from "../../config/baseUrl";
+
+const deletePost = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const RecentPost = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`);
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4">
+    <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4 h-92">
       <h1 className="text-sky-900 dark:text-sky-100 font-bold text-xl mb-4">
         Recent Posts
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {postData.map((post, index) => (
+        {posts.map((post, index) => (
           <article
             key={index}
             className="w-full shadow-pref dark:bg-sky-900 cursor-pointer rounded-2xl p-5 flex flex-col gap-4 lg:flex-row mb-7"
           >
-            <div className="w-full">
+            <div className="w-full lg:w-1/2">
               <img
-                src={post.bannerImage}
+                src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
                 alt=""
-                className="rounded-2xl md:h-auto w-full hover:opacity-80"
+                className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
               />
             </div>
             <div className="p-2">
@@ -50,7 +75,7 @@ const RecentPost = () => {
 
               <div className="mt-6 flex gap-2">
                 <img
-                  src={post.authorImage}
+                  src={`${baseUrl.serverBaseUrl}/${post.authorImage}`}
                   alt=""
                   className="h-10 w-10 rounded-full"
                 />
@@ -66,15 +91,16 @@ const RecentPost = () => {
 
               <div className="flex items-center p-2 mt-3 gap-3 text-xs">
                 <Link to={`edit/${post.id}`}>
-                  <Button
-                    text="Edit Post"
-                    extraStyles={"bg-sky-400 text-white"}
-                  />
+                  <Button extraStyles={"bg-sky-400 text-white"}>
+                    Edit Post
+                  </Button>
                 </Link>
                 <Button
-                  text="Delete Post"
                   extraStyles={"bg-red-500 text-white"}
-                />
+                  onClick={() => deletePost(post.id)}
+                >
+                  Delete Post
+                </Button>
               </div>
             </div>
           </article>
@@ -82,11 +108,12 @@ const RecentPost = () => {
 
         <div className="flex justify-center">
           <Button
-            text="Load More"
             extraStyles={
               "bg-sky-900 dark:bg-sky-500 dark:text-sky-100 dark:hover:bg-sky-200 dark:hover:text-sky-800"
             }
-          />
+          >
+            Load More
+          </Button>
         </div>
       </div>
     </section>

@@ -27,33 +27,52 @@ const formats = [
   "image",
 ];
 
-const Form = ({ buttonText }) => {
+const Form = ({
+  values: { titleProps, contentProps, summaryProps, tagProps },
+  onSubmit,
+  children,
+}) => {
   return (
-    <form className="flex flex-col gap-4">
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={onSubmit}
+    >
       <Input
         placeholder="Title"
         extraStyles="shadow-pref rounded-md"
         ariaLabel="Title"
+        value={titleProps.value}
+        onChange={titleProps.onChange}
       />
       <Input
         placeholder="Summary"
         extraStyles="shadow-pref rounded-md"
         ariaLabel="Summary"
+        value={summaryProps.value}
+        onChange={summaryProps.onChange}
       />
       <Input
-        type="file"
-        extraStyles="shadow-pref dark:bg-sky-100 rounded-md"
-        ariaLabel="Banner"
+        placeholder="Tag"
+        extraStyles="shadow-pref rounded-md"
+        ariaLabel="Tag"
+        value={tagProps.value}
+        onChange={tagProps.onChange}
       />
+      {children}
       <ReactQuill
         theme="snow"
         modules={modules}
         formats={formats}
         className="h-auto overflow-hidden border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md"
+        value={contentProps.content}
+        onChange={contentProps.onContentChange}
       />
 
-      <Button extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold">
-        {buttonText}
+      <Button
+        type="submit"
+        extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold"
+      >
+        PUBLISH
       </Button>
     </form>
   );
