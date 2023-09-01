@@ -4,23 +4,25 @@ import { v4 as uuid } from "uuid";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 // import { useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
 
 const CreatePost = () => {
   const titleProps = useFormInput("");
   const summaryProps = useFormInput("");
+  const tagProps = useFormInput("");
   const bannerProps = useFormInput("", "file");
   const contentProps = useFormInput("");
 
   // const [redirect, setRedirect] = useState(false);
   // const navigate = useNavigate();
-  // const id = uuid();
 
   const createNewPost = async (e) => {
     e.preventDefault();
+    // const id = uuid();
     const postFormData = new FormData();
     postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
+    postFormData.append("tag", tagProps.value);
     postFormData.append("summary", summaryProps.value);
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
@@ -30,10 +32,10 @@ const CreatePost = () => {
         `${baseUrl.serverBaseUrl}/posts`,
         postFormData
       );
-      console.log(response.data);
+      // console.log(response.data);
       // if (response.status === 201) {
-      // setRedirect(true);
-      // navigate(`/post/${id}`);
+      //   // setRedirect(true);
+      //   navigate("/");
       // }
     } catch (err) {
       console.log(err);
@@ -51,7 +53,7 @@ const CreatePost = () => {
           +Create New Post
         </h1>
         <Form
-          values={{ titleProps, summaryProps, contentProps }}
+          values={{ titleProps, summaryProps, contentProps, tagProps }}
           onSubmit={createNewPost}
         >
           <input

@@ -28,7 +28,7 @@ const formats = [
 ];
 
 const Form = ({
-  values: { titleProps, contentProps, summaryProps },
+  values: { titleProps, contentProps, summaryProps, tagProps },
   onSubmit,
   children,
 }) => {
@@ -50,6 +50,13 @@ const Form = ({
         ariaLabel="Summary"
         value={summaryProps.value}
         onChange={summaryProps.onChange}
+      />
+      <Input
+        placeholder="Tag"
+        extraStyles="shadow-pref rounded-md"
+        ariaLabel="Tag"
+        value={tagProps.value}
+        onChange={tagProps.onChange}
       />
       {children}
       <ReactQuill

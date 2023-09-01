@@ -14,13 +14,14 @@ class Post {
   }
 
   updatePost(id, bannerImage) {
-    const { title, summary, content } = this.req.body;
+    const { title, summary, content, tag } = this.req.body;
 
     const postToEdit = this.posts.find((item) => item.id === id);
 
     const editedPost = {
       ...postToEdit,
       title,
+      tag,
       summary,
       content,
       bannerImage,
@@ -31,7 +32,7 @@ class Post {
   }
 
   async createPost() {
-    const { id, title, summary, content } = this.req.body;
+    const { id, title, summary, content, tag } = this.req.body;
     const { originalname, path: filePath } = this.req.file;
     const ext = originalname.split(".").slice(-1).toString();
     const newPath = `${filePath}.${ext}`;
@@ -40,7 +41,7 @@ class Post {
 
       const newPost = {
         id,
-        tag: "Science",
+        tag,
         title,
         summary,
         content,
