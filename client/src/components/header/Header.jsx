@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import Menu from "../menu/Menu";
 import ColorMode from "../ColorMode";
@@ -13,7 +13,7 @@ const Header = () => {
       : null
   );
 
-  localStorage.setItem("colorMode", colorMode);
+  useEffect(() => localStorage.setItem("colorMode", colorMode), [colorMode]);
 
   const [mainMenu, ,] = Object.values(menuData);
   return (
