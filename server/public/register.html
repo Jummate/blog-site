@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Register Page</title>
+  </head>
+  <body>
+    <style>
+      html {
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        color: #000080;
+        /* color: #fff; */
+        height: 100%;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 75%;
+        max-width: 350px;
+      }
+      label {
+        font-weight: bold;
+      }
+      h1 {
+        text-align: center;
+      }
+      input {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #000080;
+      }
+      button {
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        background-color: #000080;
+        color: #fff;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+    </style>
+    <main>
+      <form>
+        <h1>Sign Up</h1>
+        <label for="email">Email:</label>
+        <input
+          type="text"
+          id="email"
+        />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+        />
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm-password"
+        />
+        <button type="submit">Create User</button>
+      </form>
+    </main>
+
+    <script>
+      const form = document.querySelector("form");
+      const email = document.querySelector("#email");
+      const password = document.querySelector("#password");
+      console.log(password.value);
+      const formData = new FormData();
+
+      const serverBaseUrl = document.baseURI;
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        try {
+          const response = await fetch(serverBaseUrl, {
+            method: "POST",
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify({
+              email: email.value,
+              password: password.value,
+            }),
+          });
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>
