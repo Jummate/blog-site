@@ -1,6 +1,6 @@
 const clearFormContent = ({ input, quill }) => {
-  input.forEach((formInput) => formInput.setValue(""));
-  quill.forEach((formQuill) => formQuill.setContent(""));
+  if (input) input.forEach((formInput) => formInput.setValue(""));
+  if (quill) quill.forEach((formQuill) => formQuill.setContent(""));
 };
 
 export default clearFormContent;

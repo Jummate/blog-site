@@ -20,5 +20,6 @@ app.use(
 // routes
 app.use("/posts", uploadMiddleware, require("./src/routes/posts"));
 app.use("/register", require("./src/routes/users"));
+app.use("/auth", require("./src/routes/auth"));
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

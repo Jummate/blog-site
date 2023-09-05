@@ -4,6 +4,8 @@ import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 import Footer from "./components/footer/Footer";
 import PostPage from "./pages/post/PostPage";
+import { AuthProvider } from "./contexts/AuthProvider";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,9 +19,11 @@ import EditPost from "./pages/edit/Edit";
 function App() {
   const Layout = () => (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+      </AuthProvider>
     </>
   );
   return (

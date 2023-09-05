@@ -2,6 +2,8 @@ const fsPromises = require("fs").promises;
 const path = require("path");
 const users = require("../db/users.json");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 class User {
   constructor(req, res) {
@@ -30,7 +32,7 @@ class User {
       const hashedPwd = await bcrypt.hash(password, 10);
       const newUser = {
         email,
-        hashedPwd,
+        password: hashedPwd,
       };
       this.setUser([...this.users, newUser]);
 
@@ -46,44 +48,65 @@ class User {
   }
 
   getRegistrationPage() {
-    // const { usera, title, summary, content, tag } = this.req.body;
-    // const { originalname, path: filePath } = this.req.file;
-    // const ext = originalname.split(".").slice(-1).toString();
-    // const newPath = `${filePath}.${ext}`;
     try {
-      //   await fsPromises.rename(filePath, newPath);
-
-      //   const newPost = {
-      //     id,
-      //     tag,
-      //     title,
-      //     summary,
-      //     content,
-      //     readTime: "4min",
-      //     author: "Olawale Jumat",
-      //     createdAt: "April 20, 2023",
-      //     bannerImage: newPath,
-      //     authorImage: newPath,
-      //   };
-
-      //   this.setPosts([...this.posts, newPost]);
-
-      //   await fsPromises.writeFile(
-      //     path.join(__dirname, "..", "db", "posts.json"),
-      //     JSON.stringify(this.posts)
-      //   );
-
       this.res.sendFile(
         path.join(__dirname, "..", "..", "public", "register.html")
       );
-
-      //   this.res.send(
-      //     "<h1 style='color:#fff; background-color:red'>You are Welcome to register page</h1>"
-      //   );
-
-      //   this.res.status(201).json({ message: "Post created successfully" });
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  async handleLogin() {
+    const { email, password } = this.req.body;
+    console.log(this.req.body);
+
+    if (!email || !password) {
+      return this.res
+        .status(400)
+        .json({ message: "Email and password are required." });
+    }
+    const potentialUser = this.users.find((user) => user.email === email);
+    if (!potentialUser)
+      return this.res.status(401).json({ message: "Records not found" });
+
+    const matchedPwd = await bcrypt.compare(password, potentialUser.password);
+    if (matchedPwd) {
+      //use expiry time of 5 or 15mins for access token in production
+      const accessToken = jwt.sign(
+        { email: potentialUser.email },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "30s" }
+      );
+      const refreshToken = jwt.sign(
+        { email: potentialUser.email },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: "1d" }
+      );
+
+      const otherUsers = this.users.filter(
+        (user) => user.email !== potentialUser.email
+      );
+      const currentUser = { ...potentialUser, refreshToken };
+
+      this.setUser([...otherUsers, currentUser]);
+
+      await fsPromises.writeFile(
+        path.join(__dirname, "..", "db", "users.json"),
+        JSON.stringify(this.users)
+      );
+
+      //use longer days for refresh token in production
+      //add "secure" and set to true i.e. secure=true
+      //add sameSite and set to strict i.e. sameSite='strict'
+      //   this.res.cookie("jwt", refreshToken, {
+      //     httpOnly: true,
+      //     maxAge: 24 * 60 * 60 * 1000,
+      //   });
+
+      this.res.json({ accessToken });
+
+      //   this.res.json({ success: `User [${potentialUser.email}], logged in!` });
     }
   }
 }

@@ -2,13 +2,21 @@ import { IoTimeOutline } from "react-icons/io5";
 import Button from "../button/Button";
 // import { postData } from "../../data";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
+import { AuthContext } from "../../contexts/AuthProvider";
 
-const deletePost = async (id) => {
+const deletePost = async (id, token) => {
+  console.log({ token });
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   try {
-    const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+    const response = await axios.delete(
+      `${baseUrl.serverBaseUrl}/posts/${id}`,
+      { headers }
+    );
     console.log(response.data);
   } catch (err) {
     console.log(err);
@@ -16,6 +24,7 @@ const deletePost = async (id) => {
 };
 
 const RecentPost = () => {
+  const { token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -97,7 +106,7 @@ const RecentPost = () => {
                 </Link>
                 <Button
                   extraStyles={"bg-red-500 text-white"}
-                  onClick={() => deletePost(post.id)}
+                  onClick={() => deletePost(post.id, token)}
                 >
                   Delete Post
                 </Button>
