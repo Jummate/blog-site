@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useFormInput } from "../../hooks/useFormInput";
@@ -6,6 +6,7 @@ import Form from "../../components/Form";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -15,6 +16,8 @@ const EditPost = () => {
   const contentProps = useFormInput("");
 
   const { id } = useParams();
+  const { token } = useContext(AuthContext);
+
   //   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +39,9 @@ const EditPost = () => {
   }, []);
 
   const editPost = async (e) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     e.preventDefault();
     const postFormData = new FormData();
     postFormData.append("title", titleProps.value);
@@ -47,7 +53,8 @@ const EditPost = () => {
     try {
       const response = await axios.put(
         `${baseUrl.serverBaseUrl}/posts/${id}`,
-        postFormData
+        postFormData,
+        { headers }
       );
       if (response.status === 200) {
         clearFormContent({

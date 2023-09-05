@@ -76,7 +76,7 @@ class User {
       const accessToken = jwt.sign(
         { email: potentialUser.email },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "30s" }
+        { expiresIn: "60s" }
       );
       const refreshToken = jwt.sign(
         { email: potentialUser.email },

@@ -1,13 +1,29 @@
 import Button from "../../components/button/Button";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
+import { AuthContext } from "../../contexts/AuthProvider";
 
-const deletePost = async (id) => {
+// const deletePost = async (id) => {
+//   try {
+//     const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+//     console.log(response.data);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+const deletePost = async (id, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   try {
-    const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
+    const response = await axios.delete(
+      `${baseUrl.serverBaseUrl}/posts/${id}`,
+      { headers }
+    );
     console.log(response.data);
   } catch (err) {
     console.log(err);
@@ -15,6 +31,7 @@ const deletePost = async (id) => {
 };
 
 const PostPage = () => {
+  const { token } = useContext(AuthContext);
   const { id } = useParams();
   const [post, setPost] = useState({});
 
@@ -42,7 +59,7 @@ const PostPage = () => {
             </Link>
             <Button
               extraStyles="bg-red-600 text-white"
-              onClick={() => deletePost(id)}
+              onClick={() => deletePost(id, token)}
             >
               Delete Post
             </Button>
