@@ -8,7 +8,6 @@ import baseUrl from "../../config/baseUrl";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const deletePost = async (id, token) => {
-  console.log({ token });
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -98,19 +97,21 @@ const RecentPost = () => {
                 </div>
               </div>
 
-              <div className="flex items-center p-2 mt-3 gap-3 text-xs">
-                <Link to={`edit/${post.id}`}>
-                  <Button extraStyles={"bg-sky-400 text-white"}>
-                    Edit Post
+              {token && (
+                <div className="flex items-center p-2 mt-3 gap-3 text-xs">
+                  <Link to={`edit/${post.id}`}>
+                    <Button extraStyles={"bg-sky-400 text-white"}>
+                      Edit Post
+                    </Button>
+                  </Link>
+                  <Button
+                    extraStyles={"bg-red-500 text-white"}
+                    onClick={() => deletePost(post.id, token)}
+                  >
+                    Delete Post
                   </Button>
-                </Link>
-                <Button
-                  extraStyles={"bg-red-500 text-white"}
-                  onClick={() => deletePost(post.id, token)}
-                >
-                  Delete Post
-                </Button>
-              </div>
+                </div>
+              )}
             </div>
           </article>
         ))}

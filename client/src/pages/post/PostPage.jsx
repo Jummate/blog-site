@@ -53,17 +53,19 @@ const PostPage = () => {
     <section className="dark:bg-sky-900/90">
       <article>
         <header>
-          <div className="flex items-center justify-center p-5 gap-3 text-sm">
-            <Link to={`/edit/${id}`}>
-              <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
-            </Link>
-            <Button
-              extraStyles="bg-red-600 text-white"
-              onClick={() => deletePost(id, token)}
-            >
-              Delete Post
-            </Button>
-          </div>
+          {token && (
+            <div className="flex items-center justify-center p-5 gap-3 text-sm">
+              <Link to={`/edit/${id}`}>
+                <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
+              </Link>
+              <Button
+                extraStyles="bg-red-600 text-white"
+                onClick={() => deletePost(id, token)}
+              >
+                Delete Post
+              </Button>
+            </div>
+          )}
           <img
             className="max-h-80 w-full"
             src={`${baseUrl.serverBaseUrl}/${post?.bannerImage}`}
