@@ -5,7 +5,7 @@ const verifyToken = require("../middleware/verifyToken");
 
 router
   .route("/")
-  .post(postController.createNewPost)
+  .post(verifyToken, postController.createNewPost)
   .get(postController.getAllPosts);
 
 router

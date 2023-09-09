@@ -5,9 +5,22 @@ import ColorMode from "../ColorMode";
 import { Link } from "react-router-dom";
 import Button from "../button/Button";
 import { AuthContext } from "../../contexts/AuthProvider";
+import baseUrl from "../../config/baseUrl";
+import axios from "axios";
+import { tokenManager } from "../../utils/tokenManager";
+
+const logOut = async (setToken) => {
+  console.log("logged out");
+  const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
+    withCredentials: true,
+  });
+  if (response.status === 204) {
+    setToken("");
+  }
+};
 
 const Header = () => {
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
   const [openMenu, setOpenMenu] = useState(false);
   const [colorMode, setColorMode] = useState(
     localStorage.hasOwnProperty("colorMode")
@@ -45,7 +58,10 @@ const Header = () => {
             </Link>
           )}
           {token && (
-            <Button extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50">
+            <Button
+              extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
+              onClick={() => logOut(setToken)}
+            >
               Log Out
             </Button>
           )}

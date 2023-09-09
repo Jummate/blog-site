@@ -59,7 +59,6 @@ class User {
 
   async handleLogin() {
     const { email, password } = this.req.body;
-    console.log(this.req.body);
 
     if (!email || !password) {
       return this.res
@@ -99,15 +98,83 @@ class User {
       //use longer days for refresh token in production
       //add "secure" and set to true i.e. secure=true
       //add sameSite and set to strict i.e. sameSite='strict'
-      //   this.res.cookie("jwt", refreshToken, {
-      //     httpOnly: true,
-      //     maxAge: 24 * 60 * 60 * 1000,
-      //   });
+      this.res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
 
       this.res.json({ accessToken });
-
-      //   this.res.json({ success: `User [${potentialUser.email}], logged in!` });
     }
+  }
+
+  async handleRefreshToken() {
+    const { cookies } = this.req;
+
+    if (!cookies?.jwt) return this.res.sendStatus(401);
+
+    const refreshToken = cookies.jwt;
+    const foundUser = this.users.find(
+      (user) => user.refreshToken === refreshToken
+    );
+    if (!foundUser) return this.res.sendStatus(403);
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (err, decoded) => {
+        if (err || decoded.email !== foundUser.email) {
+          return this.res.sendStatus(403);
+        }
+        const accessToken = jwt.sign(
+          { email: foundUser.email },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "60s" }
+        );
+        this.res.json({ accessToken });
+      }
+    );
+  }
+
+  async handleLogout() {
+    const { cookies } = this.req;
+
+    if (!cookies?.jwt) return this.res.sendStatus(204);
+
+    const refreshToken = cookies.jwt;
+    const foundUser = this.users.find(
+      (user) => user.refreshToken === refreshToken
+    );
+    if (!foundUser) {
+      this.res.clearCookie("jwt", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      });
+      return this.res.sendStatus(204);
+    }
+
+    const otherUsers = this.users.filter(
+      (user) => user.refreshToken !== foundUser.refreshToken
+    );
+    const currentUser = { ...foundUser, refreshToken: "" };
+
+    this.setUser([...otherUsers, currentUser]);
+
+    await fsPromises.writeFile(
+      path.join(__dirname, "..", "db", "users.json"),
+      JSON.stringify(this.users)
+    );
+
+    // !!!!! Add secure:true in production to make it serve only on https protocol
+    this.res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+
+    //OK but no content to send back
+    return this.res.sendStatus(204);
   }
 }
 

@@ -7,6 +7,8 @@ import axios from "axios";
 import clearFormContent from "../../utils/clearFormContent";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import jwt_decode from "jwt-decode";
+import { tokenManager } from "../../utils/tokenManager";
 
 const Login = () => {
   const { token, setToken } = useContext(AuthContext);
@@ -20,10 +22,23 @@ const Login = () => {
     loginFormData.append("password", passwordProps.value);
 
     try {
-      const response = await axios.post(`${baseUrl.serverBaseUrl}/auth`, {
-        email: emailProps.value,
-        password: passwordProps.value,
-      });
+      const response = await axios.post(
+        `${baseUrl.serverBaseUrl}/auth`,
+        {
+          email: emailProps.value,
+          password: passwordProps.value,
+        },
+        { withCredentials: true }
+      );
+      const decoded = jwt_decode(response.data.accessToken);
+      console.log(decoded);
+      console.log(decoded.exp);
+      console.log(new Date(decoded.exp).getTime());
+      const now = Date.now();
+      console.log(now);
+      console.log(new Date(now).getTime());
+
+      tokenManager.setToken(response.data.accessToken);
       setToken(response.data.accessToken);
       // if (response.status === 200) {
       //   clearFormContent({

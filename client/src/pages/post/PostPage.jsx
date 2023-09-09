@@ -5,24 +5,20 @@ import baseUrl from "../../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { tokenManager } from "../../utils/tokenManager";
 
-// const deletePost = async (id) => {
-//   try {
-//     const response = await axios.delete(`${baseUrl.serverBaseUrl}/posts/${id}`);
-//     console.log(response.data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+const axiosAuth = axios.create({
+  baseURL: baseUrl.serverBaseUrl,
+  withCredentials: true,
+});
 
 const deletePost = async (id, token) => {
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
+  // const headers = {
+  //   Authorization: `Bearer ${token}`,
+  // };
   try {
-    const response = await axios.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`,
-      { headers }
+    const response = await axiosAuth.delete(
+      `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     console.log(response.data);
   } catch (err) {
@@ -31,12 +27,50 @@ const deletePost = async (id, token) => {
 };
 
 const PostPage = () => {
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
   const { id } = useParams();
   const [post, setPost] = useState({});
 
+  axiosAuth.interceptors.request.use(
+    (config) => {
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  axiosAuth.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        alert("No token detected from response");
+      }
+      if (error.response.status === 403) {
+        // alert("Token expired from response");
+        return axiosAuth
+          .get(`${baseUrl.serverBaseUrl}/refresh`)
+          .then((response) => {
+            console.log("NEW TOKEN", response.data);
+            setToken(response.data.accessToken);
+            error.config.headers[
+              "Authorization"
+            ] = `Bearer ${response.data.accessToken}`;
+            return axios(error.config);
+          })
+          .catch((err) => console.log(err));
+      }
+      return Promise.reject(error);
+    }
+  );
+
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
         const response = await axios.get(
           `${baseUrl.serverBaseUrl}/posts/${id}`
@@ -45,8 +79,7 @@ const PostPage = () => {
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchData();
+    })();
   }, []);
 
   return (
@@ -66,6 +99,7 @@ const PostPage = () => {
               </Button>
             </div>
           )}
+
           <img
             className="max-h-80 w-full"
             src={`${baseUrl.serverBaseUrl}/${post?.bannerImage}`}
