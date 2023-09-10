@@ -6,13 +6,15 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { tokenManager } from "../../utils/tokenManager";
+// import axiosAuth from "../../services/axiosAuth";
+import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 
-const axiosAuth = axios.create({
-  baseURL: baseUrl.serverBaseUrl,
-  withCredentials: true,
-});
+// const axiosAuth = axios.create({
+//   baseURL: baseUrl.serverBaseUrl,
+//   withCredentials: true,
+// });
 
-const deletePost = async (id, token) => {
+const deletePost = async (id, axiosAuth) => {
   // const headers = {
   //   Authorization: `Bearer ${token}`,
   // };
@@ -27,47 +29,10 @@ const deletePost = async (id, token) => {
 };
 
 const PostPage = () => {
-  const { token, setToken } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
+  const axiosAuth = useAxiosInterceptor();
   const { id } = useParams();
   const [post, setPost] = useState({});
-
-  axiosAuth.interceptors.request.use(
-    (config) => {
-      if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  axiosAuth.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      if (error.response.status === 401) {
-        alert("No token detected from response");
-      }
-      if (error.response.status === 403) {
-        // alert("Token expired from response");
-        return axiosAuth
-          .get(`${baseUrl.serverBaseUrl}/refresh`)
-          .then((response) => {
-            console.log("NEW TOKEN", response.data);
-            setToken(response.data.accessToken);
-            error.config.headers[
-              "Authorization"
-            ] = `Bearer ${response.data.accessToken}`;
-            return axios(error.config);
-          })
-          .catch((err) => console.log(err));
-      }
-      return Promise.reject(error);
-    }
-  );
 
   useEffect(() => {
     (async () => {
@@ -93,7 +58,7 @@ const PostPage = () => {
               </Link>
               <Button
                 extraStyles="bg-red-600 text-white"
-                onClick={() => deletePost(id, token)}
+                onClick={() => deletePost(id, axiosAuth)}
               >
                 Delete Post
               </Button>

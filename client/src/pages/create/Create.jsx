@@ -4,10 +4,13 @@ import { v4 as uuid } from "uuid";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { useContext } from "react";
 // import { useNavigate, Navigate } from "react-router-dom";
 // import { useState } from "react";
 
 const CreatePost = () => {
+  const { token } = useContext(AuthContext);
   const titleProps = useFormInput("");
   const summaryProps = useFormInput("");
   const tagProps = useFormInput("");
@@ -18,6 +21,9 @@ const CreatePost = () => {
   // const navigate = useNavigate();
 
   const createNewPost = async (e) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     e.preventDefault();
     // const id = uuid();
     const postFormData = new FormData();
@@ -31,7 +37,8 @@ const CreatePost = () => {
     try {
       const response = await axios.post(
         `${baseUrl.serverBaseUrl}/posts`,
-        postFormData
+        postFormData,
+        { headers }
       );
       // console.log(response.data);
       if (response.status === 201) {
