@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "fc3cc1cb-516d-4ad8-a025-bdcdb4ba93ef",
+    "tag": "The tag of the journey",
+    "title": "A Journey ",
+    "summary": "The content after it was changed.",
+    "content": "<p>The content after it was changed along with the attachment of a new image. But however, there are a couple of things that will never change in the course of driving home a point which can not be excluded from the grand scheme of things however much you try.</p>",
+    "readTime": "4min",
+    "author": "Olawale Jumat",
+    "createdAt": "April 20, 2023",
+    "bannerImage": "public\\uploads\\3d4a332a07a7e4d00e52a57187550382.png",
+    "authorImage": "public\\uploads\\3d4a332a07a7e4d00e52a57187550382.png"
+  }
+]

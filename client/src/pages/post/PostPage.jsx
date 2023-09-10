@@ -5,19 +5,9 @@ import baseUrl from "../../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { tokenManager } from "../../utils/tokenManager";
-// import axiosAuth from "../../services/axiosAuth";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 
-// const axiosAuth = axios.create({
-//   baseURL: baseUrl.serverBaseUrl,
-//   withCredentials: true,
-// });
-
 const deletePost = async (id, axiosAuth) => {
-  // const headers = {
-  //   Authorization: `Bearer ${token}`,
-  // };
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`

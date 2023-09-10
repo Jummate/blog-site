@@ -7,6 +7,7 @@ import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -17,11 +18,12 @@ const EditPost = () => {
 
   const { id } = useParams();
   const { token } = useContext(AuthContext);
+  const axiosAuth = useAxiosInterceptor();
 
   //   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
         const response = await axios.get(
           `${baseUrl.serverBaseUrl}/posts/${id}`
@@ -34,14 +36,13 @@ const EditPost = () => {
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchData();
+    })();
   }, []);
 
   const editPost = async (e) => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   Authorization: `Bearer ${token}`,
+    // };
     e.preventDefault();
     const postFormData = new FormData();
     postFormData.append("title", titleProps.value);
@@ -51,10 +52,9 @@ const EditPost = () => {
     postFormData.append("banner", bannerProps.value[0]);
 
     try {
-      const response = await axios.put(
+      const response = await axiosAuth.put(
         `${baseUrl.serverBaseUrl}/posts/${id}`,
-        postFormData,
-        { headers }
+        postFormData
       );
       if (response.status === 200) {
         clearFormContent({

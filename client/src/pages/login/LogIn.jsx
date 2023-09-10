@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 import { tokenManager } from "../../utils/tokenManager";
 
 const Login = () => {
-  const { token, setToken } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const emailProps = useFormInput("");
   const passwordProps = useFormInput("");
 
@@ -30,15 +30,15 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      const decoded = jwt_decode(response.data.accessToken);
-      console.log(decoded);
-      console.log(decoded.exp);
-      console.log(new Date(decoded.exp).getTime());
-      const now = Date.now();
-      console.log(now);
-      console.log(new Date(now).getTime());
+      // const decoded = jwt_decode(response.data.accessToken);
+      // console.log(decoded);
+      // console.log(decoded.exp);
+      // console.log(new Date(decoded.exp).getTime());
+      // const now = Date.now();
+      // console.log(now);
+      // console.log(new Date(now).getTime());
 
-      tokenManager.setToken(response.data.accessToken);
+      // tokenManager.setToken(response.data.accessToken);
       setToken(response.data.accessToken);
       // if (response.status === 200) {
       //   clearFormContent({

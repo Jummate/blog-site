@@ -6,6 +6,7 @@ import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
+import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 // import { useNavigate, Navigate } from "react-router-dom";
 // import { useState } from "react";
 
@@ -17,13 +18,15 @@ const CreatePost = () => {
   const bannerProps = useFormInput("", "file");
   const contentProps = useFormInput("");
 
+  const axiosAuth = useAxiosInterceptor();
+
   // const [redirect, setRedirect] = useState(false);
   // const navigate = useNavigate();
 
   const createNewPost = async (e) => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   Authorization: `Bearer ${token}`,
+    // };
     e.preventDefault();
     // const id = uuid();
     const postFormData = new FormData();
@@ -35,10 +38,9 @@ const CreatePost = () => {
     postFormData.append("banner", bannerProps.value[0]);
 
     try {
-      const response = await axios.post(
+      const response = await axiosAuth.post(
         `${baseUrl.serverBaseUrl}/posts`,
-        postFormData,
-        { headers }
+        postFormData
       );
       // console.log(response.data);
       if (response.status === 201) {

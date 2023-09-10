@@ -6,15 +6,15 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 
-const deletePost = async (id, token) => {
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
+const deletePost = async (id, axiosAuth) => {
+  // const headers = {
+  //   Authorization: `Bearer ${token}`,
+  // };
   try {
-    const response = await axios.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`,
-      { headers }
+    const response = await axiosAuth.delete(
+      `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     console.log(response.data);
   } catch (err) {
@@ -25,17 +25,17 @@ const deletePost = async (id, token) => {
 const RecentPost = () => {
   const { token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
+  const axiosAuth = useAxiosInterceptor();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
         const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`);
         setPosts(response.data);
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchData();
+    })();
   }, []);
   return (
     <section className="p-5 py-10 sm:p-16 md:p-20 dark:bg-sky-900/90 md:w-3/4 h-92">
@@ -106,7 +106,7 @@ const RecentPost = () => {
                   </Link>
                   <Button
                     extraStyles={"bg-red-500 text-white"}
-                    onClick={() => deletePost(post.id, token)}
+                    onClick={() => deletePost(post.id, axiosAuth)}
                   >
                     Delete Post
                   </Button>
