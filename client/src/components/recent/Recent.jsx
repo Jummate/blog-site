@@ -6,13 +6,15 @@ import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
+import { notify } from "../../utils/notify";
+import { alertDelete } from "../../utils/alert";
 
 const deletePost = async (id, axiosAuth) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
-    console.log(response.data);
+    notify({ msg: response.data.message });
   } catch (err) {
     console.log(err);
   }
@@ -102,7 +104,7 @@ const RecentPost = () => {
                   </Link>
                   <Button
                     extraStyles={"bg-red-500 text-white"}
-                    onClick={() => deletePost(post.id, axiosAuth)}
+                    onClick={() => alertDelete(post.id, axiosAuth, deletePost)}
                   >
                     Delete Post
                   </Button>

@@ -15,11 +15,14 @@ import {
 import CreatePost from "./pages/create/Create";
 import Login from "./pages/login/Login";
 import EditPost from "./pages/edit/Edit";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const Layout = () => (
     <>
       <AuthProvider>
+        <ToastContainer />
         <Header />
         <Outlet />
         <Footer />

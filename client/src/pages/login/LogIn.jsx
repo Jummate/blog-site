@@ -7,8 +7,8 @@ import axios from "axios";
 import clearFormContent from "../../utils/clearFormContent";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
-import jwt_decode from "jwt-decode";
-
+// import jwt_decode from "jwt-decode";
+import { notify } from "../../utils/notify";
 const Login = () => {
   const { setToken } = useContext(AuthContext);
   const emailProps = useFormInput("");
@@ -36,6 +36,8 @@ const Login = () => {
       // const now = Date.now();
       // console.log(now);
       // console.log(new Date(now).getTime());
+
+      notify({ msg: response.data.message });
 
       setToken(response.data.accessToken);
       // if (response.status === 200) {

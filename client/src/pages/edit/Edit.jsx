@@ -8,6 +8,7 @@ import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
+import { notify } from "../../utils/notify";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -17,7 +18,7 @@ const EditPost = () => {
   const contentProps = useFormInput("");
 
   const { id } = useParams();
-  const { token } = useContext(AuthContext);
+  //   const { token } = useContext(AuthContext);
   const axiosAuth = useAxiosInterceptor();
 
   //   const navigate = useNavigate();
@@ -40,9 +41,6 @@ const EditPost = () => {
   }, []);
 
   const editPost = async (e) => {
-    // const headers = {
-    //   Authorization: `Bearer ${token}`,
-    // };
     e.preventDefault();
     const postFormData = new FormData();
     postFormData.append("title", titleProps.value);
@@ -57,6 +55,7 @@ const EditPost = () => {
         postFormData
       );
       if (response.status === 200) {
+        notify({ msg: response.data.message });
         clearFormContent({
           input: [titleProps, summaryProps, tagProps, bannerProps],
           quill: [contentProps],

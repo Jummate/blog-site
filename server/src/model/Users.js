@@ -105,7 +105,9 @@ class User {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      this.res.json({ accessToken });
+      this.res
+        .status(200)
+        .json({ accessToken, message: "Logged in successful!" });
     }
   }
 

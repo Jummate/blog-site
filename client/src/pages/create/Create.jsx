@@ -6,6 +6,7 @@ import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
+import { notify } from "../../utils/notify";
 // import { useNavigate, Navigate } from "react-router-dom";
 // import { useState } from "react";
 
@@ -47,6 +48,7 @@ const CreatePost = () => {
         // summaryProps.setValue("");
         // tagProps.setValue("");
         // contentProps.setContent("");
+        notify({ msg: response.data.message });
         clearFormContent({
           input: [titleProps, summaryProps, tagProps, bannerProps],
           quill: [contentProps],

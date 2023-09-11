@@ -6,13 +6,15 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
+import { alertDelete } from "../../utils/alert";
+import { notify } from "../../utils/notify";
 
 const deletePost = async (id, axiosAuth) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
-    console.log(response.data);
+    notify({ msg: response.data.message });
   } catch (err) {
     console.log(err);
   }
@@ -48,7 +50,7 @@ const PostPage = () => {
               </Link>
               <Button
                 extraStyles="bg-red-600 text-white"
-                onClick={() => deletePost(id, axiosAuth)}
+                onClick={() => alertDelete(id, axiosAuth, deletePost)}
               >
                 Delete Post
               </Button>
