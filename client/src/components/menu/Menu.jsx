@@ -23,6 +23,7 @@ const Menu = ({ onClick }) => {
         <Link
           to="/"
           className="hover:underline"
+          onClick={onClick}
         >
           Home
         </Link>
@@ -30,6 +31,7 @@ const Menu = ({ onClick }) => {
           <Link
             to="login"
             className="hover:underline"
+            onClick={onClick}
           >
             Log In
           </Link>
@@ -38,6 +40,7 @@ const Menu = ({ onClick }) => {
           <Link
             to="create"
             className="hover:underline"
+            onClick={onClick}
           >
             Create New Post
           </Link>
