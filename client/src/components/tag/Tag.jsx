@@ -1,3 +1,4 @@
+import Button from "../button/Button";
 import { tagData } from "../../data";
 const Tag = () => {
   return (
@@ -8,12 +9,12 @@ const Tag = () => {
 
       <div className="flex flex-wrap gap-2">
         {tagData.map((tag, index) => (
-          <button
+          <Button
             key={index}
-            className="text-sky-900 text-sm p-2 bg-sky-100 rounded-2xl hover:text-sky-100 hover:bg-sky-900 dark:hover:bg-sky-500"
+            extraStyles="text-sky-900 text-sm bg-sky-100 hover:text-sky-100 hover:bg-sky-900 dark:hover:bg-sky-500"
           >
             #{tag}
-          </button>
+          </Button>
         ))}
       </div>
     </section>
