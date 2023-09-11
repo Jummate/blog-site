@@ -87,6 +87,7 @@ class Post {
   async deletePost() {
     const { id } = this.req.params;
     const postToDelete = this.posts.find((item) => item.id === id);
+    console.log(postToDelete);
     const bannerImage = path.parse(postToDelete.bannerImage).base;
     const filteredPosts = this.posts.filter((item) => item.id !== id);
     this.setPosts(filteredPosts);

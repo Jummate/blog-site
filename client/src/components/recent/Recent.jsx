@@ -1,6 +1,5 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "../button/Button";
-// import { postData } from "../../data";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
@@ -9,9 +8,6 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 
 const deletePost = async (id, axiosAuth) => {
-  // const headers = {
-  //   Authorization: `Bearer ${token}`,
-  // };
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`

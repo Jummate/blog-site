@@ -1,7 +1,6 @@
 import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
 import { v4 as uuid } from "uuid";
-import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";

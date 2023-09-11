@@ -8,7 +8,6 @@ import clearFormContent from "../../utils/clearFormContent";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import jwt_decode from "jwt-decode";
-import { tokenManager } from "../../utils/tokenManager";
 
 const Login = () => {
   const { setToken } = useContext(AuthContext);
@@ -38,7 +37,6 @@ const Login = () => {
       // console.log(now);
       // console.log(new Date(now).getTime());
 
-      // tokenManager.setToken(response.data.accessToken);
       setToken(response.data.accessToken);
       // if (response.status === 200) {
       //   clearFormContent({

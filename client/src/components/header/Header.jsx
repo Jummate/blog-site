@@ -7,10 +7,8 @@ import Button from "../button/Button";
 import { AuthContext } from "../../contexts/AuthProvider";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";
-import { tokenManager } from "../../utils/tokenManager";
 
 const logOut = async (setToken) => {
-  console.log("logged out");
   const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
     withCredentials: true,
   });
