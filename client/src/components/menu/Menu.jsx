@@ -4,9 +4,20 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
 import Button from "../button/Button";
+import axios from "axios";
+import baseUrl from "../../config/baseUrl";
+
+const logOut = async (setToken) => {
+  const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
+    withCredentials: true,
+  });
+  if (response.status === 204) {
+    setToken("");
+  }
+};
 
 const Menu = ({ onClick }) => {
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
   return (
     <nav className="md:hidden fixed z-10 font-sans flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-sky-100 text-sky-600 dark:bg-sky-800 dark:text-sky-100 py-5">
       <div className="flex justify-end text-2xl gap-3">
@@ -46,7 +57,10 @@ const Menu = ({ onClick }) => {
           </Link>
         )}
         {token && (
-          <Button extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50 px-10">
+          <Button
+            extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50 px-10"
+            onClick={() => logOut(setToken)}
+          >
             Log Out
           </Button>
         )}
