@@ -102,11 +102,18 @@
             }),
           });
           const data = await response.json();
-          console.log(data);
+
+          swal({
+            title: "Successful",
+            text: data.message,
+            icon: "success",
+          });
+          //   console.log(data);
         } catch (error) {
           console.log(error);
         }
       });
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>
