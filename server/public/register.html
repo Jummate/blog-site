@@ -66,17 +66,20 @@
         <input
           type="text"
           id="email"
+          class="input-field"
         />
         <label for="password">Password:</label>
         <input
           type="password"
           id="password"
+          class="input-field password-field"
         />
 
         <label for="confirm-password">Confirm Password:</label>
         <input
           type="password"
           id="confirm-password"
+          class="input-field password-field"
         />
         <button type="submit">Create User</button>
       </form>
@@ -86,14 +89,60 @@
       const form = document.querySelector("form");
       const email = document.querySelector("#email");
       const password = document.querySelector("#password");
-      const formData = new FormData();
+      const confirmPassword = document.querySelector("#confirm-password");
+      const passwordFields = document.querySelectorAll(".password-field");
+      const inputFields = document.querySelectorAll(".input-field");
 
-      const serverBaseUrl = document.baseURI;
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      const SERVER_BASE_URL = document.baseURI;
 
+      const clearFormContent = (inputs) => {
+        [...inputs].forEach((input) => (input.value = ""));
+      };
+      const validateSingleField = (field) => {
+        if (!field.value) {
+          field.style.border = "2px solid red";
+          swal({
+            title: "Error",
+            text: "Empty field detected!",
+            icon: "error",
+          });
+          return false;
+        }
+        field.style.border = "";
+        return true;
+      };
+
+      const validateMultipleFields = (fields) => {
+        return [...fields].every((field) => validateSingleField(field));
+      };
+
+      //   const validateInput = (...inputs) => {};
+
+      const validatePasswordMatch = () => {
+        // e.preventDefault();
+        if (password.value === confirmPassword.value) {
+          password.style.border = "";
+          password.style.color = "";
+          confirmPassword.style.border = "";
+          confirmPassword.style.color = "";
+          return true;
+          //   handleSubmit();
+        }
+        password.style.border = "1px solid red";
+        password.style.color = "red";
+        confirmPassword.style.border = "1px solid red";
+        confirmPassword.style.color = "red";
+        swal({
+          title: "Error",
+          text: "Passwords do not match",
+          icon: "error",
+        });
+        return false;
+      };
+
+      const handleSubmit = async () => {
         try {
-          const response = await fetch(serverBaseUrl, {
+          const response = await fetch(SERVER_BASE_URL, {
             method: "POST",
             headers: { "Content-type": "application/json; charset=UTF-8" },
             body: JSON.stringify({
@@ -102,6 +151,7 @@
             }),
           });
           const data = await response.json();
+          clearFormContent(inputFields);
 
           swal({
             title: "Successful",
@@ -110,7 +160,22 @@
           });
           //   console.log(data);
         } catch (error) {
+          swal({
+            title: "Operation failed!",
+            text: "Something went wrong!",
+            icon: "error",
+          });
           console.log(error);
+        }
+      };
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (
+          validateMultipleFields(inputFields) &&
+          validatePasswordMatch(passwordFields)
+        ) {
+          handleSubmit();
         }
       });
     </script>
