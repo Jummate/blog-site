@@ -17,7 +17,7 @@ class User {
   }
 
   async createUser() {
-    const { email, password } = this.req.body;
+    const { email, password, firstName, lastName } = this.req.body;
 
     if (!email || !password) {
       return this.res
@@ -33,6 +33,8 @@ class User {
       const newUser = {
         email,
         password: hashedPwd,
+        firstName,
+        lastName,
       };
       this.setUser([...this.users, newUser]);
 

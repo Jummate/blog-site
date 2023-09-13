@@ -28,7 +28,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
-        padding: 1.2rem;
+        padding: 1.2rem 0;
         overflow: auto;
       }
       form {
@@ -37,8 +37,8 @@
         gap: 12px;
         width: 75%;
         max-width: 350px;
-        font-size: clamp(1.2rem, 2.5vw, 2rem);
-        padding: 40px;
+        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        padding: 40px 0;
       }
       label {
         font-weight: bold;
@@ -82,7 +82,7 @@
         />
         <label for="email">Email:</label>
         <input
-          type="text"
+          type="email"
           id="email"
           class="input-field"
         />
@@ -105,6 +105,8 @@
 
     <script>
       const form = document.querySelector("form");
+      const firstName = document.querySelector("#first-name");
+      const lastName = document.querySelector("#last-name");
       const email = document.querySelector("#email");
       const password = document.querySelector("#password");
       const confirmPassword = document.querySelector("#confirm-password");
@@ -142,7 +144,7 @@
           confirmPassword.style.color = "";
           return true;
         }
-        password.style.border = "1px solid red";
+        password.style.border = "2px solid red";
         password.style.color = "red";
         confirmPassword.style.border = "1px solid red";
         confirmPassword.style.color = "red";
@@ -162,6 +164,8 @@
             body: JSON.stringify({
               email: email.value,
               password: password.value,
+              firstName: firstName.value,
+              lastName: lastName.value,
             }),
           });
           const data = await response.json();
