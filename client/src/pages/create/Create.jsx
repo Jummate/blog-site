@@ -8,7 +8,7 @@ import { useContext } from "react";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
 import jwt_decode from "jwt-decode";
-// import { useNavigate, Navigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { useState } from "react";
 
 const CreatePost = () => {

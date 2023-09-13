@@ -2,6 +2,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Input from "./input/Input";
 import Button from "./button/Button";
+import TextArea from "./textarea/TextArea";
 
 const modules = {
   toolbar: [
@@ -44,7 +45,7 @@ const Form = ({
         value={titleProps.value}
         onChange={titleProps.onChange}
       />
-      <Input
+      <TextArea
         placeholder="Summary"
         extraStyles="shadow-pref rounded-md"
         ariaLabel="Summary"

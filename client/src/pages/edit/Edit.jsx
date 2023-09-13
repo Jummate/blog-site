@@ -60,7 +60,7 @@ const EditPost = () => {
           input: [titleProps, summaryProps, tagProps, bannerProps],
           quill: [contentProps],
         });
-        //   navigate(`/post/${id}`);
+        // navigate(`/post/${id}`);
       }
     } catch (err) {
       console.log(err);
