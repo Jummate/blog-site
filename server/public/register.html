@@ -13,12 +13,14 @@
       html {
         height: 100%;
         overflow: hidden;
+        font-size: 62.5%;
       }
       body {
         color: #000080;
         /* color: #fff; */
         height: 100%;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.6rem;
       }
 
       main {
@@ -26,6 +28,8 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+        padding: 1.2rem;
+        overflow: auto;
       }
       form {
         display: flex;
@@ -33,6 +37,8 @@
         gap: 12px;
         width: 75%;
         max-width: 350px;
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        padding: 40px;
       }
       label {
         font-weight: bold;
@@ -62,6 +68,18 @@
     <main>
       <form>
         <h1>Sign Up</h1>
+        <label for="first-name">First Name:</label>
+        <input
+          type="text"
+          id="first-name"
+          class="input-field"
+        />
+        <label for="last-name">Last Name:</label>
+        <input
+          type="text"
+          id="last-name"
+          class="input-field"
+        />
         <label for="email">Email:</label>
         <input
           type="text"
@@ -116,17 +134,13 @@
         return [...fields].every((field) => validateSingleField(field));
       };
 
-      //   const validateInput = (...inputs) => {};
-
       const validatePasswordMatch = () => {
-        // e.preventDefault();
         if (password.value === confirmPassword.value) {
           password.style.border = "";
           password.style.color = "";
           confirmPassword.style.border = "";
           confirmPassword.style.color = "";
           return true;
-          //   handleSubmit();
         }
         password.style.border = "1px solid red";
         password.style.color = "red";
@@ -158,7 +172,6 @@
             text: data.message,
             icon: "success",
           });
-          //   console.log(data);
         } catch (error) {
           swal({
             title: "Operation failed!",
