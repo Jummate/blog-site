@@ -1,6 +1,7 @@
 const fsPromises = require("fs").promises;
 const path = require("path");
 const posts = require("../db/posts.json");
+const users = require("../db/users.json");
 
 class Post {
   constructor(req, res) {
@@ -32,7 +33,8 @@ class Post {
   }
 
   async createPost() {
-    const { id, title, summary, content, tag } = this.req.body;
+    const { id, title, summary, content, tag, firstName, lastName } =
+      this.req.body;
     const { originalname, path: filePath } = this.req.file;
     const ext = originalname.split(".").slice(-1).toString();
     const newPath = `${filePath}.${ext}`;
@@ -46,7 +48,7 @@ class Post {
         summary,
         content,
         readTime: "4min",
-        author: "Olawale Jumat",
+        author: `${firstName} ${lastName}`,
         createdAt: "April 20, 2023",
         bannerImage: newPath,
         authorImage: newPath,

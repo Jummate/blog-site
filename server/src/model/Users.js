@@ -26,15 +26,15 @@ class User {
     }
     const duplicate = this.users.find((user) => user.email === email);
     if (duplicate)
-      return this.res.status(409).json({ message: "Records already exist" });
+      return this.res.status(409).json({ message: "Email already taken" });
 
     try {
       const hashedPwd = await bcrypt.hash(password, 10);
       const newUser = {
-        email,
-        password: hashedPwd,
         firstName,
         lastName,
+        email,
+        password: hashedPwd,
       };
       this.setUser([...this.users, newUser]);
 
@@ -75,12 +75,20 @@ class User {
     if (matchedPwd) {
       //use expiry time of 5 or 15mins for access token in production
       const accessToken = jwt.sign(
-        { email: potentialUser.email },
+        {
+          email: potentialUser.email,
+          firstName: potentialUser.firstName,
+          lastName: potentialUser.lastName,
+        },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "60s" }
       );
       const refreshToken = jwt.sign(
-        { email: potentialUser.email },
+        {
+          email: potentialUser.email,
+          firstName: potentialUser.firstName,
+          lastName: potentialUser.lastName,
+        },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: "1d" }
       );
@@ -109,7 +117,7 @@ class User {
 
       this.res
         .status(200)
-        .json({ accessToken, message: "Logged in successful!" });
+        .json({ accessToken, message: "Logged in successfully!" });
     }
   }
 
@@ -131,7 +139,11 @@ class User {
           return this.res.sendStatus(403);
         }
         const accessToken = jwt.sign(
-          { email: foundUser.email },
+          {
+            email: foundUser.email,
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
+          },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "60s" }
         );

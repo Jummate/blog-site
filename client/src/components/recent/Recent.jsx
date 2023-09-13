@@ -87,7 +87,7 @@ const RecentPost = () => {
                 />
                 <div>
                   <p className="text-sky-900 font-bold text-md dark:text-sky-100">
-                    Olawale Jumat
+                    {post.author}
                   </p>
                   <p className="text-sm text-sky-600/80 dark:text-sky-300">
                     <time dateTime="2023-04-20">{post.createdAt}</time>

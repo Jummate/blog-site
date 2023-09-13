@@ -162,10 +162,10 @@
             method: "POST",
             headers: { "Content-type": "application/json; charset=UTF-8" },
             body: JSON.stringify({
-              email: email.value,
-              password: password.value,
               firstName: firstName.value,
               lastName: lastName.value,
+              email: email.value,
+              password: password.value,
             }),
           });
           const data = await response.json();

@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
+import jwt_decode from "jwt-decode";
 // import { useNavigate, Navigate } from "react-router-dom";
 // import { useState } from "react";
 
@@ -24,11 +25,8 @@ const CreatePost = () => {
   // const navigate = useNavigate();
 
   const createNewPost = async (e) => {
-    // const headers = {
-    //   Authorization: `Bearer ${token}`,
-    // };
     e.preventDefault();
-    // const id = uuid();
+    const decoded = jwt_decode(token);
     const postFormData = new FormData();
     postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
@@ -36,6 +34,8 @@ const CreatePost = () => {
     postFormData.append("summary", summaryProps.value);
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
+    postFormData.append("firstName", decoded.firstName);
+    postFormData.append("lastName", decoded.lastName);
 
     try {
       const response = await axiosAuth.post(
