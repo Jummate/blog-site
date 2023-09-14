@@ -1,6 +1,6 @@
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
-import { loginPageData } from "../../data";
+// import { loginPageData } from "../../data";
 import { useFormInput } from "../../hooks/useFormInput";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";
@@ -32,47 +32,76 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      notify({ msg: response.data.message });
+      if (response.status === 200) {
+        notify({ msg: response.data.message });
+        setToken(response.data.accessToken);
 
-      setToken(response.data.accessToken);
-      // if (response.status === 200) {
-      //   clearFormContent({
-      //     input: [emailProps, passwordProps],
-      //   });
-      // setRedirect(true);
-      // navigate("/");
-      // }
+        clearFormContent({
+          input: [emailProps, passwordProps],
+        });
+        // setRedirect(true);
+        // navigate("/");
+      }
     } catch (err) {
       console.log(err);
     }
   };
   return (
-    <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center gap-5 dark:bg-sky-800">
-      <div>
-        <div className="flex flex-col justify-center items-center gap-3 p-7 font-bold bg-sky-100 text-sky-900 w-full -mb-12 rounded-3xl dark:bg-sky-200">
+    <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center dark:bg-sky-800">
+      <div className="bg-sky-100 text-sky-900 rounded-3xl dark:bg-sky-200 w-full max-w-md">
+        {/* <div className="flex flex-col items-center gap-3 p-7 font-bold bg-red-400">
           <h1 className="font-bold text-3xl">Sign in</h1>
           <h3 className="mb-7 text-sm text-center">Login to your account</h3>
-        </div>
+        </div> */}
 
         <form
-          className="flex flex-col gap-4 w-full max-w-96 p-3"
+          className="flex flex-col gap-4 p-7 sm:p-10 justify-center"
           onSubmit={handleSubmit}
         >
-          {loginPageData.map((data, index) => (
+          <h1 className="font-bold text-4xl text-center">Sign In</h1>
+          <h3 className="mb-7 text-md text-center">Login to your account</h3>
+          <label
+            htmlFor="email"
+            className="text-sky-600 font-bold block"
+          >
+            Email
+          </label>
+          <Input
+            id="email"
+            type="email"
+            extraStyles={"shadow-pref rounded-lg block"}
+            onChange={emailProps.onChange}
+          />
+
+          <label
+            htmlFor="password"
+            className="text-sky-600 font-bold block"
+          >
+            Password
+          </label>
+
+          <Input
+            id="password"
+            type="password"
+            extraStyles={"shadow-pref rounded-lg block"}
+            onChange={passwordProps.onChange}
+          />
+
+          {/* {loginPageData.map((data, index) => (
             <div
-              className="flex text-sm"
+              className="text-sm"
               key={index}
             >
               <label
                 htmlFor={data.id}
-                className="p-2 bg-sky-600 rounded-s-lg w-4/12 text-sky-100 font-bold text-center"
+                className="text-sky-600 font-bold block"
               >
                 {data.label}
               </label>
               <Input
                 id={data.id}
                 type={data.type}
-                extraStyles={"shadow-pref rounded-e-lg w-8/12"}
+                extraStyles={"shadow-pref rounded-lg block"}
                 onChange={
                   data.type === "password"
                     ? passwordProps.onChange
@@ -80,7 +109,7 @@ const Login = () => {
                 }
               />
             </div>
-          ))}
+          ))} */}
 
           <Button
             type="submit"
