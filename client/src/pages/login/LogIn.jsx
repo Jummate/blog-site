@@ -7,6 +7,7 @@ import axios from "axios";
 import clearFormContent from "../../utils/clearFormContent";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { validateMultipleFields } from "../../utils/validate";
 // import { useNavigate } from "react-router-dom";
 // import jwt_decode from "jwt-decode";
 import { notify } from "../../utils/notify";
@@ -18,6 +19,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateMultipleFields([emailProps, passwordProps])) {
+      notify({
+        msg: "Empty fields detected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
     const loginFormData = new FormData();
     loginFormData.append("email", emailProps.value);
     loginFormData.append("password", passwordProps.value);
@@ -43,17 +52,19 @@ const Login = () => {
         // navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 401) {
+        notify({
+          msg: err.response.data.message,
+          type: "error",
+          autoClose: false,
+        });
+      }
+      console.log(err.message);
     }
   };
   return (
     <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center dark:bg-sky-800">
       <div className="bg-sky-100 text-sky-900 rounded-3xl dark:bg-sky-200 w-full max-w-md">
-        {/* <div className="flex flex-col items-center gap-3 p-7 font-bold bg-red-400">
-          <h1 className="font-bold text-3xl">Sign in</h1>
-          <h3 className="mb-7 text-sm text-center">Login to your account</h3>
-        </div> */}
-
         <form
           className="flex flex-col gap-4 p-7 sm:p-10 justify-center"
           onSubmit={handleSubmit}
@@ -86,30 +97,6 @@ const Login = () => {
             extraStyles={"shadow-pref rounded-lg block"}
             onChange={passwordProps.onChange}
           />
-
-          {/* {loginPageData.map((data, index) => (
-            <div
-              className="text-sm"
-              key={index}
-            >
-              <label
-                htmlFor={data.id}
-                className="text-sky-600 font-bold block"
-              >
-                {data.label}
-              </label>
-              <Input
-                id={data.id}
-                type={data.type}
-                extraStyles={"shadow-pref rounded-lg block"}
-                onChange={
-                  data.type === "password"
-                    ? passwordProps.onChange
-                    : emailProps.onChange
-                }
-              />
-            </div>
-          ))} */}
 
           <Button
             type="submit"

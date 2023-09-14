@@ -118,6 +118,8 @@ class User {
       this.res
         .status(200)
         .json({ accessToken, message: "Logged in successfully!" });
+    } else {
+      this.res.status(401).json({ message: "Invalid credentials" });
     }
   }
 

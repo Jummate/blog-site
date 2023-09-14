@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 
-export const notify = ({ msg, type = "success" }) => {
+export const notify = ({ msg, type = "success", autoClose = 1000 }) => {
   toast(msg, {
     position: "top-center",
-    autoClose: 1000,
+    autoClose,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
