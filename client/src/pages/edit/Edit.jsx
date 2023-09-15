@@ -63,7 +63,14 @@ const EditPost = () => {
         // navigate(`/post/${id}`);
       }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 400) {
+        notify({
+          msg: err.response.data.message,
+          type: "error",
+          autoClose: false,
+        });
+      }
+      console.error(err);
     }
   };
 
