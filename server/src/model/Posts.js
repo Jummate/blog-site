@@ -36,8 +36,9 @@ class Post {
     const { id, title, summary, content, tag, firstName, lastName } =
       this.req.body;
     const { originalname, path: filePath } = this.req.file;
-    const ext = originalname.split(".").slice(-1).toString();
-    const newPath = `${filePath}.${ext}`;
+    // const ext = originalname.split(".").slice(-1).toString();
+    const ext = path.extname(originalname);
+    const newPath = `${filePath}${ext}`;
     try {
       await fsPromises.rename(filePath, newPath);
 
@@ -70,8 +71,9 @@ class Post {
   async editPost() {
     const { id } = this.req.params;
     const { originalname, path: filePath } = this.req.file;
-    const ext = originalname.split(".").slice(-1).toString();
-    const newPath = `${filePath}.${ext}`;
+    // const ext = originalname.split(".").slice(-1).toString();
+    const ext = path.extname(originalname);
+    const newPath = `${filePath}${ext}`;
 
     try {
       await fsPromises.rename(filePath, newPath);
@@ -89,7 +91,6 @@ class Post {
   async deletePost() {
     const { id } = this.req.params;
     const postToDelete = this.posts.find((item) => item.id === id);
-    console.log(postToDelete);
     const bannerImage = path.parse(postToDelete.bannerImage).base;
     const filteredPosts = this.posts.filter((item) => item.id !== id);
     this.setPosts(filteredPosts);

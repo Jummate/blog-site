@@ -46,17 +46,5 @@
     "createdAt": "April 20, 2023",
     "bannerImage": "public\\uploads\\cbea09662c647293572684e0acaeef32.jpg",
     "authorImage": "public\\uploads\\cbea09662c647293572684e0acaeef32.jpg"
-  },
-  {
-    "id": "790f30be-d208-48c5-b3db-3b49d6f018c4",
-    "tag": "Test",
-    "title": "Testing Text Area",
-    "summary": "Summary of Testing Text Area",
-    "content": "<p>Summary of Testing Text Area and This is the content.</p>",
-    "readTime": "4min",
-    "author": "Omololu Jumat",
-    "createdAt": "April 20, 2023",
-    "bannerImage": "public\\uploads\\2f16554fce7c36288a85be46b511f080.webp",
-    "authorImage": "public\\uploads\\2f16554fce7c36288a85be46b511f080.webp"
   }
 ]
