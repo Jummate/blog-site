@@ -46,5 +46,17 @@
     "createdAt": "April 20, 2023",
     "bannerImage": "public\\uploads\\cbea09662c647293572684e0acaeef32.jpg",
     "authorImage": "public\\uploads\\cbea09662c647293572684e0acaeef32.jpg"
+  },
+  {
+    "id": "b2a81a24-2c3e-4603-8c42-736cc1b8be36",
+    "tag": "qwert",
+    "title": "qoqaodh ddd ddh",
+    "summary": "jsjs fhdj djs djsjs",
+    "content": "<p>aqteue fhf fjtot ose etd hfh</p>",
+    "readTime": "4min",
+    "author": "Omololu Jumat",
+    "createdAt": "April 20, 2023",
+    "bannerImage": "public\\uploads\\a7c677e59c488b19e1c685bc5a087b47.jpg",
+    "authorImage": "public\\uploads\\a7c677e59c488b19e1c685bc5a087b47.jpg"
   }
 ]

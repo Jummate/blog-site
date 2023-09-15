@@ -22,7 +22,7 @@ app.use(
 app.use(cookieParser());
 
 // routes
-app.use("/posts", uploadMiddleware, require("./src/routes/posts"));
+app.use("/posts", require("./src/routes/posts"));
 app.use("/register", require("./src/routes/users"));
 app.use("/auth", require("./src/routes/auth"));
 app.use("/refresh", require("./src/routes/refresh"));
