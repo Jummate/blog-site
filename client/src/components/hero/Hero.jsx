@@ -15,7 +15,7 @@ const Hero = () => {
         <div className="flex flex-wrap gap-2 mt-5">
           <Input
             extraStyles="rounded-lg shadow-pref"
-            placeholder="abc@gmail.com"
+            placeholder="Enter your email"
             ariaLabel={"Email address"}
           />
           <Button extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50">
