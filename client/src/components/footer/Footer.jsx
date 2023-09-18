@@ -2,7 +2,29 @@ import IMAGE_THREE from "../../assets/image3.jpg";
 import Input from "../input/Input";
 import Button from "../button/Button";
 import SocialMedia from "../SocialMedia";
+import { useFormInput } from "../../hooks/useFormInput";
+import { notify } from "../../utils/notify";
+import { validateEmail, validateSingleField } from "../../utils/validate";
+import clearFormContent from "../../utils/clearFormContent";
 const Footer = () => {
+  const emailProps = useFormInput("");
+
+  const handleClick = () => {
+    if (!validateSingleField(emailProps)) {
+      notify({
+        msg: "Email field cannot be empty",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
+    if (!validateEmail(emailProps)) {
+      notify({ msg: "Invalid email", type: "error", autoClose: false });
+      return;
+    }
+    clearFormContent({ input: [emailProps] });
+    console.log("Thank you for subscribing to our newsletter");
+  };
   return (
     <footer className="text-sky-100 p-5 pt-10 bg-sky-900 flex items-center justify-center">
       <div className="flex flex-col gap-20 md:gap-5 items-center justify-center md:grid md:grid-cols-4">
@@ -15,8 +37,12 @@ const Footer = () => {
             <Input
               extraStyles="rounded-lg mb-2 shadow-pref"
               placeholder="Enter your email"
+              onChange={emailProps.onChange}
             />
-            <Button extraStyles="shadow-pref bg-sky-400 text-white">
+            <Button
+              extraStyles="shadow-pref bg-sky-400 text-white"
+              onClick={handleClick}
+            >
               Subscribe
             </Button>
           </form>
