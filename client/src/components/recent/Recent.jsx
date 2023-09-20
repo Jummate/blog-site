@@ -8,6 +8,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
 import { alertDelete } from "../../utils/alert";
+import { calculateReadingSpeed } from "../../utils/getReadingSpeed";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -64,7 +65,7 @@ const RecentPost = () => {
                     dateTime="PT4M"
                     className="text-sm text-sky-600/70 hover:text-sky-900 dark:text-sky-200/90 dark:hover:text-sky-100"
                   >
-                    {post.readTime} read
+                    {calculateReadingSpeed(post.content)} min read
                   </time>
                 </span>
               </div>

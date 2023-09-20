@@ -36,7 +36,6 @@ class Post {
     const { id, title, summary, content, tag, firstName, lastName } =
       this.req.body;
     const { originalname, path: filePath } = this.req.file;
-    // const ext = originalname.split(".").slice(-1).toString();
     const ext = path.extname(originalname);
     const newPath = `${filePath}${ext}`;
     try {
@@ -48,7 +47,6 @@ class Post {
         title,
         summary,
         content,
-        readTime: "4min",
         author: `${firstName} ${lastName}`,
         createdAt: "April 20, 2023",
         bannerImage: newPath,
