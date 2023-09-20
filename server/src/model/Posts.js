@@ -14,7 +14,7 @@ class Post {
     this.posts = newPosts;
   }
 
-  updatePost(id, bannerImage) {
+  updatePost(id, newPath = undefined) {
     const { title, summary, content, tag } = this.req.body;
 
     const postToEdit = this.posts.find((item) => item.id === id);
@@ -25,7 +25,7 @@ class Post {
       tag,
       summary,
       content,
-      bannerImage,
+      bannerImage: newPath ? newPath : postToEdit.bannerImage,
     };
     const filteredPosts = this.posts.filter((item) => item.id !== id);
 
@@ -69,15 +69,15 @@ class Post {
   }
 
   async editPost() {
-    const { id } = this.req.params;
-    const { originalname, path: filePath } = this.req.file;
-    // const ext = originalname.split(".").slice(-1).toString();
-    const ext = path.extname(originalname);
-    const newPath = `${filePath}${ext}`;
-
     try {
-      await fsPromises.rename(filePath, newPath);
-      this.updatePost(id, newPath);
+      const { id } = this.req.params;
+      if (this.req.file) {
+        const { originalname, path: filePath } = this.req.file;
+        const ext = path.extname(originalname);
+        const newPath = `${filePath}${ext}`;
+        await fsPromises.rename(filePath, newPath);
+      }
+      this.req.file ? this.updatePost(id, newPath) : this.updatePost(id);
       await fsPromises.writeFile(
         path.join(__dirname, "..", "db", "posts.json"),
         JSON.stringify(this.posts)

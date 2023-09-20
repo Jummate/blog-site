@@ -9,6 +9,11 @@ import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
+import {
+  validateMultipleFields,
+  validateFileUpload,
+  validateQuill,
+} from "../../utils/validate";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -34,20 +39,23 @@ const EditPost = () => {
         tagProps.setValue(tag);
         summaryProps.setValue(summary);
         contentProps.setContent(content);
+        // bannerProps.setValue(bannerImage);
+        // console.log(bannerImage);
       } catch (err) {
         console.log(err);
       }
     })();
   }, []);
 
-  const editPost = async (e) => {
-    e.preventDefault();
+  const editPost = async () => {
     const postFormData = new FormData();
     postFormData.append("title", titleProps.value);
     postFormData.append("summary", summaryProps.value);
     postFormData.append("tag", tagProps.value);
     postFormData.append("content", contentProps.content);
-    postFormData.append("banner", bannerProps.value[0]);
+    if (bannerProps.value.length > 0) {
+      postFormData.append("banner", bannerProps.value[0]);
+    }
 
     try {
       const response = await axiosAuth.put(
@@ -74,6 +82,23 @@ const EditPost = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !validateMultipleFields([titleProps, summaryProps, tagProps]) ||
+      !validateQuill(contentProps)
+    ) {
+      notify({
+        msg: "Empty fields detected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
+
+    editPost();
+  };
+
   return (
     <section className="flex justify-center items-center p-5 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100 ">
       <div className="flex flex-col md:w-11/12 max-w-4xl">
@@ -82,7 +107,7 @@ const EditPost = () => {
         </h1>
         <Form
           values={{ titleProps, summaryProps, contentProps, tagProps }}
-          onSubmit={editPost}
+          onSubmit={handleSubmit}
         >
           <input
             type="file"

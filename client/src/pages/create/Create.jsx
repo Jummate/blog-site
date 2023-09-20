@@ -8,6 +8,11 @@ import { useContext } from "react";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
 import jwt_decode from "jwt-decode";
+import {
+  validateMultipleFields,
+  validateFileUpload,
+  validateQuill,
+} from "../../utils/validate";
 // import { useNavigate } from "react-router-dom";
 // import { useState } from "react";
 
@@ -24,8 +29,7 @@ const CreatePost = () => {
   // const [redirect, setRedirect] = useState(false);
   // const navigate = useNavigate();
 
-  const createNewPost = async (e) => {
-    e.preventDefault();
+  const createNewPost = async () => {
     const decoded = jwt_decode(token);
     const postFormData = new FormData();
     postFormData.append("id", uuid());
@@ -42,12 +46,7 @@ const CreatePost = () => {
         `${baseUrl.serverBaseUrl}/posts`,
         postFormData
       );
-      // console.log(response.data);
       if (response.status === 201) {
-        // titleProps.setValue("");
-        // summaryProps.setValue("");
-        // tagProps.setValue("");
-        // contentProps.setContent("");
         notify({ msg: response.data.message });
         clearFormContent({
           input: [titleProps, summaryProps, tagProps, bannerProps],
@@ -68,6 +67,31 @@ const CreatePost = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !validateMultipleFields([titleProps, summaryProps, tagProps]) ||
+      !validateQuill(contentProps)
+    ) {
+      notify({
+        msg: "Empty fields detected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
+    if (!validateFileUpload(bannerProps)) {
+      notify({
+        msg: "No image was selected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
+
+    createNewPost();
+  };
+
   // if (redirect) {
   //   return <Navigate to={`/post/${id}`} />;
   // }
@@ -80,7 +104,7 @@ const CreatePost = () => {
         </h1>
         <Form
           values={{ titleProps, summaryProps, contentProps, tagProps }}
-          onSubmit={createNewPost}
+          onSubmit={handleSubmit}
         >
           <input
             type="file"
