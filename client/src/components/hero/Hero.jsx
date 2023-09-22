@@ -5,35 +5,7 @@ import { useFormInput } from "../../hooks/useFormInput";
 import { validateSingleField, validateEmail } from "../../utils/validate";
 import { notify } from "../../utils/notify";
 import clearFormContent from "../../utils/clearFormContent";
-import axios from "axios";
-
-const subscribeToNewsletter = async (email) => {
-  const options = {
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "api-key": import.meta.env.VITE_APP_BREVO_API_KEY,
-    },
-  };
-  const data = {
-    email,
-    updateEnabled: true,
-    emailBlacklisted: false,
-    smsBlacklisted: false,
-  };
-
-  try {
-    const response = await axios.post(
-      "https://api.brevo.com/v3/contacts",
-      data,
-      options
-    );
-    console.log(response.data);
-    // clearFormContent({ input: [emailProps] });
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { subscribeToNewsletter } from "../../utils/newsletterSub";
 
 const Hero = () => {
   const emailProps = useFormInput("");
@@ -52,7 +24,6 @@ const Hero = () => {
       return;
     }
     subscribeToNewsletter(emailProps.value);
-    // console.log("Thank you for subscribing to our newsletter");
   };
 
   return (
