@@ -1,6 +1,6 @@
 import axios from "axios";
 import baseUrl from "../config/baseUrl";
-// import { tokenManager } from "../utils/tokenManager";
+import { notify } from "../utils/notify";
 
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -30,7 +30,12 @@ const useAxiosInterceptor = () => {
     },
     (error) => {
       if (error.response.status === 401) {
-        alert("No token detected from response");
+        // alert("No token detected from response");
+        notify({
+          msg: error.response.data.message,
+          type: "error",
+          autoClose: false,
+        });
       }
       if (error.response.status === 403) {
         return axiosAuth

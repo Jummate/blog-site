@@ -3,6 +3,7 @@ const path = require("path");
 const users = require("../db/users.json");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userRoles = require("../config/userRoles");
 require("dotenv").config();
 
 class User {
@@ -34,6 +35,7 @@ class User {
         firstName,
         lastName,
         email,
+        roles: [userRoles.ADMIN, userRoles.EDITOR],
         password: hashedPwd,
       };
       this.setUser([...this.users, newUser]);
@@ -79,6 +81,7 @@ class User {
           email: potentialUser.email,
           firstName: potentialUser.firstName,
           lastName: potentialUser.lastName,
+          roles: [...potentialUser.roles],
         },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "60s" }
@@ -145,6 +148,7 @@ class User {
             email: foundUser.email,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
+            roles: [...foundUser.roles],
           },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "60s" }

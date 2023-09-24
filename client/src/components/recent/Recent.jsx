@@ -29,7 +29,7 @@ const RecentPost = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     (async () => {
