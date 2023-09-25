@@ -9,7 +9,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { validateMultipleFields } from "../../utils/validate";
 // import { useNavigate } from "react-router-dom";
-// import jwt_decode from "jwt-decode";
 import { notify } from "../../utils/notify";
 const Login = () => {
   const { setToken } = useContext(AuthContext);
