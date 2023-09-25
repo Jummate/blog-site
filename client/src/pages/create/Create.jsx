@@ -30,7 +30,7 @@ const CreatePost = () => {
   // const navigate = useNavigate();
 
   const createNewPost = async () => {
-    const decoded = jwt_decode(token);
+    const decoded = token && jwt_decode(token);
     const postFormData = new FormData();
     postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
@@ -38,8 +38,8 @@ const CreatePost = () => {
     postFormData.append("summary", summaryProps.value);
     postFormData.append("content", contentProps.content);
     postFormData.append("banner", bannerProps.value[0]);
-    postFormData.append("firstName", decoded.firstName);
-    postFormData.append("lastName", decoded.lastName);
+    postFormData.append("firstName", decoded?.firstName);
+    postFormData.append("lastName", decoded?.lastName);
 
     try {
       const response = await axiosAuth.post(

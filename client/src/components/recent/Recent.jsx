@@ -10,6 +10,9 @@ import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { notify } from "../../utils/notify";
 import { alertDelete } from "../../utils/alert";
 import { calculateReadingSpeed } from "../../utils/getReadingSpeed";
+import jwt_decode from "jwt-decode";
+import { hasPermission } from "../../utils/permission";
+import { accessLevel } from "../../config/accessLevel";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -24,6 +27,7 @@ const deletePost = async (id, axiosAuth) => {
 
 const RecentPost = () => {
   const { token } = useContext(AuthContext);
+  const decoded = token && jwt_decode(token);
   const [posts, setPosts] = useState([]);
   const axiosAuth = useAxiosInterceptor();
   const [itemOffset, setItemOffset] = useState(0);
@@ -115,19 +119,23 @@ const RecentPost = () => {
 
                 {token && (
                   <div className="flex items-center p-2 mt-3 gap-3 text-xs">
-                    <Link to={`edit/${post.id}`}>
-                      <Button extraStyles={"bg-sky-400 text-white"}>
-                        Edit Post
+                    {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
+                      <Link to={`edit/${post.id}`}>
+                        <Button extraStyles={"bg-sky-400 text-white"}>
+                          Edit Post
+                        </Button>
+                      </Link>
+                    )}
+                    {hasPermission(accessLevel.DELETE_POST, decoded?.roles) && (
+                      <Button
+                        extraStyles={"bg-red-500 text-white"}
+                        onClick={() =>
+                          alertDelete(post.id, axiosAuth, deletePost)
+                        }
+                      >
+                        Delete Post
                       </Button>
-                    </Link>
-                    <Button
-                      extraStyles={"bg-red-500 text-white"}
-                      onClick={() =>
-                        alertDelete(post.id, axiosAuth, deletePost)
-                      }
-                    >
-                      Delete Post
-                    </Button>
+                    )}
                   </div>
                 )}
               </div>

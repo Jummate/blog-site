@@ -7,6 +7,9 @@ import Button from "../button/Button";
 import { AuthContext } from "../../contexts/AuthProvider";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { hasPermission } from "../../utils/permission";
+import { accessLevel } from "../../config/accessLevel";
 
 const logOut = async (setToken) => {
   const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
@@ -19,6 +22,7 @@ const logOut = async (setToken) => {
 
 const Header = () => {
   const { token, setToken } = useContext(AuthContext);
+  const decoded = token && jwt_decode(token);
   const [openMenu, setOpenMenu] = useState(false);
   const [colorMode, setColorMode] = useState(
     localStorage.hasOwnProperty("colorMode")
@@ -50,7 +54,7 @@ const Header = () => {
               Log In
             </Link>
           )}
-          {token && (
+          {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
             <Link
               to="create"
               className="hover:underline"

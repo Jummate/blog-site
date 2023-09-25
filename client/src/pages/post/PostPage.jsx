@@ -8,6 +8,9 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
 import { alertDelete } from "../../utils/alert";
 import { notify } from "../../utils/notify";
+import jwt_decode from "jwt-decode";
+import { hasPermission } from "../../utils/permission";
+import { accessLevel } from "../../config/accessLevel";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -22,6 +25,7 @@ const deletePost = async (id, axiosAuth) => {
 
 const PostPage = () => {
   const { token } = useContext(AuthContext);
+  const decoded = token && jwt_decode(token);
   const axiosAuth = useAxiosInterceptor();
   const { id } = useParams();
   const [post, setPost] = useState({});
@@ -45,15 +49,19 @@ const PostPage = () => {
         <header>
           {token && (
             <div className="flex items-center justify-center p-5 gap-3 text-sm">
-              <Link to={`/edit/${id}`}>
-                <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
-              </Link>
-              <Button
-                extraStyles="bg-red-600 text-white"
-                onClick={() => alertDelete(id, axiosAuth, deletePost)}
-              >
-                Delete Post
-              </Button>
+              {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
+                <Link to={`/edit/${id}`}>
+                  <Button extraStyles="bg-sky-400 text-white">Edit Post</Button>
+                </Link>
+              )}
+              {hasPermission(accessLevel.DELETE_POST, decoded?.roles) && (
+                <Button
+                  extraStyles="bg-red-600 text-white"
+                  onClick={() => alertDelete(id, axiosAuth, deletePost)}
+                >
+                  Delete Post
+                </Button>
+              )}
             </div>
           )}
 
