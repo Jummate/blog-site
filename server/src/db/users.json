@@ -27,7 +27,7 @@
     "firstName": "Olawale",
     "lastName": "Jumat",
     "email": "olawalejumat@yahoo.com",
-    "password": "$2b$10$tkgS12Pyd/eEA2kfTB3wQOcC1N91sqLDSWYqNgILaSfxkJWZj.3hm"
-   
+    "password": "$2b$10$tkgS12Pyd/eEA2kfTB3wQOcC1N91sqLDSWYqNgILaSfxkJWZj.3hm",
+    "roles": ["ADMIN", "EDITOR"]
   }
 ]

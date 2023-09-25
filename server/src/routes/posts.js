@@ -9,8 +9,8 @@ const ROLES_LIST = require("../config/userRoles");
 router
   .route("/")
   .post(
-    verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     verifyToken,
+    verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     uploadMiddleware,
     postController.createNewPost
   )
@@ -20,14 +20,14 @@ router
   .route("/:id")
   .get(postController.getPost)
   .put(
-    verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     verifyToken,
+    verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     uploadMiddleware,
     postController.editPost
   )
   .delete(
-    verifyRoles(ROLES_LIST.ADMIN),
     verifyToken,
+    verifyRoles(ROLES_LIST.ADMIN),
     postController.deletePost
   );
 

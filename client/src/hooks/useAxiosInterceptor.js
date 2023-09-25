@@ -30,7 +30,6 @@ const useAxiosInterceptor = () => {
     },
     (error) => {
       if (error.response.status === 401) {
-        // alert("No token detected from response");
         notify({
           msg: error.response.data.message,
           type: "error",

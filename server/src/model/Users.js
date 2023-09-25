@@ -4,6 +4,7 @@ const users = require("../db/users.json");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRoles = require("../config/userRoles");
+const cookieOptions = require("../config/cookieOptions");
 require("dotenv").config();
 
 class User {
@@ -75,6 +76,7 @@ class User {
 
     const matchedPwd = await bcrypt.compare(password, potentialUser.password);
     if (matchedPwd) {
+      console.log(process.env.ACCESS_TOKEN_EXPIRY);
       //use expiry time of 5 or 15mins for access token in production
       const accessToken = jwt.sign(
         {
@@ -84,7 +86,7 @@ class User {
           roles: [...potentialUser.roles],
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "60s" }
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
       );
       const refreshToken = jwt.sign(
         {
@@ -93,7 +95,7 @@ class User {
           lastName: potentialUser.lastName,
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
       );
 
       const otherUsers = this.users.filter(
@@ -112,10 +114,8 @@ class User {
       //add "secure" and set to true i.e. secure=true
       //add sameSite and set to strict i.e. sameSite='strict'
       this.res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        ...cookieOptions,
+        maxAge: process.env.REFRESH_TOKEN_EXPIRY,
       });
 
       this.res
@@ -151,7 +151,7 @@ class User {
             roles: [...foundUser.roles],
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "60s" }
+          { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
         );
         this.res.json({ accessToken });
       }
@@ -168,11 +168,7 @@ class User {
       (user) => user.refreshToken === refreshToken
     );
     if (!foundUser) {
-      this.res.clearCookie("jwt", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-      });
+      this.res.clearCookie("jwt", cookieOptions);
       return this.res.sendStatus(204);
     }
 
@@ -189,11 +185,7 @@ class User {
     );
 
     // !!!!! Add secure:true in production to make it serve only on https protocol
-    this.res.clearCookie("jwt", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-    });
+    this.res.clearCookie("jwt", cookieOptions);
 
     //OK but no content to send back
     return this.res.sendStatus(204);

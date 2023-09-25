@@ -1,6 +1,9 @@
 const verifyRoles = (...allowedRoles) => {
+  console.log({ allowedRoles });
   return (req, res, next) => {
     if (!req?.roles) {
+      //   console.log(req);
+      console.log({ roles: req.roles });
       return res
         .status(401)
         .json({ message: "Not authorized to perform this operation!" });
