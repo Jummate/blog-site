@@ -21,7 +21,6 @@ const createPost = async (req, res) => {
     };
 
     const result = await Post.create(newPost);
-    console.log(result);
     res.status(201).json({ message: "Post created successfully", result });
   } catch (err) {
     console.log(err);

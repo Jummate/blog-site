@@ -1,5 +1,4 @@
 import { FaTimes } from "react-icons/fa";
-// import { menuData } from "../../data";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
@@ -69,29 +68,6 @@ const Menu = ({ onClick }) => {
           </Button>
         )}
       </div>
-      {/* {Object.keys(menuData).map((heading, index) => (
-        <div
-          key={index}
-          className="flex flex-col gap-2"
-        >
-          <h3 className="text-lg mb-2 text-sky-800 dark:text-sky-200">
-            {heading}
-          </h3>
-          {Object.keys(menuData[`${heading}`]).map((item) => (
-            <Link
-              key={`${index}${item}`}
-              to={`${menuData[`${heading}`][`${item}`].link}`}
-              className="hover:underline"
-              onClick={onClick}
-            >
-              {item}
-            </Link>
-          ))}
-          {index === 0 ? (
-            <hr className="mt-3 border-sky-800/20 dark:border-sky-200/20 border-2" />
-          ) : null}
-        </div>
-      ))} */}
     </nav>
   );
 };

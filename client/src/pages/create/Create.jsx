@@ -1,6 +1,5 @@
 import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
-import { v4 as uuid } from "uuid";
 import baseUrl from "../../config/baseUrl";
 import clearFormContent from "../../utils/clearFormContent";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -14,7 +13,6 @@ import {
   validateQuill,
 } from "../../utils/validate";
 import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
 
 const CreatePost = () => {
   const { token } = useContext(AuthContext);
@@ -26,13 +24,11 @@ const CreatePost = () => {
 
   const axiosAuth = useAxiosInterceptor();
 
-  // const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
   const createNewPost = async () => {
     const decoded = token && jwt_decode(token);
     const postFormData = new FormData();
-    // postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
     postFormData.append("tag", tagProps.value);
     postFormData.append("summary", summaryProps.value);
@@ -51,7 +47,6 @@ const CreatePost = () => {
         input: [titleProps, summaryProps, tagProps, bannerProps],
         quill: [contentProps],
       });
-      // setRedirect(true);
       navigate("/");
     } catch (err) {
       if (err.response.status === 400) {
@@ -89,10 +84,6 @@ const CreatePost = () => {
 
     createNewPost();
   };
-
-  // if (redirect) {
-  //   return <Navigate to={`/post/${id}`} />;
-  // }
 
   return (
     <section className="flex justify-center items-center p-5 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100 ">

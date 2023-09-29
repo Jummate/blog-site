@@ -24,8 +24,7 @@ export const subscribeToNewsletter = async (email) => {
     );
     if (response.status === 201) {
       notify({ msg: "Successful!. Thanks for your interest!" });
-    }
-    if (response.status === 204) {
+    } else if (response.status === 204) {
       notify({
         msg: "You have already subscribed!",
         type: "info",

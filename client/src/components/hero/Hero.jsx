@@ -4,7 +4,6 @@ import IMAGE_ONE from "../../assets/image1.jpg";
 import { useFormInput } from "../../hooks/useFormInput";
 import { validateSingleField, validateEmail } from "../../utils/validate";
 import { notify } from "../../utils/notify";
-import clearFormContent from "../../utils/clearFormContent";
 import { subscribeToNewsletter } from "../../utils/newsletterSub";
 
 const Hero = () => {

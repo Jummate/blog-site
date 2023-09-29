@@ -1,6 +1,5 @@
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
-// import { loginPageData } from "../../data";
 import { useFormInput } from "../../hooks/useFormInput";
 import baseUrl from "../../config/baseUrl";
 import axios from "axios";

@@ -1,8 +1,6 @@
 const User = require("../models/User");
 const cookieOptions = require("../config/cookieOptions");
 
-// require("dotenv").config();
-
 const handleLogout = async (req, res) => {
   const { cookies } = req;
 
