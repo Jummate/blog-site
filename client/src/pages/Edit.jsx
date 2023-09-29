@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
@@ -6,14 +6,9 @@ import Form from "../components/Form";
 import axios from "axios";
 import baseUrl from "../config/baseUrl";
 import clearFormContent from "../utils/clearFormContent";
-import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-import {
-  validateMultipleFields,
-  validateFileUpload,
-  validateQuill,
-} from "../utils/validate";
+import { validateMultipleFields, validateQuill } from "../utils/validate";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -23,7 +18,6 @@ const EditPost = () => {
   const contentProps = useFormInput("");
 
   const { id } = useParams();
-  //   const { token } = useContext(AuthContext);
   const axiosAuth = useAxiosInterceptor();
 
   const navigate = useNavigate();
@@ -39,8 +33,6 @@ const EditPost = () => {
         tagProps.setValue(tag);
         summaryProps.setValue(summary);
         contentProps.setContent(content);
-        // bannerProps.setValue(bannerImage);
-        // console.log(bannerImage);
       } catch (err) {
         console.log(err);
       }
