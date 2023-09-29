@@ -36,7 +36,7 @@ const PostPage = () => {
         const response = await axios.get(
           `${baseUrl.serverBaseUrl}/posts/${id}`
         );
-        setPost(response.data[0]);
+        setPost(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -75,13 +75,13 @@ const PostPage = () => {
           <div className="flex flex-col md:w-11/12 gap-16 sm:p-12 md:p-16 ">
             <div className="flex gap-2 mt-6 ">
               <img
-                src={`${baseUrl.serverBaseUrl}/${post?.authorImage}`}
+                src={`${baseUrl.serverBaseUrl}/${post?.author?.avatar}`}
                 alt=""
                 className="h-10 w-10 rounded-full"
               />
               <div>
                 <p className="text-sky-900 font-bold text-md dark:text-sky-100">
-                  {post?.author}
+                  {post?.author?.fullName}
                 </p>
                 <p className="text-sm text-sky-600/80 dark:text-sky-300">
                   Posted on <time dateTime="2023-04-20">{post?.createdAt}</time>

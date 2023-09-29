@@ -1,13 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const corsOptions = require("./src/config/corsOptions");
-const { uploadMiddleware } = require("./src/middleware/uploadMiddleware");
 const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const credentials = require("./src/middleware/credentials");
+const connectDB = require("./src/config/dbConn");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3500;
+
+//connect to DB
+connectDB();
 
 //middleware
 app.use(credentials);
@@ -22,10 +26,13 @@ app.use(
 app.use(cookieParser());
 
 // routes
-app.use("/posts", require("./src/routes/posts"));
-app.use("/register", require("./src/routes/register"));
-app.use("/auth", require("./src/routes/auth"));
-app.use("/refresh", require("./src/routes/refresh"));
-app.use("/logout", require("./src/routes/logout"));
+app.use("/posts", require("./src/routes/post.route"));
+app.use("/register", require("./src/routes/register.route"));
+app.use("/auth", require("./src/routes/auth.route"));
+app.use("/refresh", require("./src/routes/refreshtoken.route"));
+app.use("/logout", require("./src/routes/logout.route"));
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+});

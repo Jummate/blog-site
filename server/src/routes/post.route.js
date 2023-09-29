@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const postController = require("../controllers/postController");
+const postController = require("../controllers/post.controller");
 const verifyToken = require("../middleware/verifyToken");
 const { uploadMiddleware } = require("../middleware/uploadMiddleware");
 const verifyRoles = require("../middleware/verifyRoles");
@@ -12,7 +12,7 @@ router
     verifyToken,
     verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     uploadMiddleware,
-    postController.createNewPost
+    postController.createPost
   )
   .get(postController.getAllPosts);
 
@@ -23,7 +23,7 @@ router
     verifyToken,
     verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     uploadMiddleware,
-    postController.editPost
+    postController.updatePost
   )
   .delete(
     verifyToken,

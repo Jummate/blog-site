@@ -32,7 +32,7 @@ const CreatePost = () => {
   const createNewPost = async () => {
     const decoded = token && jwt_decode(token);
     const postFormData = new FormData();
-    postFormData.append("id", uuid());
+    // postFormData.append("id", uuid());
     postFormData.append("title", titleProps.value);
     postFormData.append("tag", tagProps.value);
     postFormData.append("summary", summaryProps.value);

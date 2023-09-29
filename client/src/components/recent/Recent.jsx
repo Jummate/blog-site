@@ -19,6 +19,7 @@ const deletePost = async (id, axiosAuth) => {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
+    console.log(response);
     notify({ msg: response.data.message });
   } catch (err) {
     console.log(err);
@@ -91,7 +92,7 @@ const RecentPost = () => {
                   </span>
                 </div>
 
-                <Link to={`post/${post.id}`}>
+                <Link to={`post/${post._id}`}>
                   <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3 hover:underline dark:text-sky-100">
                     {post.title}
                   </h1>
@@ -103,13 +104,13 @@ const RecentPost = () => {
 
                 <div className="mt-6 flex gap-2">
                   <img
-                    src={`${baseUrl.serverBaseUrl}/${post.authorImage}`}
+                    src={`${baseUrl.serverBaseUrl}/${post.author.avatar}`}
                     alt=""
                     className="h-10 w-10 rounded-full"
                   />
                   <div>
                     <p className="text-sky-900 font-bold text-md dark:text-sky-100">
-                      {post.author}
+                      {post.author.fullName}
                     </p>
                     <p className="text-sm text-sky-600/80 dark:text-sky-300">
                       <time dateTime="2023-04-20">{post.createdAt}</time>
@@ -120,7 +121,7 @@ const RecentPost = () => {
                 {token && (
                   <div className="flex items-center p-2 mt-3 gap-3 text-xs">
                     {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
-                      <Link to={`edit/${post.id}`}>
+                      <Link to={`edit/${post._id}`}>
                         <Button extraStyles={"bg-sky-400 text-white"}>
                           Edit Post
                         </Button>
@@ -130,7 +131,7 @@ const RecentPost = () => {
                       <Button
                         extraStyles={"bg-red-500 text-white"}
                         onClick={() =>
-                          alertDelete(post.id, axiosAuth, deletePost)
+                          alertDelete(post._id, axiosAuth, deletePost)
                         }
                       >
                         Delete Post

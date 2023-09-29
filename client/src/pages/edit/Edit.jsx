@@ -34,7 +34,7 @@ const EditPost = () => {
         const response = await axios.get(
           `${baseUrl.serverBaseUrl}/posts/${id}`
         );
-        const { title, summary, content, tag } = response.data[0];
+        const { title, summary, content, tag } = response.data;
         titleProps.setValue(title);
         tagProps.setValue(tag);
         summaryProps.setValue(summary);
