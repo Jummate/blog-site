@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./src/middleware/credentials");
 const connectDB = require("./src/config/dbConn");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3500;
 
