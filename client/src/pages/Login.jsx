@@ -1,14 +1,14 @@
-import Input from "../../components/input/Input";
-import Button from "../../components/button/Button";
-import { useFormInput } from "../../hooks/useFormInput";
-import baseUrl from "../../config/baseUrl";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import { useFormInput } from "../hooks/useFormInput";
+import baseUrl from "../config/baseUrl";
 import axios from "axios";
-import clearFormContent from "../../utils/clearFormContent";
+import clearFormContent from "../utils/clearFormContent";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthProvider";
-import { validateMultipleFields } from "../../utils/validate";
+import { AuthContext } from "../contexts/AuthProvider";
+import { validateMultipleFields } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
-import { notify } from "../../utils/notify";
+import { notify } from "../utils/notify";
 const Login = () => {
   const { setToken } = useContext(AuthContext);
   const emailProps = useFormInput("");

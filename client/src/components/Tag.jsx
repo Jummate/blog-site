@@ -1,5 +1,5 @@
-import Button from "../button/Button";
-import { tagData } from "../../data";
+import Button from "./Button";
+import { tagData } from "../data";
 const Tag = () => {
   return (
     <section>

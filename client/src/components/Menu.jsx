@@ -1,10 +1,10 @@
 import { FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
+import { AuthContext } from "../contexts/AuthProvider";
 import { useContext } from "react";
-import Button from "../button/Button";
+import Button from "./Button";
 import axios from "axios";
-import baseUrl from "../../config/baseUrl";
+import baseUrl from "../config/baseUrl";
 
 const logOut = async (navigate, setToken) => {
   try {

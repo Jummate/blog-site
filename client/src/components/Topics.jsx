@@ -1,4 +1,4 @@
-import { topicData } from "../../data";
+import { topicData } from "../data";
 const Topics = () => {
   return (
     <section className="mb-10">

@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { FaBars } from "react-icons/fa";
-import Menu from "../menu/Menu";
-import ColorMode from "../ColorMode";
+import Menu from "./Menu";
+import ColorMode from "./ColorMode";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../button/Button";
-import { AuthContext } from "../../contexts/AuthProvider";
-import baseUrl from "../../config/baseUrl";
+import Button from "./Button";
+import { AuthContext } from "../contexts/AuthProvider";
+import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { hasPermission } from "../../utils/permission";
-import { accessLevel } from "../../config/accessLevel";
+import { hasPermission } from "../utils/permission";
+import { accessLevel } from "../config/accessLevel";
 
 const logOut = async (navigate, setToken) => {
   try {

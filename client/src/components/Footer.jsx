@@ -1,11 +1,11 @@
-import IMAGE_THREE from "../../assets/image3.jpg";
-import Input from "../input/Input";
-import Button from "../button/Button";
-import SocialMedia from "../SocialMedia";
-import { useFormInput } from "../../hooks/useFormInput";
-import { notify } from "../../utils/notify";
-import { validateEmail, validateSingleField } from "../../utils/validate";
-import { subscribeToNewsletter } from "../../utils/newsletterSub";
+import IMAGE_THREE from "../assets/image3.jpg";
+import Input from "./Input";
+import Button from "./Button";
+import SocialMedia from "./SocialMedia";
+import { useFormInput } from "../hooks/useFormInput";
+import { notify } from "../utils/notify";
+import { validateEmail, validateSingleField } from "../utils/validate";
+import { subscribeToNewsletter } from "../utils/newsletterSub";
 const Footer = () => {
   const emailProps = useFormInput("");
 

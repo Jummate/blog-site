@@ -1,8 +1,8 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Input from "./input/Input";
-import Button from "./button/Button";
-import TextArea from "./textarea/TextArea";
+import Input from "./Input";
+import Button from "./Button";
+import TextArea from "./TextArea";
 
 const modules = {
   toolbar: [

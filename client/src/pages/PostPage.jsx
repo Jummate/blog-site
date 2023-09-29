@@ -1,16 +1,16 @@
-import Button from "../../components/button/Button";
+import Button from "../components/Button";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import baseUrl from "../../config/baseUrl";
+import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import DOMPurify from "dompurify";
-import { AuthContext } from "../../contexts/AuthProvider";
-import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
-import { alertDelete } from "../../utils/alert";
-import { notify } from "../../utils/notify";
+import { AuthContext } from "../contexts/AuthProvider";
+import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
+import { alertDelete } from "../utils/alert";
+import { notify } from "../utils/notify";
 import jwt_decode from "jwt-decode";
-import { hasPermission } from "../../utils/permission";
-import { accessLevel } from "../../config/accessLevel";
+import { hasPermission } from "../utils/permission";
+import { accessLevel } from "../config/accessLevel";
 
 const deletePost = async (id, axiosAuth) => {
   try {

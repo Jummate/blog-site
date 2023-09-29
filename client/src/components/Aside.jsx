@@ -1,5 +1,5 @@
-import Topics from "../topics/Topics";
-import Tag from "../tag/Tag";
+import Topics from "./Topics";
+import Tag from "./Tag";
 
 const Aside = () => {
   return (

@@ -1,18 +1,18 @@
 import { IoTimeOutline } from "react-icons/io5";
-import Button from "../button/Button";
+import Button from "./Button";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import baseUrl from "../../config/baseUrl";
-import { AuthContext } from "../../contexts/AuthProvider";
-import useAxiosInterceptor from "../../hooks/useAxiosInterceptor";
-import { notify } from "../../utils/notify";
-import { alertDelete } from "../../utils/alert";
-import { calculateReadingSpeed } from "../../utils/getReadingSpeed";
+import baseUrl from "../config/baseUrl";
+import { AuthContext } from "../contexts/AuthProvider";
+import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
+import { notify } from "../utils/notify";
+import { alertDelete } from "../utils/alert";
+import { calculateReadingSpeed } from "../utils/getReadingSpeed";
 import jwt_decode from "jwt-decode";
-import { hasPermission } from "../../utils/permission";
-import { accessLevel } from "../../config/accessLevel";
+import { hasPermission } from "../utils/permission";
+import { accessLevel } from "../config/accessLevel";
 
 const deletePost = async (id, axiosAuth) => {
   try {

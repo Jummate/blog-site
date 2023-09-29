@@ -1,10 +1,10 @@
-import Button from "../button/Button";
-import Input from "../input/Input";
-import IMAGE_ONE from "../../assets/image1.jpg";
-import { useFormInput } from "../../hooks/useFormInput";
-import { validateSingleField, validateEmail } from "../../utils/validate";
-import { notify } from "../../utils/notify";
-import { subscribeToNewsletter } from "../../utils/newsletterSub";
+import Button from "./Button";
+import Input from "./Input";
+import IMAGE_ONE from "../assets/image1.jpg";
+import { useFormInput } from "../hooks/useFormInput";
+import { validateSingleField, validateEmail } from "../utils/validate";
+import { notify } from "../utils/notify";
+import { subscribeToNewsletter } from "../utils/newsletterSub";
 
 const Hero = () => {
   const emailProps = useFormInput("");
