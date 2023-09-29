@@ -19,7 +19,6 @@ const deletePost = async (id, axiosAuth) => {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
-    console.log(response);
     notify({ msg: response.data.message });
   } catch (err) {
     console.log(err);

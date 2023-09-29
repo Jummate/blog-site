@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFormInput } from "../../hooks/useFormInput";
 import Form from "../../components/Form";
 import axios from "axios";
@@ -26,7 +26,7 @@ const EditPost = () => {
   //   const { token } = useContext(AuthContext);
   const axiosAuth = useAxiosInterceptor();
 
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -62,14 +62,12 @@ const EditPost = () => {
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );
-      if (response.status === 200) {
-        notify({ msg: response.data.message });
-        clearFormContent({
-          input: [titleProps, summaryProps, tagProps, bannerProps],
-          quill: [contentProps],
-        });
-        // navigate(`/post/${id}`);
-      }
+      notify({ msg: response.data.message });
+      clearFormContent({
+        input: [titleProps, summaryProps, tagProps, bannerProps],
+        quill: [contentProps],
+      });
+      navigate(`/post/${id}`);
     } catch (err) {
       if (err.response.status === 400) {
         notify({

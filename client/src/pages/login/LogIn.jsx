@@ -8,13 +8,13 @@ import clearFormContent from "../../utils/clearFormContent";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { validateMultipleFields } from "../../utils/validate";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/notify";
 const Login = () => {
   const { setToken } = useContext(AuthContext);
   const emailProps = useFormInput("");
   const passwordProps = useFormInput("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,16 +40,13 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      if (response.status === 200) {
-        notify({ msg: response.data.message });
-        setToken(response.data.accessToken);
+      notify({ msg: response.data.message });
+      setToken(response.data.accessToken);
 
-        clearFormContent({
-          input: [emailProps, passwordProps],
-        });
-        // setRedirect(true);
-        // navigate("/");
-      }
+      clearFormContent({
+        input: [emailProps, passwordProps],
+      });
+      navigate("/");
     } catch (err) {
       if (err.response.status === 401) {
         notify({

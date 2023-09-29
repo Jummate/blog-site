@@ -13,7 +13,7 @@ import {
   validateFileUpload,
   validateQuill,
 } from "../../utils/validate";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useState } from "react";
 
 const CreatePost = () => {
@@ -27,7 +27,7 @@ const CreatePost = () => {
   const axiosAuth = useAxiosInterceptor();
 
   // const [redirect, setRedirect] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const createNewPost = async () => {
     const decoded = token && jwt_decode(token);
@@ -46,15 +46,13 @@ const CreatePost = () => {
         `${baseUrl.serverBaseUrl}/posts`,
         postFormData
       );
-      if (response.status === 201) {
-        notify({ msg: response.data.message });
-        clearFormContent({
-          input: [titleProps, summaryProps, tagProps, bannerProps],
-          quill: [contentProps],
-        });
-        // setRedirect(true);
-        // navigate("/");
-      }
+      notify({ msg: response.data.message });
+      clearFormContent({
+        input: [titleProps, summaryProps, tagProps, bannerProps],
+        quill: [contentProps],
+      });
+      // setRedirect(true);
+      navigate("/");
     } catch (err) {
       if (err.response.status === 400) {
         notify({

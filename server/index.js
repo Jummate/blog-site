@@ -33,6 +33,7 @@ app.use("/auth", require("./src/routes/auth.route"));
 app.use("/refresh", require("./src/routes/refreshtoken.route"));
 app.use("/logout", require("./src/routes/logout.route"));
 
+//this ensures that app will only listen if DB connection is successful
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

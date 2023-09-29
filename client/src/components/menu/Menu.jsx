@@ -1,22 +1,26 @@
 import { FaTimes } from "react-icons/fa";
 // import { menuData } from "../../data";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext } from "react";
 import Button from "../button/Button";
 import axios from "axios";
 import baseUrl from "../../config/baseUrl";
 
-const logOut = async (setToken) => {
-  const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-    withCredentials: true,
-  });
-  if (response.status === 204) {
+const logOut = async (navigate, setToken) => {
+  try {
+    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
+      withCredentials: true,
+    });
     setToken("");
+    navigate("/");
+  } catch (err) {
+    console.error(err);
   }
 };
 
 const Menu = ({ onClick }) => {
+  const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
   return (
     <nav className="md:hidden fixed z-10 font-sans flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-sky-100 text-sky-600 dark:bg-sky-800 dark:text-sky-100 py-5">
@@ -59,7 +63,7 @@ const Menu = ({ onClick }) => {
         {token && (
           <Button
             extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50 px-10"
-            onClick={() => logOut(setToken)}
+            onClick={() => logOut(navigate, setToken)}
           >
             Log Out
           </Button>

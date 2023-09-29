@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import Menu from "../menu/Menu";
 import ColorMode from "../ColorMode";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 import { AuthContext } from "../../contexts/AuthProvider";
 import baseUrl from "../../config/baseUrl";
@@ -11,16 +11,20 @@ import jwt_decode from "jwt-decode";
 import { hasPermission } from "../../utils/permission";
 import { accessLevel } from "../../config/accessLevel";
 
-const logOut = async (setToken) => {
-  const response = await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-    withCredentials: true,
-  });
-  if (response.status === 204) {
+const logOut = async (navigate, setToken) => {
+  try {
+    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
+      withCredentials: true,
+    });
     setToken("");
+    navigate("/");
+  } catch (err) {
+    console.error(err);
   }
 };
 
 const Header = () => {
+  const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
   const [openMenu, setOpenMenu] = useState(false);
@@ -65,7 +69,7 @@ const Header = () => {
           {token && (
             <Button
               extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
-              onClick={() => logOut(setToken)}
+              onClick={() => logOut(navigate, setToken)}
             >
               Log Out
             </Button>
