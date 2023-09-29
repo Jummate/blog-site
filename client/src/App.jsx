@@ -1,9 +1,7 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import Header from "./components/header/Header";
-import Home from "./pages/home/Home";
-import Footer from "./components/footer/Footer";
-import PostPage from "./pages/post/PostPage";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import PostPage from "./pages/PostPage";
 import { AuthProvider } from "./contexts/AuthProvider";
 
 import {
@@ -12,14 +10,17 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import CreatePost from "./pages/create/Create";
-import Login from "./pages/login/Login";
-import EditPost from "./pages/edit/Edit";
+import CreatePost from "./pages/Create";
+import Login from "./pages/Login";
+import EditPost from "./pages/Edit";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const Layout = () => (
     <>
       <AuthProvider>
+        <ToastContainer />
         <Header />
         <Outlet />
         <Footer />

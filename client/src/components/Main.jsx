@@ -1,5 +1,5 @@
-import RecentPost from "./recent/Recent";
-import Aside from "./aside/Aside";
+import RecentPost from "./Recent";
+import Aside from "./Aside";
 
 const Main = () => {
   return (

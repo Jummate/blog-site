@@ -13,12 +13,14 @@
       html {
         height: 100%;
         overflow: hidden;
+        font-size: 62.5%;
       }
       body {
         color: #000080;
         /* color: #fff; */
         height: 100%;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.6rem;
       }
 
       main {
@@ -26,6 +28,8 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+        padding: 1.2rem 0;
+        overflow: auto;
       }
       form {
         display: flex;
@@ -33,6 +37,8 @@
         gap: 12px;
         width: 75%;
         max-width: 350px;
+        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        padding: 40px 0;
       }
       label {
         font-weight: bold;
@@ -62,21 +68,36 @@
     <main>
       <form>
         <h1>Sign Up</h1>
-        <label for="email">Email:</label>
+        <label for="first-name">First Name:</label>
         <input
           type="text"
+          id="first-name"
+          class="input-field"
+        />
+        <label for="last-name">Last Name:</label>
+        <input
+          type="text"
+          id="last-name"
+          class="input-field"
+        />
+        <label for="email">Email:</label>
+        <input
+          type="email"
           id="email"
+          class="input-field"
         />
         <label for="password">Password:</label>
         <input
           type="password"
           id="password"
+          class="input-field password-field"
         />
 
         <label for="confirm-password">Confirm Password:</label>
         <input
           type="password"
           id="confirm-password"
+          class="input-field password-field"
         />
         <button type="submit">Create User</button>
       </form>
@@ -84,29 +105,97 @@
 
     <script>
       const form = document.querySelector("form");
+      const firstName = document.querySelector("#first-name");
+      const lastName = document.querySelector("#last-name");
       const email = document.querySelector("#email");
       const password = document.querySelector("#password");
-      const formData = new FormData();
+      const confirmPassword = document.querySelector("#confirm-password");
+      const passwordFields = document.querySelectorAll(".password-field");
+      const inputFields = document.querySelectorAll(".input-field");
 
-      const serverBaseUrl = document.baseURI;
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      const SERVER_BASE_URL = document.baseURI;
 
+      const clearFormContent = (inputs) => {
+        [...inputs].forEach((input) => (input.value = ""));
+      };
+      const validateSingleField = (field) => {
+        if (!field.value) {
+          field.style.border = "2px solid red";
+          swal({
+            title: "Error",
+            text: "Empty field detected!",
+            icon: "error",
+          });
+          return false;
+        }
+        field.style.border = "";
+        return true;
+      };
+
+      const validateMultipleFields = (fields) => {
+        return [...fields].every((field) => validateSingleField(field));
+      };
+
+      const validatePasswordMatch = () => {
+        if (password.value === confirmPassword.value) {
+          password.style.border = "";
+          password.style.color = "";
+          confirmPassword.style.border = "";
+          confirmPassword.style.color = "";
+          return true;
+        }
+        password.style.border = "2px solid red";
+        password.style.color = "red";
+        confirmPassword.style.border = "1px solid red";
+        confirmPassword.style.color = "red";
+        swal({
+          title: "Error",
+          text: "Passwords do not match",
+          icon: "error",
+        });
+        return false;
+      };
+
+      const handleSubmit = async () => {
         try {
-          const response = await fetch(serverBaseUrl, {
+          const response = await fetch(SERVER_BASE_URL, {
             method: "POST",
             headers: { "Content-type": "application/json; charset=UTF-8" },
             body: JSON.stringify({
+              firstName: firstName.value,
+              lastName: lastName.value,
               email: email.value,
               password: password.value,
             }),
           });
           const data = await response.json();
-          console.log(data);
+          clearFormContent(inputFields);
+
+          swal({
+            title: "Successful",
+            text: data.message,
+            icon: "success",
+          });
         } catch (error) {
+          swal({
+            title: "Operation failed!",
+            text: "Something went wrong!",
+            icon: "error",
+          });
           console.log(error);
+        }
+      };
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (
+          validateMultipleFields(inputFields) &&
+          validatePasswordMatch(passwordFields)
+        ) {
+          handleSubmit();
         }
       });
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>
