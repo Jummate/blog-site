@@ -37,14 +37,26 @@ const RecentPost = () => {
   const itemsPerPage = 5;
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+
     (async () => {
       try {
-        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`);
+        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
+          cancelToken: source.token,
+        });
         setPosts(response.data);
       } catch (err) {
-        console.log(err);
+        if (axios.isCancel(err)) {
+          console.log("Axios request aborted");
+        } else {
+          console.log(err);
+        }
       }
     })();
+
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import { notify } from "../utils/notify";
 import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
+import { formatDate } from "../utils/dateFormatter";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -31,6 +32,8 @@ const PostPage = () => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+
     (async () => {
       try {
         const response = await axios.get(
@@ -38,9 +41,17 @@ const PostPage = () => {
         );
         setPost(response.data);
       } catch (err) {
-        console.log(err);
+        if (axios.isCancel(err)) {
+          console.log("Axios request aborted");
+        } else {
+          console.log(err);
+        }
       }
     })();
+
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   return (
@@ -84,7 +95,10 @@ const PostPage = () => {
                   {post?.author?.fullName}
                 </p>
                 <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                  Posted on <time dateTime="2023-04-20">{post?.createdAt}</time>
+                  Posted on{" "}
+                  <time dateTime="2023-04-20">
+                    {formatDate(post?.createdAt)}
+                  </time>
                 </p>
               </div>
             </div>
