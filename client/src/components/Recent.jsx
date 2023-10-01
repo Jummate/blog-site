@@ -13,6 +13,7 @@ import { calculateReadingSpeed } from "../utils/getReadingSpeed";
 import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
+import { formatDate } from "../utils/dateFormatter";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -112,7 +113,9 @@ const RecentPost = () => {
                       {post.author.fullName}
                     </p>
                     <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                      <time dateTime="2023-04-20">{post.createdAt}</time>
+                      <time dateTime="2023-04-20">
+                        {formatDate(post.createdAt)}
+                      </time>
                     </p>
                   </div>
                 </div>
