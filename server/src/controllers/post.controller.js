@@ -44,7 +44,7 @@ const deletePost = async (req, res) => {
 };
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().sort({ createdAt: -1 });
   if (!posts) return res.status(200).json({ message: "No posts found" });
   res.status(200).json(posts);
 };
