@@ -13,7 +13,7 @@ const checkFileType = (file, cb) => {
 };
 
 const upload = multer({
-  dest: "./public/uploads/",
+  dest: "./public/uploads/banners/",
   limits: { fileSize: 3 * 1024 * 1024 },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);

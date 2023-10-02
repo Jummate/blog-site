@@ -3,15 +3,63 @@ import "react-quill/dist/quill.snow.css";
 import Input from "./Input";
 import Button from "./Button";
 import TextArea from "./TextArea";
+import axios from "axios";
+import baseUrl from "../config/baseUrl";
+import { useRef } from "react";
+
+let quillRef;
+
+const imageHandler = () => {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
+
+  input.onchange = async () => {
+    try {
+      const file = input.files[0];
+      const formData = new FormData();
+
+      formData.append("files", file);
+
+      const quill = quillRef.current.getEditor();
+
+      // Save current cursor state
+      const range = quill.getSelection();
+
+      // Move cursor to right side of image (easier to continue typing)
+      quill.setSelection(range.index + 1);
+
+      const res = await axios.post(
+        `${baseUrl.serverBaseUrl}/upload/`,
+        formData
+      );
+
+      // Insert uploaded image
+      quill.insertEmbed(
+        range.index,
+        "image",
+        `${baseUrl.serverBaseUrl}/${res.data.src}`
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
 
 const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }],
-    ["link", "image"],
-    ["clean"],
-  ],
+  toolbar: {
+    container: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+    handlers: {
+      image: imageHandler,
+    },
+  },
 };
 
 const formats = [
@@ -33,6 +81,8 @@ const Form = ({
   onSubmit,
   children,
 }) => {
+  quillRef = useRef(null);
+
   return (
     <form
       className="flex flex-col gap-4"
@@ -61,6 +111,7 @@ const Form = ({
       />
       {children}
       <ReactQuill
+        ref={quillRef}
         theme="snow"
         modules={modules}
         formats={formats}
