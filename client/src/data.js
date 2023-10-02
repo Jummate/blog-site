@@ -1,34 +1,3 @@
-import IMAGE_TWO from "./assets/image2.jpg";
-
-export const menuData = {
-  "Main Menu": {
-    Home: { link: "/" },
-    "Log In": { link: "login" },
-    "Log Out": { link: "" },
-    "Create New Post": { link: "create" },
-  },
-  Topics: {
-    "Science & Nature": { link: "" },
-    Politics: { link: "" },
-    Environment: { link: "" },
-  },
-};
-
-export const tagData = [
-  "science",
-  "nature",
-  "technology",
-  "wildlife",
-  "politics",
-  "travel",
-];
-
-export const topicData = {
-  Science: IMAGE_TWO,
-  Nature: IMAGE_TWO,
-  Technology: IMAGE_TWO,
-};
-
 export const socialMedia = {
   user: {
     linkedin: {

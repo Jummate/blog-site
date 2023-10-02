@@ -1,6 +1,5 @@
 import Button from "./Button";
-import { tagData } from "../data";
-const Tag = () => {
+const Tag = ({ tags }) => {
   return (
     <section>
       <h1 className="mb-3 text-lg font-bold text-sky-900 dark:text-sky-100">
@@ -8,12 +7,12 @@ const Tag = () => {
       </h1>
 
       <div className="flex flex-wrap gap-2">
-        {tagData.map((tag, index) => (
+        {tags.map((tag, index) => (
           <Button
             key={index}
             extraStyles="text-sky-900 text-sm bg-sky-100 hover:text-sky-100 hover:bg-sky-900 dark:hover:bg-sky-500"
           >
-            #{tag}
+            #{tag.toLowerCase()}
           </Button>
         ))}
       </div>

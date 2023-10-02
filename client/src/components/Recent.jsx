@@ -2,7 +2,7 @@ import { IoTimeOutline } from "react-icons/io5";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+// import axios from "axios";
 import ReactPaginate from "react-paginate";
 import baseUrl from "../config/baseUrl";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -26,40 +26,40 @@ const deletePost = async (id, axiosAuth) => {
   }
 };
 
-const RecentPost = () => {
+const RecentPost = ({ posts, isLoading }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   const axiosAuth = useAxiosInterceptor();
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
+  // useEffect(() => {
+  //   const source = axios.CancelToken.source();
 
-    (async () => {
-      try {
-        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
-          cancelToken: source.token,
-        });
-        setPosts(response.data);
-        setIsLoading(false);
-      } catch (err) {
-        if (axios.isCancel(err)) {
-          console.log("Axios request aborted");
-        } else {
-          console.log(err);
-        }
-      }
-    })();
+  //   (async () => {
+  //     try {
+  //       const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
+  //         cancelToken: source.token,
+  //       });
+  //       setPosts(response.data);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       if (axios.isCancel(err)) {
+  //         console.log("Axios request aborted");
+  //       } else {
+  //         console.log(err);
+  //       }
+  //     }
+  //   })();
 
-    return () => {
-      source.cancel();
-    };
-  }, []);
+  //   return () => {
+  //     source.cancel();
+  //   };
+  // }, []);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -77,7 +77,13 @@ const RecentPost = () => {
         Recent Posts
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {currentItems.length > 0 ? (
+        {isLoading ? (
+          <p className="text-sky-900 dark:text-sky-100">Loading...</p>
+        ) : posts.length < 0 ? (
+          <p className="text-sky-900 dark:text-sky-100">
+            No articles to display
+          </p>
+        ) : (
           currentItems.map((post, index) => (
             <article
               key={index}
@@ -158,24 +164,24 @@ const RecentPost = () => {
               </div>
             </article>
           ))
-        ) : (
-          <p className="text-sky-900 dark:text-sky-100">Loading...</p>
         )}
 
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="Next>"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          pageCount={pageCount}
-          previousLabel="<Prev"
-          renderOnZeroPageCount={null}
-          containerClassName="flex gap-5 font-bold "
-          activeClassName="rounded-full bg-sky-900 text-sky-50 dark:bg-sky-200 dark:text-sky-900 h-6 w-6 text-center"
-          previousClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
-          nextClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
-          pageClassName="text-sky-600 dark:text-sky-100 hover:text-sky-400 dark:hover:text-sky-500"
-        />
+        {posts.length > 0 ? (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next>"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel="<Prev"
+            renderOnZeroPageCount={null}
+            containerClassName="flex gap-5 font-bold "
+            activeClassName="rounded-full bg-sky-900 text-sky-50 dark:bg-sky-200 dark:text-sky-900 h-6 w-6 text-center"
+            previousClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
+            nextClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
+            pageClassName="text-sky-600 dark:text-sky-100 hover:text-sky-400 dark:hover:text-sky-500"
+          />
+        ) : null}
       </div>
     </section>
   );
