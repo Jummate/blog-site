@@ -34,6 +34,7 @@ const RecentPost = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const RecentPost = () => {
           cancelToken: source.token,
         });
         setPosts(response.data);
+        setIsLoading(false);
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log("Axios request aborted");
@@ -75,7 +77,7 @@ const RecentPost = () => {
         Recent Posts
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {currentItems &&
+        {currentItems.length > 0 ? (
           currentItems.map((post, index) => (
             <article
               key={index}
@@ -155,7 +157,10 @@ const RecentPost = () => {
                 )}
               </div>
             </article>
-          ))}
+          ))
+        ) : (
+          <p className="text-sky-900 dark:text-sky-100">Loading...</p>
+        )}
 
         <ReactPaginate
           breakLabel="..."

@@ -58,7 +58,7 @@ const Login = () => {
     }
   };
   return (
-    <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center dark:bg-sky-800">
+    <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center min-h-screen dark:bg-sky-800">
       <div className="bg-sky-100 text-sky-900 rounded-3xl dark:bg-sky-200 w-full max-w-md">
         <form
           className="flex flex-col gap-4 p-7 sm:p-10 justify-center"
