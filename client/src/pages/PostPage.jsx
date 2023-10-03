@@ -78,7 +78,7 @@ const PostPage = () => {
 
           <img
             className="max-h-80 w-full"
-            src={`${baseUrl.serverBaseUrl}/${post?.bannerImage}`}
+            src={post?.bannerImage}
             alt=""
           />
         </header>
@@ -86,7 +86,7 @@ const PostPage = () => {
           <div className="flex flex-col md:w-11/12 gap-16 sm:p-12 md:p-16 ">
             <div className="flex gap-2 mt-6 ">
               <img
-                src={`${baseUrl.serverBaseUrl}/${post?.author?.avatar}`}
+                src={post?.author?.avatar}
                 alt=""
                 className="h-10 w-10 rounded-full"
               />

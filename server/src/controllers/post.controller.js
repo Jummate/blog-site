@@ -1,14 +1,29 @@
 const fsPromises = require("fs").promises;
 const path = require("path");
 const Post = require("../models/Post");
+const convertToBase64 = require("../helpers/convertToBase64");
+const handleUpload = require("../helpers/imageUpload");
+const cloudinary = require("cloudinary");
+
+const deleteImage = (publicID) => {
+  return cloudinary.v2.uploader.destroy(publicID, function (error, result) {
+    if (error) throw new Error(error);
+    return result;
+  });
+};
 
 const createPost = async (req, res) => {
   const { id, title, summary, content, tag, firstName, lastName } = req.body;
-  const { originalname, path: filePath } = req.file;
-  const ext = path.extname(originalname);
-  const newPath = `${filePath}${ext}`;
+  const { buffer, mimetype } = req.file;
+  //   const { originalname, path: filePath } = req.file;
+  //   const ext = path.extname(originalname);
+  //   const newPath = `${filePath}${ext}`;
   try {
-    await fsPromises.rename(filePath, newPath);
+    const dataURI = convertToBase64(buffer, mimetype);
+    const cldRes = await handleUpload(dataURI);
+
+    console.log(path.parse(cldRes.secure_url));
+    // await fsPromises.rename(filePath, newPath);
 
     const newPost = {
       id,
@@ -16,8 +31,11 @@ const createPost = async (req, res) => {
       title,
       summary,
       content,
-      author: { fullName: `${firstName} ${lastName}`, avatar: newPath },
-      bannerImage: newPath,
+      author: {
+        fullName: `${firstName} ${lastName}`,
+        avatar: cldRes.secure_url,
+      },
+      bannerImage: cldRes.secure_url,
     };
 
     const result = await Post.create(newPost);
@@ -28,19 +46,24 @@ const createPost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const { id } = req.params;
-  if (!id) return res.status(400).json({ message: "ID parameter is required" });
-  const postToDelete = await Post.findOne({ _id: id }).exec();
-  if (!postToDelete)
-    return res.status(200).json({ message: `No post with an ID ${id}` });
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "ID parameter is required" });
+    const postToDelete = await Post.findOne({ _id: id }).exec();
+    if (!postToDelete)
+      return res.status(200).json({ message: `No post with an ID ${id}` });
+    const imageID = path.parse(postToDelete.bannerImage).name;
 
-  const result = await Post.deleteOne({ _id: id });
-  const bannerImage = path.parse(postToDelete.bannerImage).base;
-
-  await fsPromises.unlink(
-    path.join(__dirname, "..", "..", "public", "uploads", bannerImage)
-  );
-  res.status(200).json({ message: "Post deleted successfully", result });
+    const result = await Post.deleteOne({ _id: id });
+    await deleteImage(imageID);
+    //   await fsPromises.unlink(
+    //     path.join(__dirname, "..", "..", "public", "uploads", bannerImage)
+    //   );
+    res.status(200).json({ message: "Post deleted successfully", result });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getAllPosts = async (req, res) => {

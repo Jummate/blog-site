@@ -91,7 +91,7 @@ const RecentPost = ({ posts, isLoading }) => {
             >
               <div className="w-full lg:w-1/2">
                 <img
-                  src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
+                  src={post.bannerImage}
                   alt=""
                   className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
                 />
@@ -124,7 +124,7 @@ const RecentPost = ({ posts, isLoading }) => {
 
                 <div className="mt-6 flex gap-2">
                   <img
-                    src={`${baseUrl.serverBaseUrl}/${post.author.avatar}`}
+                    src={post.author.avatar}
                     alt=""
                     className="h-10 w-10 rounded-full"
                   />
