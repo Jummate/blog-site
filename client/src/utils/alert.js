@@ -1,6 +1,6 @@
 import swal from "sweetalert";
 
-export const alertDelete = async (id, axiosAuth, deletePost) => {
+export const alertDelete = async (id, axiosAuth, navigate, deletePost) => {
   const willDelete = await swal({
     title: "Are you sure you want to delete this post?",
     icon: "warning",
@@ -10,6 +10,6 @@ export const alertDelete = async (id, axiosAuth, deletePost) => {
     closeOnEsc: false,
   });
   if (willDelete) {
-    deletePost(id, axiosAuth);
+    deletePost(id, axiosAuth, navigate);
   }
 };

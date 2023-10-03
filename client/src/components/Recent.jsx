@@ -1,6 +1,6 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 // import axios from "axios";
 import ReactPaginate from "react-paginate";
@@ -15,12 +15,13 @@ import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
 
-const deletePost = async (id, axiosAuth) => {
+const deletePost = async (id, axiosAuth, navigate) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
+    navigate("/");
   } catch (err) {
     console.log(err);
   }
@@ -36,6 +37,7 @@ const RecentPost = ({ posts, isLoading }) => {
   const [currentItems, setCurrentItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const source = axios.CancelToken.source();
@@ -153,7 +155,7 @@ const RecentPost = ({ posts, isLoading }) => {
                       <Button
                         extraStyles={"bg-red-500 text-white"}
                         onClick={() =>
-                          alertDelete(post._id, axiosAuth, deletePost)
+                          alertDelete(post._id, axiosAuth, navigate, deletePost)
                         }
                       >
                         Delete Post

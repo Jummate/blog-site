@@ -3,14 +3,7 @@ const path = require("path");
 const Post = require("../models/Post");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
-const cloudinary = require("cloudinary");
-
-const deleteImage = (publicID) => {
-  return cloudinary.v2.uploader.destroy(publicID, function (error, result) {
-    if (error) throw new Error(error);
-    return result;
-  });
-};
+const deleteImage = require("../helpers/deleteImage");
 
 const createPost = async (req, res) => {
   const { id, title, summary, content, tag, firstName, lastName } = req.body;

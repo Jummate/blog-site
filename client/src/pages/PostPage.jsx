@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
@@ -13,12 +13,13 @@ import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
 
-const deletePost = async (id, axiosAuth) => {
+const deletePost = async (id, axiosAuth, navigate) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
+    navigate("/");
   } catch (err) {
     console.log(err);
   }
@@ -30,6 +31,7 @@ const PostPage = () => {
   const axiosAuth = useAxiosInterceptor();
   const { id } = useParams();
   const [post, setPost] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -68,7 +70,9 @@ const PostPage = () => {
               {hasPermission(accessLevel.DELETE_POST, decoded?.roles) && (
                 <Button
                   extraStyles="bg-red-600 text-white"
-                  onClick={() => alertDelete(id, axiosAuth, deletePost)}
+                  onClick={() =>
+                    alertDelete(id, axiosAuth, navigate, deletePost)
+                  }
                 >
                   Delete Post
                 </Button>
