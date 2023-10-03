@@ -12,8 +12,12 @@ const createPost = async (req, res) => {
   //   const ext = path.extname(originalname);
   //   const newPath = `${filePath}${ext}`;
   try {
+    const config = {
+      resource_type: "auto",
+      folder: "banner",
+    };
     const dataURI = convertToBase64(buffer, mimetype);
-    const cldRes = await handleUpload(dataURI);
+    const cldRes = await handleUpload(dataURI, config);
 
     // await fsPromises.rename(filePath, newPath);
 

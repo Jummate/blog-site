@@ -36,11 +36,7 @@ const imageHandler = () => {
       );
 
       // Insert uploaded image
-      quill.insertEmbed(
-        range.index,
-        "image",
-        `${baseUrl.serverBaseUrl}/${res.data.src}`
-      );
+      quill.insertEmbed(range.index, "image", res.data.src);
     } catch (err) {
       console.error(err);
     }

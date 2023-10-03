@@ -6,10 +6,10 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-async function handleUpload(file) {
+async function handleUpload(file, config) {
   const res = await cloudinary.uploader.upload(file, {
     resource_type: "auto",
-    folder: "banner",
+    ...config,
   });
   return res;
 }
