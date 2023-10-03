@@ -8,7 +8,7 @@ import baseUrl from "../config/baseUrl";
 
 const collectTags = (allPosts) => {
   if (allPosts.length > 0) {
-    return allPosts.map(({ tag }) => tag);
+    return [...new Set(allPosts.map(({ tag }) => tag))];
   }
 };
 
