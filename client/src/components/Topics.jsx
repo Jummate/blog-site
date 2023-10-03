@@ -7,7 +7,7 @@ const Topics = ({ tags }) => {
         Popular Topics
       </h1>
 
-      {tags.map((tag, index) => (
+      {tags?.map((tag, index) => (
         <div
           key={index}
           className="flex gap-2 border-2 rounded-xl mb-4 w-full text-sm"

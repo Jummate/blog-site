@@ -63,8 +63,8 @@ const RecentPost = ({ posts, isLoading }) => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(posts.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(posts.length / itemsPerPage));
+    setCurrentItems(posts?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(posts?.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, posts]);
 
   const handlePageClick = (event) => {
@@ -79,7 +79,7 @@ const RecentPost = ({ posts, isLoading }) => {
       <div className="flex flex-col justify-center items-center">
         {isLoading ? (
           <p className="text-sky-900 dark:text-sky-100">Loading...</p>
-        ) : posts.length < 0 ? (
+        ) : posts.length < 1 ? (
           <p className="text-sky-900 dark:text-sky-100">
             No articles to display
           </p>

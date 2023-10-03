@@ -6,7 +6,11 @@ import Topics from "./Topics";
 import Tag from "./Tag";
 import baseUrl from "../config/baseUrl";
 
-const collectTags = (allPosts) => allPosts.map(({ tag }) => tag);
+const collectTags = (allPosts) => {
+  if (allPosts.length > 0) {
+    return allPosts.map(({ tag }) => tag);
+  }
+};
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +24,9 @@ const Main = () => {
         const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
           cancelToken: source.token,
         });
-        setPosts(response.data);
+        if (response.data.length > 0) {
+          setPosts(response.data);
+        }
         setIsLoading(false);
       } catch (err) {
         if (axios.isCancel(err)) {

@@ -22,7 +22,6 @@ const createPost = async (req, res) => {
     const dataURI = convertToBase64(buffer, mimetype);
     const cldRes = await handleUpload(dataURI);
 
-    console.log(path.parse(cldRes.secure_url));
     // await fsPromises.rename(filePath, newPath);
 
     const newPost = {
@@ -54,9 +53,11 @@ const deletePost = async (req, res) => {
     if (!postToDelete)
       return res.status(200).json({ message: `No post with an ID ${id}` });
     const imageID = path.parse(postToDelete.bannerImage).name;
+    const pathToImageFolder = path.parse(postToDelete.bannerImage).dir;
+    const imageFolder = pathToImageFolder.split("/").slice(-1).toString();
 
     const result = await Post.deleteOne({ _id: id });
-    await deleteImage(imageID);
+    await deleteImage(`${imageFolder}/${imageID}`);
     //   await fsPromises.unlink(
     //     path.join(__dirname, "..", "..", "public", "uploads", bannerImage)
     //   );
@@ -67,9 +68,14 @@ const deletePost = async (req, res) => {
 };
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find().sort({ createdAt: -1 });
-  if (!posts) return res.status(200).json({ message: "No posts found" });
-  res.status(200).json(posts);
+  try {
+    const posts = await Post.find().sort({ createdAt: -1 });
+    if (!posts || posts.length < 1)
+      return res.status(200).json({ message: "No posts found" });
+    res.status(200).json(posts);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getPost = async (req, res) => {
@@ -87,15 +93,20 @@ const updatePost = async (req, res) => {
     if (!id)
       return res.status(400).json({ message: "ID parameter is required" });
 
+    let result;
+
     if (req.file) {
-      const { originalname, path: filePath } = req.file;
-      const ext = path.extname(originalname);
-      const newPath = `${filePath}${ext}`;
-      await fsPromises.rename(filePath, newPath);
+      //   const { originalname, path: filePath } = req.file;
+      //   const ext = path.extname(originalname);
+      //   const newPath = `${filePath}${ext}`;
+      //   await fsPromises.rename(filePath, newPath);
+      const { buffer, mimetype } = req.file;
+      const dataURI = convertToBase64(buffer, mimetype);
+      const cldRes = await handleUpload(dataURI);
+      result = await editPost(req, res, id, cldRes.secure_url);
+    } else {
+      result = await editPost(req, res, id);
     }
-    const result = req.file
-      ? await editPost(req, res, id, newPath)
-      : await editPost(req, res, id);
 
     res.status(200).json({ message: "Post updated successfully", result });
   } catch (err) {
