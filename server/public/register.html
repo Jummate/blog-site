@@ -99,6 +99,13 @@
           id="confirm-password"
           class="input-field password-field"
         />
+
+        <label for="avatar">Profile Photo</label>
+        <input
+          type="file"
+          id="avatar"
+        />
+
         <button type="submit">Create User</button>
       </form>
     </main>
@@ -110,15 +117,17 @@
       const email = document.querySelector("#email");
       const password = document.querySelector("#password");
       const confirmPassword = document.querySelector("#confirm-password");
+      const avatar = document.querySelector("#avatar");
       const passwordFields = document.querySelectorAll(".password-field");
       const inputFields = document.querySelectorAll(".input-field");
 
-      const SERVER_BASE_URL = document.baseURI;
+      const SERVER_REG_BASE_URL = document.baseURI.replace("/register", "");
 
       const clearFormContent = (inputs) => {
         [...inputs].forEach((input) => (input.value = ""));
       };
       const validateSingleField = (field) => {
+        console.log(SERVER_REG_BASE_URL);
         if (!field.value) {
           field.style.border = "2px solid red";
           swal({
@@ -158,15 +167,15 @@
 
       const handleSubmit = async () => {
         try {
-          const response = await fetch(SERVER_BASE_URL, {
+          const formData = new FormData();
+          formData.append("firstName", firstName.value);
+          formData.append("lastName", lastName.value);
+          formData.append("email", email.value);
+          formData.append("password", password.value);
+          formData.append("avatar", avatar.files[0]);
+          const response = await fetch(SERVER_REG_BASE_URL, {
             method: "POST",
-            headers: { "Content-type": "application/json; charset=UTF-8" },
-            body: JSON.stringify({
-              firstName: firstName.value,
-              lastName: lastName.value,
-              email: email.value,
-              password: password.value,
-            }),
+            body: formData,
           });
           const data = await response.json();
           clearFormContent(inputFields);

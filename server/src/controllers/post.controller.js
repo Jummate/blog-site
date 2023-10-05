@@ -13,7 +13,6 @@ const createPost = async (req, res) => {
   //   const newPath = `${filePath}${ext}`;
   try {
     const config = {
-      resource_type: "auto",
       folder: "banner",
     };
     const dataURI = convertToBase64(buffer, mimetype);

@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/posts", require("./src/routes/post.route"));
-app.use("/register", require("./src/routes/register.route"));
+app.use("/users", require("./src/routes/user.route"));
 app.use("/auth", require("./src/routes/auth.route"));
 app.use("/refresh", require("./src/routes/refreshtoken.route"));
 app.use("/logout", require("./src/routes/logout.route"));

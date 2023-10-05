@@ -23,6 +23,7 @@ const handleLogin = async (req, res) => {
         email: potentialUser.email,
         firstName: potentialUser.firstName,
         lastName: potentialUser.lastName,
+        userId: potentialUser._id,
         roles: [...potentialUser.roles],
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -33,6 +34,7 @@ const handleLogin = async (req, res) => {
         email: potentialUser.email,
         firstName: potentialUser.firstName,
         lastName: potentialUser.lastName,
+        userId: potentialUser._id,
       },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
