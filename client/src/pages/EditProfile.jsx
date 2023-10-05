@@ -13,12 +13,12 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const EditProfile = () => {
-  const firstName = useFormInput("");
-  const lastName = useFormInput("");
-  const email = useFormInput("");
-  const password = useFormInput("");
-  const confirmPassword = useFormInput("");
-  const avatar = useFormInput("", "file");
+  const firstNameInput = useFormInput("");
+  const lastNameInput = useFormInput("");
+  const emailInput = useFormInput("");
+  //   const password = useFormInput("");
+  //   const confirmPassword = useFormInput("");
+  const avatarInput = useFormInput("", "file");
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
@@ -26,30 +26,29 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // (async () => {
-    //   try {
-    //     const response = await axios.get(
-    //       `${baseUrl.serverBaseUrl}/users/${id}`
-    //     );
-    //     const { title, summary, content, tag } = response.data;
-    //     titleProps.setValue(title);
-    //     tagProps.setValue(tag);
-    //     summaryProps.setValue(summary);
-    //     contentProps.setContent(content);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // })();
+    (async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl.serverBaseUrl}/users/${id}`
+        );
+        const { firstName, lastName, email } = response.data;
+        firstNameInput.setValue(firstName);
+        lastNameInput.setValue(lastName);
+        emailInput.setValue(email);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
   const editProfile = async () => {
     const postFormData = new FormData();
-    postFormData.append("firstName", firstName.value);
-    postFormData.append("lastName", lastName.value);
-    postFormData.append("email", email.value);
-    postFormData.append("password", password.value);
-    if (bannerProps.value.length > 0) {
-      postFormData.append("avatar", avatar.value[0]);
+    postFormData.append("firstName", firstNameInput.value);
+    postFormData.append("lastName", lastNameInput.value);
+    postFormData.append("email", emailInput.value);
+    // postFormData.append("password", password.value);
+    if (avatarInput.value.length > 0) {
+      postFormData.append("avatar", avatarInput.value[0]);
     }
 
     try {
@@ -111,8 +110,8 @@ const EditProfile = () => {
           <Input
             id="first-name"
             extraStyles="shadow-pref rounded-md"
-            value={firstName.value}
-            onChange={firstName.onChange}
+            value={firstNameInput.value}
+            onChange={firstNameInput.onChange}
           />
           <label
             className="text-bold"
@@ -123,8 +122,8 @@ const EditProfile = () => {
           <Input
             id="last-name"
             extraStyles="shadow-pref rounded-md"
-            value={lastName.value}
-            onChange={lastName.onChange}
+            value={lastNameInput.value}
+            onChange={lastNameInput.onChange}
           />
           <label
             className="text-bold"
@@ -136,11 +135,11 @@ const EditProfile = () => {
             type="email"
             id="email"
             extraStyles="shadow-pref rounded-md"
-            value={email.value}
-            onChange={email.onChange}
+            value={emailInput.value}
+            onChange={emailInput.onChange}
           />
 
-          <label
+          {/* <label
             className="text-bold"
             htmlFor="password"
           >
@@ -166,7 +165,7 @@ const EditProfile = () => {
             extraStyles="shadow-pref rounded-md"
             value={confirmPassword.value}
             onChange={confirmPassword.onChange}
-          />
+          /> */}
 
           <label
             className="text-bold"
@@ -178,7 +177,7 @@ const EditProfile = () => {
             type="file"
             id="avatar"
             extraStyles="shadow-pref rounded-md dark:bg-sky-100"
-            onChange={avatar.onChange}
+            onChange={avatarInput.onChange}
           />
 
           <Button

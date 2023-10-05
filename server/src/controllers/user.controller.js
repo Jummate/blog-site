@@ -96,4 +96,14 @@ const editUser = async (req, res, userId, newPath = undefined) => {
   return result;
 };
 
-module.exports = { getRegistrationPage, createUser, updateUser };
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ message: "ID parameter is required" });
+  const user = await User.findOne({ _id: id }).select("-password").exec();
+  console.log(user);
+  if (!user)
+    return res.status(200).json({ message: `No user with an ID ${id}` });
+  res.status(200).json(user);
+};
+
+module.exports = { getRegistrationPage, createUser, updateUser, getUser };

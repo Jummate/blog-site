@@ -6,6 +6,9 @@ const { uploadFromFrontend } = require("../middleware/uploadFromFrontend");
 router.route("/").post(uploadFromFrontend, userController.createUser);
 
 router.route("/register").get(userController.getRegistrationPage);
-router.route("/:id").put(uploadFromFrontend, userController.updateUser);
+router
+  .route("/:id")
+  .get(userController.getUser)
+  .put(uploadFromFrontend, userController.updateUser);
 
 module.exports = router;
