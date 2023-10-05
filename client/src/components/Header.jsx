@@ -74,6 +74,12 @@ const Header = () => {
               Log Out
             </Button>
           )}
+          <Link
+            to={`/edit-profile/${decoded?.userId}`}
+            className="hover:underline"
+          >
+            Edit Profile
+          </Link>
         </div>
         <div className="flex gap-3">
           <ColorMode
