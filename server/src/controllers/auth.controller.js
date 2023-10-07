@@ -25,6 +25,7 @@ const handleLogin = async (req, res) => {
         lastName: potentialUser.lastName,
         userId: potentialUser._id,
         roles: [...potentialUser.roles],
+        avatar: potentialUser.avatar,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
@@ -35,6 +36,7 @@ const handleLogin = async (req, res) => {
         firstName: potentialUser.firstName,
         lastName: potentialUser.lastName,
         userId: potentialUser._id,
+        avatar: potentialUser.avatar,
       },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }

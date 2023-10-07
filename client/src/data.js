@@ -1,5 +1,6 @@
-export const socialMedia = {
+export const profile = {
   user: {
+    fullName: "Olawale Jumat",
     linkedin: {
       href: "https://www.linkedin.com/in/omololu-jumat-1405",
       title: "Developer's LinkedIn Profile",
@@ -19,6 +20,7 @@ export const socialMedia = {
   },
 
   developer: {
+    fullName: "Omololu Jumat",
     linkedin: {
       href: "https://www.linkedin.com/in/omololu-jumat-1405",
       title: "Developer's LinkedIn Profile",

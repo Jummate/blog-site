@@ -1,13 +1,21 @@
 import IMAGE_THREE from "../assets/image3.jpg";
 import Input from "./Input";
 import Button from "./Button";
+import { profile } from "../data";
 import SocialMedia from "./SocialMedia";
 import { useFormInput } from "../hooks/useFormInput";
 import { notify } from "../utils/notify";
 import { validateEmail, validateSingleField } from "../utils/validate";
 import { subscribeToNewsletter } from "../utils/newsletterSub";
+// import jwt_decode from "jwt-decode";
+import { AuthContext } from "../contexts/AuthProvider";
+// import { useState, useEffect, useContext } from "react";
+// import { FaBars, FaUserCircle } from "react-icons/fa";
+
 const Footer = () => {
   const emailProps = useFormInput("");
+  // const { token, setToken } = useContext(AuthContext);
+  // const decoded = token && jwt_decode(token);
 
   const handleClick = () => {
     if (!validateSingleField(emailProps)) {
@@ -30,7 +38,7 @@ const Footer = () => {
         <section className="flex flex-col justify-center items-center gap-2 px-3 col-span-2">
           <h1 className="text-2xl font-bold mb-3">Newsletter</h1>
           <p className="text-slate-200 md:text-lg mb-5 leading-6 text-center">
-            Be the first to get the latest post lorem ipsum lorem ipsum a lorem
+            Be the first to get the latest post from me.
           </p>
           <form className="flex flex-col justify-center items-center">
             <Input
@@ -52,14 +60,17 @@ const Footer = () => {
             alt=""
             className="h-24 w-24 rounded-full"
           ></img>
-          <h1 className="text-xl font-bold">Olawale Jumat</h1>
+          <h1 className="text-xl font-bold">
+            {profile.user.fullName}
+            {/* {decoded.firstName} {decoded.lastName} */}
+          </h1>
           <h3 className="text-md mb-3">Content Writer</h3>
           <SocialMedia userType="user" />
         </section>
 
         <section className="flex flex-col justify-center gap-5 items-center opacity-60 text-center">
           <span className="text-md leading-8">
-            Designed & Built By <b>Omololu Jumat</b>
+            Designed & Built By <b>{profile.developer.fullName}</b>
           </span>
           <SocialMedia userType="developer" />
         </section>

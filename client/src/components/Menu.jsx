@@ -1,26 +1,26 @@
 import { FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthProvider";
-import { useContext } from "react";
-import Button from "./Button";
-import axios from "axios";
-import baseUrl from "../config/baseUrl";
+import { Link } from "react-router-dom";
+// import { AuthContext } from "../contexts/AuthProvider";
+// import { useContext } from "react";
+// import Button from "./Button";
+// import axios from "axios";
+// import baseUrl from "../config/baseUrl";
 
-const logOut = async (navigate, setToken) => {
-  try {
-    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-      withCredentials: true,
-    });
-    setToken("");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
+// const logOut = async (navigate, setToken) => {
+//   try {
+//     await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
+//       withCredentials: true,
+//     });
+//     setToken("");
+//     navigate("/");
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 const Menu = ({ onClick }) => {
-  const navigate = useNavigate();
-  const { token, setToken } = useContext(AuthContext);
+  // const navigate = useNavigate();
+  // const { token, setToken } = useContext(AuthContext);
   return (
     <nav className="md:hidden fixed z-10 font-sans flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-sky-100 text-sky-600 dark:bg-sky-800 dark:text-sky-100 py-5">
       <div className="flex justify-end text-2xl gap-3">
@@ -41,7 +41,7 @@ const Menu = ({ onClick }) => {
         >
           Home
         </Link>
-        {!token && (
+        {/* {!token && (
           <Link
             to="login"
             className="hover:underline"
@@ -49,8 +49,8 @@ const Menu = ({ onClick }) => {
           >
             Log In
           </Link>
-        )}
-        {token && (
+        )} */}
+        {/* {token && (
           <Link
             to="create"
             className="hover:underline"
@@ -58,15 +58,15 @@ const Menu = ({ onClick }) => {
           >
             Create New Post
           </Link>
-        )}
-        {token && (
+        )} */}
+        {/* {token && (
           <Button
             extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50 px-10"
             onClick={() => logOut(navigate, setToken)}
           >
             Log Out
           </Button>
-        )}
+        )} */}
       </div>
     </nav>
   );

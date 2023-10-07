@@ -20,6 +20,7 @@ const handleRefreshToken = async (req, res) => {
         lastName: foundUser.lastName,
         userId: foundUser._id,
         roles: [...foundUser.roles],
+        avatar: foundUser.avatar,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }

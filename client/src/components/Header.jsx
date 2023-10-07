@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaUserCircle } from "react-icons/fa";
 import Menu from "./Menu";
+import ProfileMenu from "./ProfileMenu";
 import ColorMode from "./ColorMode";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
@@ -28,6 +29,7 @@ const Header = () => {
   const { token, setToken } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
   const [openMenu, setOpenMenu] = useState(false);
+  const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [colorMode, setColorMode] = useState(
     localStorage.hasOwnProperty("colorMode")
       ? localStorage.getItem("colorMode")
@@ -58,30 +60,40 @@ const Header = () => {
               Log In
             </Link>
           )}
-          {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
+          {/* {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
             <Link
               to="create"
               className="hover:underline"
             >
               Create New Post
             </Link>
-          )}
-          {token && (
+          )} */}
+          {/* {token && (
             <Button
               extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
               onClick={() => logOut(navigate, setToken)}
             >
               Log Out
             </Button>
-          )}
-          <Link
-            to={`/edit-profile/${decoded?.userId}`}
-            className="hover:underline"
-          >
-            Edit Profile
-          </Link>
+          )} */}
         </div>
+
         <div className="flex gap-3">
+          {token &&
+            (decoded?.avatar ? (
+              <img
+                src={decoded.avatar}
+                alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
+                className="h-7 w-7 rounded-full cursor-pointer"
+                onClick={() => setOpenProfileMenu(true)}
+              />
+            ) : (
+              <FaUserCircle
+                className="text-2xl cursor-pointer hover:text-sky-300"
+                onClick={() => setOpenProfileMenu(true)}
+              />
+            ))}
+
           <ColorMode
             colorMode={colorMode}
             setColorMode={setColorMode}
@@ -102,6 +114,12 @@ const Header = () => {
           //   />
           // }
           onClick={() => setOpenMenu(false)}
+        />
+      ) : null}
+      {openProfileMenu ? (
+        <ProfileMenu
+          // token={token}
+          handleProfileMenu={() => setOpenProfileMenu(false)}
         />
       ) : null}
     </header>
