@@ -7,15 +7,9 @@ import { useFormInput } from "../hooks/useFormInput";
 import { notify } from "../utils/notify";
 import { validateEmail, validateSingleField } from "../utils/validate";
 import { subscribeToNewsletter } from "../utils/newsletterSub";
-// import jwt_decode from "jwt-decode";
-import { AuthContext } from "../contexts/AuthProvider";
-// import { useState, useEffect, useContext } from "react";
-// import { FaBars, FaUserCircle } from "react-icons/fa";
 
 const Footer = () => {
   const emailProps = useFormInput("");
-  // const { token, setToken } = useContext(AuthContext);
-  // const decoded = token && jwt_decode(token);
 
   const handleClick = () => {
     if (!validateSingleField(emailProps)) {
@@ -60,11 +54,8 @@ const Footer = () => {
             alt=""
             className="h-24 w-24 rounded-full"
           ></img>
-          <h1 className="text-xl font-bold">
-            {profile.user.fullName}
-            {/* {decoded.firstName} {decoded.lastName} */}
-          </h1>
-          <h3 className="text-md mb-3">Content Writer</h3>
+          <h1 className="text-xl font-bold">{profile.user.fullName}</h1>
+          <h3 className="text-md mb-3">Content Writer </h3>
           <SocialMedia userType="user" />
         </section>
 

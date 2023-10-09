@@ -125,10 +125,25 @@ const editUser = async (req, res, userId, newPath = undefined) => {
 const getUser = async (req, res) => {
   const { id } = req.params;
   if (!id) return res.status(400).json({ message: "ID parameter is required" });
-  const user = await User.findOne({ _id: id }).select("-password").exec();
+  const user = await User.findOne({ _id: id })
+    .select("-password -refreshToken")
+    .exec();
   if (!user)
     return res.status(200).json({ message: `No user with an ID ${id}` });
   res.status(200).json(user);
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find()
+      .select("-password -refreshToken")
+      .sort({ createdAt: -1 });
+    if (!users || users.length < 1)
+      return res.status(200).json({ message: "No users found" });
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = {
@@ -136,5 +151,6 @@ module.exports = {
   createUser,
   updateUser,
   getUser,
+  getAllUsers,
   resetPassword,
 };

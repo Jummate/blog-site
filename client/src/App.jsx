@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import EditPost from "./pages/Edit";
 import EditProfile from "./pages/EditProfile";
 import ResetPassword from "./pages/ResetPassword";
+import ChangeStatus from "./pages/ChangeStatus";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -63,6 +64,10 @@ function App() {
           <Route
             path="/reset-password/:id"
             element={<ResetPassword />}
+          />
+          <Route
+            path="/change-status"
+            element={<ChangeStatus />}
           />
         </Route>
       </Routes>

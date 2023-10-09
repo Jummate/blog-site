@@ -72,6 +72,15 @@ const ProfileMenu = ({ handleProfileMenu }) => {
         >
           Reset Password
         </Link>
+        {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
+          <Link
+            to="change-status"
+            className="hover:underline"
+            onClick={handleProfileMenu}
+          >
+            Change User's Status
+          </Link>
+        )}
 
         {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
           <Link
