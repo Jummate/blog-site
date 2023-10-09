@@ -10,3 +10,6 @@ export const validateQuill = (quill) => (!quill.content ? false : true);
 
 export const validateFileUpload = (file) =>
   file.value.length < 1 ? false : true;
+
+export const validatePasswordMatch = (newPassword, confirmPassword) =>
+  newPassword.value === confirmPassword.value;

@@ -14,6 +14,7 @@ import CreatePost from "./pages/Create";
 import Login from "./pages/Login";
 import EditPost from "./pages/Edit";
 import EditProfile from "./pages/EditProfile";
+import ResetPassword from "./pages/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -58,6 +59,10 @@ function App() {
           <Route
             path="/edit-profile/:id"
             element={<EditProfile />}
+          />
+          <Route
+            path="/reset-password/:id"
+            element={<ResetPassword />}
           />
         </Route>
       </Routes>

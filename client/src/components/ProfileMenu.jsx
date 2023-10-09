@@ -61,7 +61,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
           Edit Profile
         </Link>
         <Link
-          to={`edit-profile/${decoded?.userId}`}
+          to={`reset-password/${decoded?.userId}`}
           className="hover:underline"
           onClick={handleProfileMenu}
         >

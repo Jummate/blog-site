@@ -13,6 +13,32 @@ const getRegistrationPage = (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { id } = req.params;
+
+  if (!oldPassword || !newPassword) {
+    return res
+      .status(400)
+      .json({ message: "Old and new passwords are required." });
+  }
+  if (!id) return res.status(400).json({ message: "ID parameter is required" });
+
+  const foundUser = await User.findOne({ _id: id }).exec();
+  if (!foundUser) return res.status(400).json({ message: "Record not found" });
+
+  const matchedPwd = await bcrypt.compare(oldPassword, foundUser.password);
+
+  if (!matchedPwd)
+    return res.status(400).json({ message: "Incorrect old password" });
+
+  const hashedNewPwd = await bcrypt.hash(newPassword, 10);
+  foundUser.password = hashedNewPwd;
+  await foundUser.save();
+
+  res.status(200).json({ message: "Password successfully changed" });
+};
+
 const createUser = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   const { buffer, mimetype } = req.file;
@@ -100,10 +126,15 @@ const getUser = async (req, res) => {
   const { id } = req.params;
   if (!id) return res.status(400).json({ message: "ID parameter is required" });
   const user = await User.findOne({ _id: id }).select("-password").exec();
-  console.log(user);
   if (!user)
     return res.status(200).json({ message: `No user with an ID ${id}` });
   res.status(200).json(user);
 };
 
-module.exports = { getRegistrationPage, createUser, updateUser, getUser };
+module.exports = {
+  getRegistrationPage,
+  createUser,
+  updateUser,
+  getUser,
+  resetPassword,
+};

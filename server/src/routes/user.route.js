@@ -6,6 +6,7 @@ const { uploadFromFrontend } = require("../middleware/uploadFromFrontend");
 router.route("/").post(uploadFromFrontend, userController.createUser);
 
 router.route("/register").get(userController.getRegistrationPage);
+router.route("/reset-password/:id").put(userController.resetPassword);
 router
   .route("/:id")
   .get(userController.getUser)
