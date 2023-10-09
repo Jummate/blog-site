@@ -38,11 +38,16 @@ const ProfileMenu = ({ handleProfileMenu }) => {
       </div>
       <div className="flex flex-col items-center justify-center gap-4">
         {decoded?.avatar ? (
-          <img
-            src={decoded.avatar}
-            alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
-            className="h-32 w-32 rounded-full"
-          />
+          <a
+            href={decoded.avatar}
+            target="_blank"
+          >
+            <img
+              src={decoded.avatar}
+              alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
+              className="h-32 w-32 rounded-full cursor-pointer"
+            />
+          </a>
         ) : (
           <FaUserCircle className="text-8xl" />
         )}
