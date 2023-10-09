@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const Table = ({ data, columns }) => {
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-auto">
       <table className="w-full border-collapse">
         <thead className="bg-sky-700 text-sky-50 p-5">
           <tr>
