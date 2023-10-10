@@ -3,12 +3,6 @@ import { useState, useEffect } from "react";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-const data = [
-  { _id: 1, firstName: "Bayo", lastName: 13, roles: ["Active", "Boom"] },
-  { _id: 2, firstName: "Tunde", lastName: 12, roles: ["Inactive"] },
-  { _id: 3, firstName: "Tolu", lastName: 11, roles: ["Software"] },
-  { _id: 4, firstName: "Lolu", lastName: 12, roles: ["Frontender"] },
-];
 
 const columns = [
   {
@@ -31,6 +25,7 @@ const columns = [
 
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const axiosAuth = useAxiosInterceptor();
 
   useEffect(() => {
@@ -41,6 +36,7 @@ const ChangeStatus = () => {
         const response = await axios.get(`${baseUrl.serverBaseUrl}/users/`, {
           cancelToken: source.token,
         });
+        setIsLoading(false);
         setUsers(response.data);
       } catch (err) {
         if (axios.isCancel(err)) {
@@ -61,10 +57,14 @@ const ChangeStatus = () => {
         <h1 className="text-center text-xl p-3 font-extrabold">
           USERS AND ROLES
         </h1>
-        <Table
-          data={users}
-          columns={columns}
-        />
+        {isLoading ? (
+          <p className="text-center mt-18">Loading...</p>
+        ) : (
+          <Table
+            data={users}
+            columns={columns}
+          />
+        )}
       </div>
     </section>
   );
