@@ -14,6 +14,10 @@ const columns = [
     header: "Last Name",
   },
   {
+    field: "avatar",
+    header: "Avatar",
+  },
+  {
     field: "email",
     header: "Email",
   },
@@ -28,43 +32,14 @@ const ChangeStatus = () => {
   const [isLoading, setIsLoading] = useState(true);
   const axiosAuth = useAxiosInterceptor();
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-
-    (async () => {
-      try {
-        const response = await axios.get(`${baseUrl.serverBaseUrl}/users/`, {
-          cancelToken: source.token,
-        });
-        setIsLoading(false);
-        setUsers(response.data);
-      } catch (err) {
-        if (axios.isCancel(err)) {
-          console.log("Axios request aborted");
-        } else {
-          console.log(err);
-        }
-      }
-    })();
-
-    return () => {
-      source.cancel();
-    };
-  }, []);
   return (
     <section className="flex justify-center items-center p-5 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100 ">
       <div className="flex flex-col w-full max-w-4xl">
         <h1 className="text-center text-xl p-3 font-extrabold">
           USERS AND ROLES
         </h1>
-        {isLoading ? (
-          <p className="text-center mt-18">Loading...</p>
-        ) : (
-          <Table
-            data={users}
-            columns={columns}
-          />
-        )}
+
+        <Table />
       </div>
     </section>
   );

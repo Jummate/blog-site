@@ -78,7 +78,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
             className="hover:underline"
             onClick={handleProfileMenu}
           >
-            Change User's Status
+            Change User's Role
           </Link>
         )}
 

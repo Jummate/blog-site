@@ -39,6 +39,26 @@ const resetPassword = async (req, res) => {
   res.status(200).json({ message: "Password successfully changed" });
 };
 
+const changeRole = async (req, res) => {
+  const { roles } = req.body;
+  const { id } = req.params;
+
+  // if (!roles) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Old and new passwords are required." });
+  // }
+  if (!id) return res.status(400).json({ message: "ID parameter is required" });
+
+  const foundUser = await User.findOne({ _id: id }).exec();
+  if (!foundUser) return res.status(400).json({ message: "Record not found" });
+
+  foundUser.roles = [...roles];
+  await foundUser.save();
+
+  res.status(200).json({ message: "Roles successfully updated" });
+};
+
 const createUser = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   const { buffer, mimetype } = req.file;
@@ -153,4 +173,5 @@ module.exports = {
   getUser,
   getAllUsers,
   resetPassword,
+  changeRole,
 };

@@ -10,6 +10,7 @@ router
 
 router.route("/register").get(userController.getRegistrationPage);
 router.route("/reset-password/:id").put(userController.resetPassword);
+router.route("/change-role/:id").put(userController.changeRole);
 router
   .route("/:id")
   .get(userController.getUser)
