@@ -31,7 +31,6 @@ const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRoleChange, setIsRoleChange] = useState(false);
-  const axiosAuth = useAxiosInterceptor();
 
   useEffect(() => {
     const source = axios.CancelToken.source();

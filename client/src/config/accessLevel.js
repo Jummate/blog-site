@@ -2,4 +2,8 @@ export const accessLevel = {
   CREATE_POST: ["ADMIN", "EDITOR"],
   EDIT_POST: ["ADMIN", "EDITOR"],
   DELETE_POST: ["ADMIN"],
+  EDIT_USER: ["ADMIN", "EDITOR"],
+  DELETE_USER: ["ADMIN"],
+  RESET_PASSWORD: ["ADMIN", "EDITOR"],
+  CHANGE_ROLE: ["ADMIN"],
 };

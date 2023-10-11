@@ -58,13 +58,15 @@ const ProfileMenu = ({ handleProfileMenu }) => {
       <hr className="border-sky-200 dark:border-sky-900" />
 
       <nav className="flex flex-col gap-6 items-center text-sm">
-        <Link
-          to={`edit-profile/${decoded?.userId}`}
-          className="hover:underline"
-          onClick={handleProfileMenu}
-        >
-          Edit Profile
-        </Link>
+        {token && hasPermission(accessLevel.EDIT_USER, decoded?.roles) && (
+          <Link
+            to={`edit-profile/${decoded?.userId}`}
+            className="hover:underline"
+            onClick={handleProfileMenu}
+          >
+            Edit Profile
+          </Link>
+        )}
         <Link
           to={`reset-password/${decoded?.userId}`}
           className="hover:underline"
@@ -72,7 +74,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
         >
           Reset Password
         </Link>
-        {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
+        {token && hasPermission(accessLevel.CHANGE_ROLE, decoded?.roles) && (
           <Link
             to="change-status"
             className="hover:underline"
