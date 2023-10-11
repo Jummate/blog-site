@@ -7,50 +7,23 @@ import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import baseUrl from "../config/baseUrl";
 
-const deleteUser = async (id, axiosAuth) => {
+const deleteUser = async (id, axiosAuth, callback) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/users/${id}`
     );
     notify({ msg: response.data.message });
-    //   navigate("/");
+    callback();
   } catch (err) {
     console.log(err);
   }
 };
-// import baseUrl from "../config/baseUrl";
-// import axios from "axios";
 
 const Table = ({ data, columns, setIsRoleChange }) => {
   const [openModal, setOpenModal] = useState(false);
   const [rowItems, setRowItems] = useState([]);
   const axiosAuth = useAxiosInterceptor();
-  //   const [users, setUsers] = useState([]);
-  //   const [isLoading, setIsLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     const source = axios.CancelToken.source();
-
-  //     (async () => {
-  //       try {
-  //         const response = await axios.get(`${baseUrl.serverBaseUrl}/users/`, {
-  //           cancelToken: source.token,
-  //         });
-  //         setIsLoading(false);
-  //         setUsers(response.data);
-  //       } catch (err) {
-  //         if (axios.isCancel(err)) {
-  //           console.log("Axios request aborted");
-  //         } else {
-  //           console.log(err);
-  //         }
-  //       }
-  //     })();
-
-  //     return () => {
-  //       source.cancel();
-  //     };
-  //   }, []);
   return (
     <div className="w-full overflow-auto">
       <table className="w-full border-collapse text-sm">
@@ -124,7 +97,7 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                         alertDelete(
                           JSON.parse(e.target.closest("tr").dataset.data)._id,
                           axiosAuth,
-                          null,
+                          setIsRoleChange,
                           deleteUser
                         )
                       }

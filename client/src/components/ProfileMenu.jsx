@@ -57,7 +57,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
       </div>
       <hr className="border-sky-200 dark:border-sky-900" />
 
-      <nav className="flex flex-col gap-6 items-center text-sm">
+      <nav className="flex flex-col gap-4 items-center text-sm">
         {token && hasPermission(accessLevel.EDIT_USER, decoded?.roles) && (
           <Link
             to={`edit-profile/${decoded?.userId}`}

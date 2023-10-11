@@ -56,7 +56,7 @@ const ResetPassword = () => {
       //   clearFormContent({
       //     input: [firstName, lastName, email, password],
       //   });
-      //   navigate(`/post/${id}`);
+      navigate(-1);
     } catch (err) {
       if (err.response.status === 400) {
         notify({

@@ -50,10 +50,7 @@ const EditProfile = () => {
         postFormData
       );
       notify({ msg: response.data.message });
-      //   clearFormContent({
-      //     input: [firstName, lastName, email, password],
-      //   });
-      //   navigate(`/post/${id}`);
+      navigate(-1);
     } catch (err) {
       if (err.response.status === 400) {
         notify({
