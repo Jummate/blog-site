@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
 import Form from "../components/Form";
 import axios from "axios";
@@ -24,21 +24,14 @@ const EditProfile = () => {
   const axiosAuth = useAxiosInterceptor();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const data = location.state;
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(
-          `${baseUrl.serverBaseUrl}/users/${id}`
-        );
-        const { firstName, lastName, email } = response.data;
-        firstNameInput.setValue(firstName);
-        lastNameInput.setValue(lastName);
-        emailInput.setValue(email);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    const { firstName, lastName, email } = data;
+    firstNameInput.setValue(firstName);
+    lastNameInput.setValue(lastName);
+    emailInput.setValue(email);
   }, []);
 
   const editProfile = async () => {
@@ -75,17 +68,6 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (
-    //   !validateMultipleFields([firstName, lastName, email]) ||
-    //   !validateQuill(contentProps)
-    // ) {
-    //   notify({
-    //     msg: "Empty fields detected!",
-    //     type: "error",
-    //     autoClose: false,
-    //   });
-    //   return;
-    // }
 
     editProfile();
   };

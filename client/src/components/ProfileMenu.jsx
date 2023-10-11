@@ -62,6 +62,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
           <Link
             to={`edit-profile/${decoded?.userId}`}
             className="hover:underline"
+            state={decoded}
             onClick={handleProfileMenu}
           >
             Edit Profile

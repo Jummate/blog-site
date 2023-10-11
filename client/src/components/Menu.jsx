@@ -1,7 +1,7 @@
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
-// import { AuthContext } from "../contexts/AuthProvider";
-// import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthProvider";
+import { useContext } from "react";
 // import Button from "./Button";
 // import axios from "axios";
 // import baseUrl from "../config/baseUrl";
@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 
 const Menu = ({ onClick }) => {
   // const navigate = useNavigate();
-  // const { token, setToken } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   return (
     <nav className="md:hidden fixed z-10 font-sans flex flex-col gap-5 w-full min-h-screen px-5 top-0 left-0 bg-sky-100 text-sky-600 dark:bg-sky-800 dark:text-sky-100 py-5">
       <div className="flex justify-end text-2xl gap-3">
@@ -41,7 +41,7 @@ const Menu = ({ onClick }) => {
         >
           Home
         </Link>
-        {/* {!token && (
+        {!token && (
           <Link
             to="login"
             className="hover:underline"
@@ -49,7 +49,7 @@ const Menu = ({ onClick }) => {
           >
             Log In
           </Link>
-        )} */}
+        )}
         {/* {token && (
           <Link
             to="create"

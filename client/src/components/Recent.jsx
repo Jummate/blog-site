@@ -30,6 +30,7 @@ const deletePost = async (id, axiosAuth, navigate) => {
 const RecentPost = ({ posts, isLoading }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
+
   // const [posts, setPosts] = useState([]);
   const axiosAuth = useAxiosInterceptor();
   const [itemOffset, setItemOffset] = useState(0);
@@ -38,30 +39,6 @@ const RecentPost = ({ posts, isLoading }) => {
   // const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const source = axios.CancelToken.source();
-
-  //   (async () => {
-  //     try {
-  //       const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
-  //         cancelToken: source.token,
-  //       });
-  //       setPosts(response.data);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       if (axios.isCancel(err)) {
-  //         console.log("Axios request aborted");
-  //       } else {
-  //         console.log(err);
-  //       }
-  //     }
-  //   })();
-
-  //   return () => {
-  //     source.cancel();
-  //   };
-  // }, []);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -114,7 +91,10 @@ const RecentPost = ({ posts, isLoading }) => {
                   </span>
                 </div>
 
-                <Link to={`post/${post._id}`}>
+                <Link
+                  to={`post/${post._id}`}
+                  state={post}
+                >
                   <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3 hover:underline dark:text-sky-100">
                     {post.title}
                   </h1>
@@ -145,7 +125,10 @@ const RecentPost = ({ posts, isLoading }) => {
                 {token && (
                   <div className="flex items-center p-2 mt-3 gap-3 text-xs">
                     {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
-                      <Link to={`edit/${post._id}`}>
+                      <Link
+                        to={`edit/${post._id}`}
+                        state={post}
+                      >
                         <Button extraStyles={"bg-sky-400 text-white"}>
                           Edit Post
                         </Button>

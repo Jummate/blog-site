@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
 import Form from "../components/Form";
-import axios from "axios";
 import baseUrl from "../config/baseUrl";
 import clearFormContent from "../utils/clearFormContent";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
@@ -22,21 +21,15 @@ const EditPost = () => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const data = location.state;
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(
-          `${baseUrl.serverBaseUrl}/posts/${id}`
-        );
-        const { title, summary, content, tag } = response.data;
-        titleProps.setValue(title);
-        tagProps.setValue(tag);
-        summaryProps.setValue(summary);
-        contentProps.setContent(content);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    const { title, summary, content, tag } = data;
+    titleProps.setValue(title);
+    tagProps.setValue(tag);
+    summaryProps.setValue(summary);
+    contentProps.setContent(content);
   }, []);
 
   const editPost = async () => {

@@ -45,7 +45,7 @@ const Login = () => {
       clearFormContent({
         input: [emailProps, passwordProps],
       });
-      navigate("/");
+      navigate(-1);
     } catch (err) {
       if (err.response.status === 401) {
         notify({
