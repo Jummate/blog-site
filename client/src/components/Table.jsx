@@ -1,12 +1,30 @@
 import Button from "./Button";
 import { useState } from "react";
 import Modal from "./Modal";
+import { FaTrash } from "react-icons/fa";
+import { alertDelete } from "../utils/alert";
+import { notify } from "../utils/notify";
+import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
+import baseUrl from "../config/baseUrl";
+
+const deleteUser = async (id, axiosAuth) => {
+  try {
+    const response = await axiosAuth.delete(
+      `${baseUrl.serverBaseUrl}/users/${id}`
+    );
+    notify({ msg: response.data.message });
+    //   navigate("/");
+  } catch (err) {
+    console.log(err);
+  }
+};
 // import baseUrl from "../config/baseUrl";
 // import axios from "axios";
 
 const Table = ({ data, columns, setIsRoleChange }) => {
   const [openModal, setOpenModal] = useState(false);
   const [rowItems, setRowItems] = useState([]);
+  const axiosAuth = useAxiosInterceptor();
   //   const [users, setUsers] = useState([]);
   //   const [isLoading, setIsLoading] = useState(true);
 
@@ -88,7 +106,7 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                 })}
                 <td className="p-3 font-bold cursor-pointer text-center">
                   {/* <FaEdit className="w-full" /> */}
-                  <p className="w-full flex items-center justify-center">
+                  <p className="w-full flex items-center justify-center gap-4">
                     <Button
                       extraStyles="bg-sky-500 text-white w-30"
                       onClick={(e) => {
@@ -99,6 +117,19 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                       }}
                     >
                       Change Roles
+                    </Button>
+                    <Button
+                      extraStyles="bg-red-500 text-white w-30"
+                      onClick={(e) =>
+                        alertDelete(
+                          JSON.parse(e.target.closest("tr").dataset.data)._id,
+                          axiosAuth,
+                          null,
+                          deleteUser
+                        )
+                      }
+                    >
+                      Delete User
                     </Button>
                   </p>
                 </td>

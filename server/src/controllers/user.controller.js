@@ -166,12 +166,30 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "ID parameter is required" });
+    const userToDelete = await User.findOne({ _id: id }).exec();
+    if (!userToDelete)
+      return res.status(200).json({ message: `No user with an ID ${id}` });
+
+    const result = await User.deleteOne({ _id: id });
+
+    res.status(200).json({ message: "User deleted successfully", result });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getRegistrationPage,
   createUser,
   updateUser,
   getUser,
   getAllUsers,
+  deleteUser,
   resetPassword,
   changeRole,
 };

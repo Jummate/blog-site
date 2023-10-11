@@ -30,6 +30,11 @@ router
     verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
     uploadFromFrontend,
     userController.updateUser
+  )
+  .delete(
+    verifyToken,
+    verifyRoles(ROLES_LIST.ADMIN),
+    userController.deleteUser
   );
 
 module.exports = router;

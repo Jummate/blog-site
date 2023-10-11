@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
-  const token = authHeader.split(" ")[1];
+  const token = authHeader?.split(" ")[1];
 
   if (!authHeader || !token) return res.sendStatus(401);
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
