@@ -56,7 +56,9 @@ const Footer = () => {
             className="h-24 w-24 rounded-full"
           ></img>
           <h1 className="text-xl font-bold">{profile.user.fullName}</h1>
-          <h3 className="text-md mb-3">Content Writer </h3>
+          <h3 className="text-sm mb-3 text-center">
+            Content Writer, Realtor, Educator{" "}
+          </h3>
           <SocialMedia userType="user" />
         </section>
 

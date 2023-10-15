@@ -32,8 +32,9 @@ const Hero = () => {
         <h1 className="text-2xl">
           Hi <PiHandWavingDuotone className="inline" />.
         </h1>
-        <h2 className="text-center w-full max-w-xs text-lg">
-          Welcome to my blog: Macro
+        <h2 className="text-center w-full max-w-xs text-xl">
+          Welcome to my blog:{" "}
+          <span className="font-bold dark:text-yellow-300">Macro</span>
         </h2>
         <p className="text-center w-full max-w-xs text-lg">
           I'm <span className="font-bold text-2xl">Olawale Jumat. </span>
