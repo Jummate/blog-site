@@ -32,7 +32,8 @@ const Footer = () => {
         <section className="flex flex-col justify-center items-center gap-2 px-3 col-span-2">
           <h1 className="text-2xl font-bold mb-3">Newsletter</h1>
           <p className="text-slate-200 md:text-lg mb-5 leading-6 text-center">
-            Be the first to get the latest post from me.
+            Don't miss out on anything. Be the first to get the latest posts.
+            Subcribe to get them directly to your mailbox.
           </p>
           <form className="flex flex-col justify-center items-center">
             <Input

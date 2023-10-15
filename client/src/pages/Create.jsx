@@ -1,7 +1,6 @@
 import { useFormInput } from "../hooks/useFormInput";
 import Form from "../components/Form";
 import baseUrl from "../config/baseUrl";
-import clearFormContent from "../utils/clearFormContent";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useContext } from "react";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
@@ -43,10 +42,6 @@ const CreatePost = () => {
         postFormData
       );
       notify({ msg: response.data.message });
-      clearFormContent({
-        input: [titleProps, summaryProps, tagProps, bannerProps],
-        quill: [contentProps],
-      });
       navigate("/");
     } catch (err) {
       if (err.response.status === 400) {

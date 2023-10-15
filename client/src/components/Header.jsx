@@ -42,7 +42,13 @@ const Header = () => {
     <header className="w-full p-5 md:px-10 font-sans font-bold sticky top-0 left-0 bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 z-10">
       <nav className="flex justify-between items-center">
         <Link to="/">
-          <h1 className="cursor-pointer"> Leo's Blog</h1>
+          <h1 className="cursor-pointer text-sky-600 dark:text-yellow-300 font-bold tracking-wider">
+            {" "}
+            <span className="h-10 w-10 rounded-full bg-sky-600 text-yellow-300 dark:bg-yellow-300 dark:text-sky-600 text-2xl">
+              m
+            </span>
+            acro
+          </h1>
         </Link>
 
         <div className="hidden md:flex md:text-md gap-6 items-center">

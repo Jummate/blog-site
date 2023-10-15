@@ -2,13 +2,9 @@ import { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
-import Form from "../components/Form";
-import axios from "axios";
 import baseUrl from "../config/baseUrl";
-import clearFormContent from "../utils/clearFormContent";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-import { validateMultipleFields, validateQuill } from "../utils/validate";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
@@ -16,8 +12,7 @@ const EditProfile = () => {
   const firstNameInput = useFormInput("");
   const lastNameInput = useFormInput("");
   const emailInput = useFormInput("");
-  //   const password = useFormInput("");
-  //   const confirmPassword = useFormInput("");
+
   const avatarInput = useFormInput("", "file");
 
   const { id } = useParams();
@@ -39,7 +34,6 @@ const EditProfile = () => {
     postFormData.append("firstName", firstNameInput.value);
     postFormData.append("lastName", lastNameInput.value);
     postFormData.append("email", emailInput.value);
-    // postFormData.append("password", password.value);
     if (avatarInput.value.length > 0) {
       postFormData.append("avatar", avatarInput.value[0]);
     }
@@ -117,34 +111,6 @@ const EditProfile = () => {
             value={emailInput.value}
             onChange={emailInput.onChange}
           />
-
-          {/* <label
-            className="text-bold"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <Input
-            type="password"
-            id="password"
-            extraStyles="shadow-pref rounded-md"
-            value={password.value}
-            onChange={password.onChange}
-          />
-
-          <label
-            className="text-bold"
-            htmlFor="confirm-password"
-          >
-            Confirm Password:
-          </label>
-          <Input
-            type="password"
-            id="confirm-password"
-            extraStyles="shadow-pref rounded-md"
-            value={confirmPassword.value}
-            onChange={confirmPassword.onChange}
-          /> */}
 
           <label
             className="text-bold"
