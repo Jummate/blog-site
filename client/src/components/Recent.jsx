@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
+import { appConfig } from "../config/appClientConfig";
 
 const deletePost = async (id, axiosAuth, navigate) => {
   try {
@@ -34,7 +35,7 @@ const RecentPost = ({ posts, isLoading }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  const itemsPerPage = 5;
+  const itemsPerPage = appConfig.ITEMS_PER_PAGE;
   const navigate = useNavigate();
 
   useEffect(() => {
