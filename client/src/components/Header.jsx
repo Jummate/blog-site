@@ -3,30 +3,12 @@ import { FaBars, FaUserCircle } from "react-icons/fa";
 import Menu from "./Menu";
 import ProfileMenu from "./ProfileMenu";
 import ColorMode from "./ColorMode";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "./Button";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
-import baseUrl from "../config/baseUrl";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { hasPermission } from "../utils/permission";
-import { accessLevel } from "../config/accessLevel";
-
-const logOut = async (navigate, setToken) => {
-  try {
-    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-      withCredentials: true,
-    });
-    setToken("");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
 
 const Header = () => {
-  const navigate = useNavigate();
-  const { token, setToken } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
@@ -66,22 +48,6 @@ const Header = () => {
               Log In
             </Link>
           )}
-          {/* {token && hasPermission(accessLevel.CREATE_POST, decoded?.roles) && (
-            <Link
-              to="create"
-              className="hover:underline"
-            >
-              Create New Post
-            </Link>
-          )} */}
-          {/* {token && (
-            <Button
-              extraStyles="shadow-pref bg-sky-900 dark:bg-sky-600 dark:text-slate-50"
-              onClick={() => logOut(navigate, setToken)}
-            >
-              Log Out
-            </Button>
-          )} */}
         </div>
 
         <div className="flex gap-3">
@@ -111,22 +77,9 @@ const Header = () => {
           />
         </div>
       </nav>
-      {openMenu ? (
-        <Menu
-          // ColorMode={
-          //   <ColorMode
-          //     colorMode={colorMode}
-          //     setColorMode={setColorMode}
-          //   />
-          // }
-          onClick={() => setOpenMenu(false)}
-        />
-      ) : null}
+      {openMenu ? <Menu onClick={() => setOpenMenu(false)} /> : null}
       {openProfileMenu ? (
-        <ProfileMenu
-          // token={token}
-          handleProfileMenu={() => setOpenProfileMenu(false)}
-        />
+        <ProfileMenu handleProfileMenu={() => setOpenProfileMenu(false)} />
       ) : null}
     </header>
   );

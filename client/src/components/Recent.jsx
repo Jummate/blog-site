@@ -2,7 +2,6 @@ import { IoTimeOutline } from "react-icons/io5";
 import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-// import axios from "axios";
 import ReactPaginate from "react-paginate";
 import baseUrl from "../config/baseUrl";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -31,12 +30,10 @@ const RecentPost = ({ posts, isLoading }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
 
-  // const [posts, setPosts] = useState([]);
   const axiosAuth = useAxiosInterceptor();
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 

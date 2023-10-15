@@ -35,5 +35,3 @@ export const profile = {
     },
   },
 };
-
-// module.exports = { mobileMenuData, tagData };

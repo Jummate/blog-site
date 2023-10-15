@@ -1,8 +1,7 @@
 import { FaEdit } from "react-icons/fa";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
-import clearFormContent from "../utils/clearFormContent";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 import {
@@ -20,30 +19,7 @@ const ResetPassword = () => {
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
 
-  //   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //     (async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `${baseUrl.serverBaseUrl}/users/${id}`
-  //         );
-  //         const { firstName, lastName, email } = response.data;
-  //         firstNameInput.setValue(firstName);
-  //         lastNameInput.setValue(lastName);
-  //         emailInput.setValue(email);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     })();
-  //   }, []);
-
   const resetPassword = async () => {
-    // const postFormData = new FormData();
-    // postFormData.append("oldPassword", oldPasswordInput.value);
-    // postFormData.append("newPassword", newPasswordInput.value);
-    // console.log(postFormData);
-
     try {
       const response = await axiosAuth.put(
         `${baseUrl.serverBaseUrl}/users/reset-password/${id}`,
@@ -53,9 +29,7 @@ const ResetPassword = () => {
         }
       );
       notify({ msg: response.data.message });
-      //   clearFormContent({
-      //     input: [firstName, lastName, email, password],
-      //   });
+
       navigate(-1);
     } catch (err) {
       if (err.response.status === 400) {

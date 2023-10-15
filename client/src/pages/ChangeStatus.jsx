@@ -2,7 +2,6 @@ import Table from "../components/Table";
 import { useState, useEffect } from "react";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
-import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 
 const columns = [
   {

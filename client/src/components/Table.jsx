@@ -1,7 +1,6 @@
 import Button from "./Button";
 import { useState } from "react";
 import Modal from "./Modal";
-import { FaTrash } from "react-icons/fa";
 import { alertDelete } from "../utils/alert";
 import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
@@ -78,7 +77,6 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                   );
                 })}
                 <td className="p-3 font-bold cursor-pointer text-center">
-                  {/* <FaEdit className="w-full" /> */}
                   <p className="w-full flex items-center justify-center gap-4">
                     <Button
                       extraStyles="bg-sky-500 text-white w-30"

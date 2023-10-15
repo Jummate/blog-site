@@ -54,7 +54,6 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
         />
       </div>
       <div className="flex flex-col items-center">
-        {/* <h1>{}</h1> */}
         <form className="flex flex-col gap-3">
           <label
             className="text-bold"
@@ -79,7 +78,6 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
             extraStyles="shadow-pref rounded-md"
             value={rowItems.lastName}
             disabled={true}
-            // onChange={newPasswordInput.onChange}
           />
           <label
             className="text-bold"
