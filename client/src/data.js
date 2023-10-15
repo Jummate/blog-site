@@ -35,3 +35,26 @@ export const profile = {
     },
   },
 };
+
+export const columns = [
+  {
+    field: "firstName",
+    header: "First Name",
+  },
+  {
+    field: "lastName",
+    header: "Last Name",
+  },
+  {
+    field: "avatar",
+    header: "Avatar",
+  },
+  {
+    field: "email",
+    header: "Email",
+  },
+  {
+    field: "roles",
+    header: "Roles",
+  },
+];

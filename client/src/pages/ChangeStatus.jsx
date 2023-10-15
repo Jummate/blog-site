@@ -2,29 +2,7 @@ import Table from "../components/Table";
 import { useState, useEffect } from "react";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
-
-const columns = [
-  {
-    field: "firstName",
-    header: "First Name",
-  },
-  {
-    field: "lastName",
-    header: "Last Name",
-  },
-  {
-    field: "avatar",
-    header: "Avatar",
-  },
-  {
-    field: "email",
-    header: "Email",
-  },
-  {
-    field: "roles",
-    header: "Roles",
-  },
-];
+import { columns } from "../data";
 
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
