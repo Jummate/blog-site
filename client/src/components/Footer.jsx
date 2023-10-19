@@ -1,4 +1,4 @@
-import IMAGE_THREE from "../assets/image3.jpg";
+import IMAGE_ONE from "../assets/image1.jpg";
 import Input from "./Input";
 import Button from "./Button";
 import { profile } from "../data";
@@ -51,7 +51,7 @@ const Footer = () => {
         </section>
         <section className="flex flex-col justify-center items-center gap-2">
           <img
-            src={IMAGE_THREE}
+            src={IMAGE_ONE}
             alt=""
             className="h-24 w-24 rounded-full"
           ></img>
