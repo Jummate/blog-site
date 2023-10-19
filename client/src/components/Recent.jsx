@@ -113,9 +113,7 @@ const RecentPost = ({ posts, isLoading }) => {
                       {post.author.fullName}
                     </p>
                     <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                      <time dateTime="2023-04-20">
-                        {formatDate(post.createdAt)}
-                      </time>
+                      <time>{formatDate(post.createdAt)}</time>
                     </p>
                   </div>
                 </div>

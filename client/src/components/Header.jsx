@@ -26,7 +26,7 @@ const Header = () => {
         <Link to="/">
           <h1 className="cursor-pointer text-sky-600 dark:text-yellow-300 font-bold tracking-wider">
             {" "}
-            <span className="h-10 w-10 rounded-full bg-sky-600 text-yellow-300 dark:bg-yellow-300 dark:text-sky-600 text-2xl px-1">
+            <span className="h-10 w-10 rounded-full bg-sky-600 text-yellow-300 dark:bg-yellow-300 dark:text-sky-600">
               m
             </span>
             acro
