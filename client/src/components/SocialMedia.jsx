@@ -1,4 +1,4 @@
-import { socialMedia } from "../data";
+import { profile } from "../data";
 
 import { FaLinkedin, FaGlobe, FaTwitter } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
@@ -11,7 +11,7 @@ const icons = {
 };
 
 const SocialMedia = ({ userType }) => {
-  const data = socialMedia[`${userType}`];
+  const data = profile[`${userType}`];
   return (
     <ul className="flex gap-5 text-2xl">
       {Object.keys(data).map((item, index) => (

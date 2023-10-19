@@ -5,6 +5,7 @@ import { useFormInput } from "../hooks/useFormInput";
 import { validateSingleField, validateEmail } from "../utils/validate";
 import { notify } from "../utils/notify";
 import { subscribeToNewsletter } from "../utils/newsletterSub";
+import { PiHandWavingDuotone } from "react-icons/pi";
 
 const Hero = () => {
   const emailProps = useFormInput("");
@@ -29,10 +30,17 @@ const Hero = () => {
     <section className="bg-slate-100 text-sky-900 dark:bg-sky-900 dark:text-slate-100 p-10 md:flex gap-5 justify-center items-center">
       <div className="flex flex-col items-center justify-center gap-5 py-5">
         <h1 className="text-2xl">
-          Hi, I'm <span className="font-bold text-3xl">Olawale Jumat</span>
+          Hi <PiHandWavingDuotone className="inline" />.
         </h1>
-        <p className="w-full max-w-xs text-md leading-6">
-          Lorem ipsum kddhdh dhdhd dgdgd gdg dhdhdh dd dhdh dhd dhdh
+        <h2 className="text-center w-full max-w-xs text-xl">
+          Welcome to my blog:{" "}
+          <span className="font-bold dark:text-yellow-300">Macro</span>
+        </h2>
+        <p className="text-center w-full max-w-xs text-lg">
+          I'm <span className="font-bold text-2xl">Olawale Jumat. </span>
+        </p>
+        <p className="text-center w-full max-w-xs text-lg">
+          I'm a content writer, a realtor and an educator.
         </p>
         <div className="flex flex-wrap gap-2 mt-5">
           <Input

@@ -20,9 +20,9 @@ const fileFilter = (req, file, cb) => {
   checkFileType(file, cb);
 };
 
-const upload = multer({ storage, limits, fileFilter }).single("banner");
+const upload = multer({ storage, limits, fileFilter }).single("avatar");
 
-const uploadMiddleware = (req, res, next) => {
+const uploadFromFrontend = (req, res, next) => {
   upload(req, res, (err) => {
     if (err instanceof multer.MulterError)
       return res.status(400).json({ message: err.message });
@@ -31,4 +31,4 @@ const uploadMiddleware = (req, res, next) => {
   });
 };
 
-module.exports = { uploadMiddleware };
+module.exports = { uploadFromFrontend };

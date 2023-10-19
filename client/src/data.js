@@ -1,137 +1,14 @@
-import IMAGE_TWO from "./assets/image2.jpg";
-import IMAGE_ONE from "./assets/image1.jpg";
-
-export const menuData = {
-  "Main Menu": {
-    Home: { link: "/" },
-    "Log In": { link: "login" },
-    "Log Out": { link: "" },
-    "Create New Post": { link: "create" },
-  },
-  Topics: {
-    "Science & Nature": { link: "" },
-    Politics: { link: "" },
-    Environment: { link: "" },
-  },
-};
-
-export const tagData = [
-  "science",
-  "nature",
-  "technology",
-  "wildlife",
-  "politics",
-  "travel",
-];
-
-export const topicData = {
-  Science: IMAGE_TWO,
-  Nature: IMAGE_TWO,
-  Technology: IMAGE_TWO,
-};
-
-export const loginPageData = [
-  { element: "input", label: "Email", type: "text", id: "email" },
-  { element: "input", label: "Password", type: "password", id: "password" },
-];
-
-export const postData = [
-  {
-    id: "qaAb23456ZCVhjk",
-    tag: "Science",
-    title: "My First Foray Into Lazy Loading With JavaScript",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "4min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_ONE,
-    authorImage: IMAGE_ONE,
-  },
-
-  {
-    id: "xaAb109836ZCVzct",
-    tag: "Nature",
-    title: "My First Foray Into Nature",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "6min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_TWO,
-    authorImage: IMAGE_TWO,
-  },
-  {
-    id: "xaAb109836ZCVzct",
-    tag: "Nature",
-    title: "My First Foray Into Nature",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "6min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_TWO,
-    authorImage: IMAGE_TWO,
-  },
-  {
-    id: "xaAb109836ZCVzct",
-    tag: "Nature",
-    title: "My First Foray Into Nature",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "6min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_TWO,
-    authorImage: IMAGE_TWO,
-  },
-  {
-    id: "xaAb109836ZCVzct",
-    tag: "Nature",
-    title: "My First Foray Into Nature",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "6min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_TWO,
-    authorImage: IMAGE_TWO,
-  },
-  {
-    id: "xaAb109836ZCVzct",
-    tag: "Nature",
-    title: "My First Foray Into Nature",
-    summary:
-      " Lazy Loading is a performance-improvement technique which seeks to lorem ipsum when the lorem ipsum is the lorem ipsum within the lorem ipsum...",
-    readTime: "6min",
-    author: "Olawale Jumat",
-    createdAt: "April 20, 2023",
-    bannerImage: IMAGE_TWO,
-    authorImage: IMAGE_TWO,
-  },
-];
-
-export const socialMedia = {
+export const profile = {
   user: {
-    linkedin: {
-      href: "https://www.linkedin.com/in/omololu-jumat-1405",
-      title: "Developer's LinkedIn Profile",
-    },
-    website: {
-      href: "https://omololujumat.netlify.app",
-      title: "Developer's Portfolio Website",
-    },
+    fullName: "Olawale Jumat",
     email: {
-      href: "mailto:omololujumat@gmail.com",
-      title: "Developer's Email Address",
-    },
-    twitter: {
-      href: "mailto:omololujumat@gmail.com",
-      title: "Developer's Email Address",
+      href: "mailto:olawalejumat43@gmail.com",
+      title: "Owner's Email Address",
     },
   },
 
   developer: {
+    fullName: "Omololu Jumat",
     linkedin: {
       href: "https://www.linkedin.com/in/omololu-jumat-1405",
       title: "Developer's LinkedIn Profile",
@@ -147,4 +24,25 @@ export const socialMedia = {
   },
 };
 
-// module.exports = { mobileMenuData, tagData };
+export const columns = [
+  {
+    field: "firstName",
+    header: "First Name",
+  },
+  {
+    field: "lastName",
+    header: "Last Name",
+  },
+  {
+    field: "avatar",
+    header: "Avatar",
+  },
+  {
+    field: "email",
+    header: "Email",
+  },
+  {
+    field: "roles",
+    header: "Roles",
+  },
+];

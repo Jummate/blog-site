@@ -1,8 +1,7 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import ReactPaginate from "react-paginate";
 import baseUrl from "../config/baseUrl";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -13,43 +12,36 @@ import { calculateReadingSpeed } from "../utils/getReadingSpeed";
 import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
+import { formatDate } from "../utils/dateFormatter";
+import { appConfig } from "../config/appClientConfig";
 
-const deletePost = async (id, axiosAuth) => {
+const deletePost = async (id, axiosAuth, navigate) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
+    navigate("/");
   } catch (err) {
     console.log(err);
   }
 };
 
-const RecentPost = () => {
+const RecentPost = ({ posts, isLoading }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
-  const [posts, setPosts] = useState([]);
+
   const axiosAuth = useAxiosInterceptor();
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`);
-        setPosts(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+  const itemsPerPage = appConfig.ITEMS_PER_PAGE;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(posts.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(posts.length / itemsPerPage));
+    setCurrentItems(posts?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(posts?.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, posts]);
 
   const handlePageClick = (event) => {
@@ -62,7 +54,13 @@ const RecentPost = () => {
         Recent Posts
       </h1>
       <div className="flex flex-col justify-center items-center">
-        {currentItems &&
+        {isLoading ? (
+          <p className="text-sky-900 dark:text-sky-100">Loading...</p>
+        ) : posts.length < 1 ? (
+          <p className="text-sky-900 dark:text-sky-100">
+            No articles to display
+          </p>
+        ) : (
           currentItems.map((post, index) => (
             <article
               key={index}
@@ -70,7 +68,7 @@ const RecentPost = () => {
             >
               <div className="w-full lg:w-1/2">
                 <img
-                  src={`${baseUrl.serverBaseUrl}/${post.bannerImage}`}
+                  src={post.bannerImage}
                   alt=""
                   className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
                 />
@@ -91,7 +89,10 @@ const RecentPost = () => {
                   </span>
                 </div>
 
-                <Link to={`post/${post._id}`}>
+                <Link
+                  to={`post/${post._id}`}
+                  state={post}
+                >
                   <h1 className="font-bold text-sky-800 text-sm leading-5 mb-3 hover:underline dark:text-sky-100">
                     {post.title}
                   </h1>
@@ -103,7 +104,7 @@ const RecentPost = () => {
 
                 <div className="mt-6 flex gap-2">
                   <img
-                    src={`${baseUrl.serverBaseUrl}/${post.author.avatar}`}
+                    src={post.author.avatar}
                     alt=""
                     className="h-10 w-10 rounded-full"
                   />
@@ -112,7 +113,7 @@ const RecentPost = () => {
                       {post.author.fullName}
                     </p>
                     <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                      <time dateTime="2023-04-20">{post.createdAt}</time>
+                      <time>{formatDate(post.createdAt)}</time>
                     </p>
                   </div>
                 </div>
@@ -120,7 +121,10 @@ const RecentPost = () => {
                 {token && (
                   <div className="flex items-center p-2 mt-3 gap-3 text-xs">
                     {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
-                      <Link to={`edit/${post._id}`}>
+                      <Link
+                        to={`edit/${post._id}`}
+                        state={post}
+                      >
                         <Button extraStyles={"bg-sky-400 text-white"}>
                           Edit Post
                         </Button>
@@ -130,7 +134,7 @@ const RecentPost = () => {
                       <Button
                         extraStyles={"bg-red-500 text-white"}
                         onClick={() =>
-                          alertDelete(post._id, axiosAuth, deletePost)
+                          alertDelete(post._id, axiosAuth, navigate, deletePost)
                         }
                       >
                         Delete Post
@@ -140,22 +144,25 @@ const RecentPost = () => {
                 )}
               </div>
             </article>
-          ))}
+          ))
+        )}
 
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="Next>"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          pageCount={pageCount}
-          previousLabel="<Prev"
-          renderOnZeroPageCount={null}
-          containerClassName="flex gap-5 font-bold "
-          activeClassName="rounded-full bg-sky-900 text-sky-50 dark:bg-sky-200 dark:text-sky-900 h-6 w-6 text-center"
-          previousClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
-          nextClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
-          pageClassName="text-sky-600 dark:text-sky-100 hover:text-sky-400 dark:hover:text-sky-500"
-        />
+        {posts.length > 0 ? (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next>"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel="<Prev"
+            renderOnZeroPageCount={null}
+            containerClassName="flex gap-5 font-bold "
+            activeClassName="rounded-full bg-sky-900 text-sky-50 dark:bg-sky-200 dark:text-sky-900 h-6 w-6 text-center"
+            previousClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
+            nextClassName="text-sky-950 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300"
+            pageClassName="text-sky-600 dark:text-sky-100 hover:text-sky-400 dark:hover:text-sky-500"
+          />
+        ) : null}
       </div>
     </section>
   );
