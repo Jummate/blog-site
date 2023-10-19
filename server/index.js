@@ -20,14 +20,15 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  "/public/uploads/banners",
-  express.static(path.join(__dirname, "/public/uploads/banners"))
-);
-app.use(
-  "/public/uploads/content",
-  express.static(path.join(__dirname, "/public/uploads/content"))
-);
+app.use("/users", express.static(path.join(__dirname, "/public")));
+// app.use(
+//   "/public/uploads/banners",
+//   express.static(path.join(__dirname, "/public/uploads/banners"))
+// );
+// app.use(
+//   "/public/uploads/content",
+//   express.static(path.join(__dirname, "/public/uploads/content"))
+// );
 app.use(cookieParser());
 
 // routes
