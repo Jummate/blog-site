@@ -8,19 +8,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import axios from "axios";
-
-const logOut = async (navigate, setToken, handleProfileMenu) => {
-  try {
-    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-      withCredentials: true,
-    });
-    handleProfileMenu();
-    setToken("");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
+import logOut from "../../helpers/logOut";
 
 const ProfileMenu = ({ handleProfileMenu }) => {
   const navigate = useNavigate();
