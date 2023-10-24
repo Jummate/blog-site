@@ -17,8 +17,6 @@ const handleLogin = async (req, res) => {
 
   const matchedPwd = await bcrypt.compare(password, potentialUser.password);
   if (matchedPwd) {
-    //use expiry time of 5 or 15mins for access token in production
-
     const accessToken = jwt.sign(
       {
         email: potentialUser.email,
@@ -47,9 +45,9 @@ const handleLogin = async (req, res) => {
 
     await potentialUser.save();
 
-    //use longer days for refresh token in production
-    //add "secure" and set to true i.e. secure=true
-    //add sameSite and set to strict i.e. sameSite='strict'
+    if (process.env.NODE_ENV === "production") {
+      cookieOptions = { ...cookieOptions, secure: true, sameSite: "strict" };
+    }
     res.cookie("jwt", refreshToken, {
       ...cookieOptions,
       maxAge: process.env.REFRESH_TOKEN_EXPIRY,
