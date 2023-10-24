@@ -54,13 +54,14 @@ const Login = () => {
 
       navigate(-1);
     } catch (err) {
-      if (err.response.status === 401) {
-        notify({
-          msg: err.response.data.message,
-          type: "error",
-          autoClose: false,
-        });
-      }
+      notify({
+        msg:
+          err.response.status >= 500
+            ? "Something went wrong. Please check your connection or try again."
+            : err?.response?.data?.message,
+        type: "error",
+        autoClose: false,
+      });
       console.error(err.message);
     }
   };

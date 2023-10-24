@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import { columns } from "../data";
+import { notify } from "../utils/notify";
 
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
@@ -24,6 +25,14 @@ const ChangeStatus = () => {
           console.log("Axios request aborted");
         } else {
           console.log(err);
+          notify({
+            msg:
+              !err.response || err?.response?.status >= 500
+                ? "Something went wrong. Please check your connection or try again."
+                : err?.response?.data?.message,
+            type: "error",
+            autoClose: false,
+          });
         }
       }
     })();

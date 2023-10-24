@@ -1,17 +1,21 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { handleAsync } = require("../helpers/handleAsyncError");
+const CustomError = require("../utils/error.custom");
 
-const handleRefreshToken = async (req, res) => {
+const handleRefreshToken = handleAsync(async (req, res, next) => {
   const { cookies } = req;
 
-  if (!cookies?.jwt) return res.sendStatus(401);
-
+  if (!cookies?.jwt)
+    return next(new CustomError("Please log in again to get access", 401));
   const refreshToken = cookies.jwt;
   const foundUser = await User.findOne({ refreshToken }).exec();
-  if (!foundUser) return res.sendStatus(403);
+  if (!foundUser)
+    return next(new CustomError("Access Denied! Inavlid token", 403));
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
     if (err || decoded.email !== foundUser.email) {
-      return res.sendStatus(403);
+      // return res.sendStatus(403);
+      return next(new CustomError("Access Denied! Invalid token", 403));
     }
     const accessToken = jwt.sign(
       {
@@ -27,6 +31,6 @@ const handleRefreshToken = async (req, res) => {
     );
     res.json({ accessToken });
   });
-};
+});
 
 module.exports = { handleRefreshToken };

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Topics from "./Topics";
 import Tag from "./Tag";
 import baseUrl from "../config/baseUrl";
+import { notify } from "../utils/notify";
 
 const collectTags = (allPosts) => {
   if (allPosts.length > 0) {
@@ -32,7 +33,16 @@ const Main = () => {
         if (axios.isCancel(err)) {
           console.log("Axios request aborted");
         } else {
-          console.log(err);
+          //error without "response" object is from axios request cancellation, so do not log it
+          err.response && console.log(err);
+          notify({
+            msg:
+              !err.response || err?.response?.status >= 500
+                ? "Something went wrong. Please check your connection or try again."
+                : err?.response?.data?.message,
+            type: "error",
+            autoClose: false,
+          });
         }
       }
     })();

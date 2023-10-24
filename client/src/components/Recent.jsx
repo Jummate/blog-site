@@ -23,7 +23,15 @@ const deletePost = async (id, axiosAuth, navigate) => {
     notify({ msg: response.data.message });
     navigate("/");
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    notify({
+      msg:
+        err.response.status >= 500
+          ? "Something went wrong. Please check your connection or try again."
+          : err?.response?.data?.message,
+      type: "error",
+      autoClose: false,
+    });
   }
 };
 

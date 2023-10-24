@@ -2,18 +2,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieOptions = require("../config/cookieOptions");
 const User = require("../models/User");
+const { handleAsync } = require("../helpers/handleAsyncError");
+const CustomError = require("../utils/error.custom");
 
-const handleLogin = async (req, res) => {
+const handleLogin = handleAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Email and password are required." });
+    return next(new CustomError("Email and password are required.", 400));
   }
   const potentialUser = await User.findOne({ email }).exec();
-  if (!potentialUser)
-    return res.status(401).json({ message: "Record not found" });
+  if (!potentialUser) return next(new CustomError("Record not found", 401));
 
   const matchedPwd = await bcrypt.compare(password, potentialUser.password);
   if (matchedPwd) {
@@ -55,8 +54,9 @@ const handleLogin = async (req, res) => {
 
     res.status(200).json({ accessToken, message: "Logged in successfully!" });
   } else {
-    res.status(401).json({ message: "Invalid credentials" });
+    // res.status(401).json({ message: "Invalid credentials" });
+    return next(new CustomError("Invalid credentials", 401));
   }
-};
+});
 
 module.exports = { handleLogin };
