@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./src/middleware/credentials");
 const CustomError = require("./src/utils/error.custom");
 const { errorHandler } = require("./src/utils/error");
+require("dotenv").config();
 
 //middleware
 app.use(credentials);
@@ -25,13 +26,18 @@ app.use("/users", express.static(path.join(__dirname, "/public")));
 // );
 app.use(cookieParser());
 
+// app.use((req, res, next) => {
+//   console.log(req.url);
+//   next();
+// });
+
 // routes
-app.use("/posts", require("./src/routes/post.route"));
-app.use("/users", require("./src/routes/user.route"));
-app.use("/auth", require("./src/routes/auth.route"));
-app.use("/refresh", require("./src/routes/refreshtoken.route"));
-app.use("/logout", require("./src/routes/logout.route"));
-app.use("/upload", require("./src/routes/upload.route"));
+app.use("/api/v1/posts", require("./src/api/v1/routes/post.route"));
+app.use("/api/v1/users", require("./src/api/v1/routes/user.route"));
+app.use("/api/v1/auth", require("./src/api/v1/routes/auth.route"));
+app.use("/api/v1/refresh", require("./src/api/v1/routes/refreshtoken.route"));
+app.use("/api/v1/logout", require("./src/api/v1/routes/logout.route"));
+app.use("/api/v1/upload", require("./src/api/v1/routes/upload.route"));
 
 app.all("*", (req, res, next) => {
   next(

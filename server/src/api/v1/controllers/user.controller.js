@@ -1,15 +1,17 @@
 const path = require("path");
-const userRoles = require("../config/userRoles");
+const userRoles = require("../../../config/userRoles");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
-const convertToBase64 = require("../helpers/convertToBase64");
-const handleUpload = require("../helpers/imageUpload");
-const { handleAsync } = require("../helpers/handleAsyncError");
-const CustomError = require("../utils/error.custom");
+const convertToBase64 = require("../../../helpers/convertToBase64");
+const handleUpload = require("../../../helpers/imageUpload");
+const { handleAsync } = require("../../../helpers/handleAsyncError");
+const CustomError = require("../../../utils/error.custom");
 
 const getRegistrationPage = (req, res) => {
   try {
-    res.sendFile(path.join(__dirname, "..", "..", "public", "register.html"));
+    res.sendFile(
+      path.join(__dirname, "..", "..", "..", "..", "public", "register.html")
+    );
   } catch (err) {
     console.error(err);
   }

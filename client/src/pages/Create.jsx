@@ -28,6 +28,7 @@ const CreatePost = () => {
   const createNewPost = async () => {
     const decoded = token && jwt_decode(token);
     const postFormData = new FormData();
+
     postFormData.append("title", titleProps.value);
     postFormData.append("tag", tagProps.value);
     postFormData.append("summary", summaryProps.value);
@@ -35,6 +36,7 @@ const CreatePost = () => {
     postFormData.append("banner", bannerProps.value[0]);
     postFormData.append("firstName", decoded?.firstName);
     postFormData.append("lastName", decoded?.lastName);
+    postFormData.append("avatar", decoded?.avatar);
 
     try {
       const response = await axiosAuth.post(

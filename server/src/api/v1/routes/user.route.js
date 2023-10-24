@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user.controller");
-const { uploadFromFrontend } = require("../middleware/uploadFromFrontend");
-const verifyToken = require("../middleware/verifyToken");
-const verifyRoles = require("../middleware/verifyRoles");
-const ROLES_LIST = require("../config/userRoles");
+const {
+  uploadFromFrontend,
+} = require("../../../middleware/uploadFromFrontend");
+const verifyToken = require("../../../middleware/verifyToken");
+const verifyRoles = require("../../../middleware/verifyRoles");
+const ROLES_LIST = require("../../../config/userRoles");
 
 router
   .route("/")

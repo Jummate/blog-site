@@ -1,13 +1,14 @@
 const path = require("path");
 const Post = require("../models/Post");
-const convertToBase64 = require("../helpers/convertToBase64");
-const handleUpload = require("../helpers/imageUpload");
-const deleteImage = require("../helpers/deleteImage");
-const { handleAsync } = require("../helpers/handleAsyncError");
-const CustomError = require("../utils/error.custom");
+const convertToBase64 = require("../../../helpers/convertToBase64");
+const handleUpload = require("../../../helpers/imageUpload");
+const deleteImage = require("../../../helpers/deleteImage");
+const { handleAsync } = require("../../../helpers/handleAsyncError");
+const CustomError = require("../../../utils/error.custom");
 
 const createPost = handleAsync(async (req, res, next) => {
-  const { id, title, summary, content, tag, firstName, lastName } = req.body;
+  const { title, summary, content, tag, firstName, lastName, avatar } =
+    req.body;
   const { buffer, mimetype } = req.file;
 
   const config = {
@@ -17,14 +18,13 @@ const createPost = handleAsync(async (req, res, next) => {
   const cldRes = await handleUpload(dataURI, config);
 
   const newPost = {
-    id,
     tag,
     title,
     summary,
     content,
     author: {
       fullName: `${firstName} ${lastName}`,
-      avatar: cldRes.secure_url,
+      avatar,
     },
     bannerImage: cldRes.secure_url,
   };

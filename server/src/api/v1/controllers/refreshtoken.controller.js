@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const { handleAsync } = require("../helpers/handleAsyncError");
-const CustomError = require("../utils/error.custom");
+const { handleAsync } = require("../../../helpers/handleAsyncError");
+const CustomError = require("../../../utils/error.custom");
 
 const handleRefreshToken = handleAsync(async (req, res, next) => {
   const { cookies } = req;

@@ -1,6 +1,6 @@
 const User = require("../models/User");
-const cookieOptions = require("../config/cookieOptions");
-const { handleAsync } = require("../helpers/handleAsyncError");
+const cookieOptions = require("../../../config/cookieOptions");
+const { handleAsync } = require("../../../helpers/handleAsyncError");
 
 const handleLogout = handleAsync(async (req, res, next) => {
   const { cookies } = req;

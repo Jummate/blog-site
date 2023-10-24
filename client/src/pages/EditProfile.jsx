@@ -8,6 +8,7 @@ import { notify } from "../utils/notify";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthProvider";
+import { logOut } from "../helpers/logOut";
 
 const EditProfile = () => {
   const firstNameInput = useFormInput("");

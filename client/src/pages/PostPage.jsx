@@ -41,6 +41,7 @@ const PostPage = () => {
 
   const location = useLocation();
   const data = location.state;
+  // console.log(data);
 
   return (
     <section className="dark:bg-sky-900/90">
@@ -88,10 +89,7 @@ const PostPage = () => {
                   {data?.author?.fullName}
                 </p>
                 <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                  Posted on{" "}
-                  <time dateTime="2023-04-20">
-                    {formatDate(data?.createdAt)}
-                  </time>
+                  Posted on <time>{formatDate(data?.createdAt)}</time>
                 </p>
               </div>
             </div>
