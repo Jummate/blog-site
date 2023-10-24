@@ -45,8 +45,14 @@ const handleLogin = handleAsync(async (req, res, next) => {
     await potentialUser.save();
 
     if (process.env.NODE_ENV === "production") {
-      cookieOptions = { ...cookieOptions, secure: true, sameSite: "strict" };
+      res.cookie("jwt", refreshToken, {
+        ...cookieOptions,
+        maxAge: process.env.REFRESH_TOKEN_EXPIRY,
+        secure: true,
+        sameSite: "strict",
+      });
     }
+
     res.cookie("jwt", refreshToken, {
       ...cookieOptions,
       maxAge: process.env.REFRESH_TOKEN_EXPIRY,
