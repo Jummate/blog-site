@@ -86,7 +86,7 @@ const ProfileMenu = ({ handleProfileMenu }) => {
           <Button
             extraStyles="shadow-pref bg-sky-900 dark:text-slate-50 px-10"
             onClick={() =>
-              logOut(navigate, setToken, handleProfileMenu, timerID)
+              logOut({ navigate, setToken, handleProfileMenu, timerID })
             }
           >
             Log Out

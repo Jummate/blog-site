@@ -104,7 +104,7 @@ const updateUser = handleAsync(async (req, res, next) => {
 });
 
 const editUser = async (req, res, userId, newPath = undefined) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, firstName, lastName } = req.body;
 
   const userToEdit = await User.findOne({ _id: userId }).exec();
   if (!userToEdit)
@@ -113,7 +113,6 @@ const editUser = async (req, res, userId, newPath = undefined) => {
   userToEdit.email = email;
   userToEdit.firstName = firstName;
   userToEdit.lastName = lastName;
-  userToEdit.password = password;
   userToEdit.avatar = newPath ? newPath : userToEdit.avatar;
 
   const result = await userToEdit.save();

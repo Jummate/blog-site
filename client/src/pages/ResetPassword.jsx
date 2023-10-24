@@ -1,15 +1,18 @@
 import { FaEdit } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthProvider";
 import {
   validateMultipleFields,
   validatePasswordMatch,
 } from "../utils/validate";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { logOut } from "../helpers/logOut";
 
 const ResetPassword = () => {
   const oldPasswordInput = useFormInput("");
@@ -18,6 +21,8 @@ const ResetPassword = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+  const { setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const resetPassword = async () => {
     try {
@@ -30,7 +35,7 @@ const ResetPassword = () => {
       );
       notify({ msg: response.data.message });
 
-      navigate(-1);
+      logOut({ navigate, url: "/login", setToken });
     } catch (err) {
       notify({
         msg:
@@ -40,7 +45,7 @@ const ResetPassword = () => {
         type: "error",
         autoClose: false,
       });
-      console.error(err);
+      console.log(err);
     }
   };
 

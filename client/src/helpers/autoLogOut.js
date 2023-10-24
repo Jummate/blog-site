@@ -7,7 +7,7 @@ export const autoLogOut = (navigate, setToken) => {
   // expiryTime = expiryTime * 1000;
   const timeOut = import.meta.env.VITE_APP_AUTO_LOG_OUT_TIME;
   const timer = setTimeout(() => {
-    logOut(navigate, setToken);
+    logOut({ navigate, setToken });
   }, timeOut);
 
   return timer;

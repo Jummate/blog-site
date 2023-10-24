@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
@@ -7,6 +7,7 @@ import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const EditProfile = () => {
   const firstNameInput = useFormInput("");
@@ -17,6 +18,8 @@ const EditProfile = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+
+  const { setToken } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,7 +47,7 @@ const EditProfile = () => {
         postFormData
       );
       notify({ msg: response.data.message });
-      navigate(-1);
+      logOut({ navigate, url: "/login", setToken });
     } catch (err) {
       notify({
         msg:

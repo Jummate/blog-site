@@ -8,6 +8,8 @@ import { notify } from "../utils/notify";
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // this is required to cause the Table to re-render to refelect update immediately
   const [isRoleChange, setIsRoleChange] = useState(false);
 
   useEffect(() => {

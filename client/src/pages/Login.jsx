@@ -51,7 +51,6 @@ const Login = () => {
       clearFormContent({
         input: [emailProps, passwordProps],
       });
-
       navigate(-1);
     } catch (err) {
       notify({

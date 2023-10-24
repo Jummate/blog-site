@@ -2,12 +2,13 @@ import axios from "axios";
 import baseUrl from "../config/baseUrl";
 import { notify } from "../utils/notify";
 
-export const logOut = async (
+export const logOut = async ({
   navigate,
+  url = "/",
   setToken,
   handleProfileMenu = undefined,
-  timerID = undefined
-) => {
+  timerID = undefined,
+}) => {
   try {
     await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
       withCredentials: true,
@@ -15,7 +16,7 @@ export const logOut = async (
     handleProfileMenu && handleProfileMenu();
     timerID && clearTimeout(timerID);
     setToken("");
-    navigate("/");
+    navigate(url);
   } catch (err) {
     console.log(err);
     notify({
