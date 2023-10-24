@@ -4,16 +4,21 @@ import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import clearFormContent from "../utils/clearFormContent";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { validateMultipleFields } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../utils/notify";
+import { TimerContext } from "../contexts/TimerProvider";
+import { autoLogOut } from "../helpers/autoLogOut";
+
 const Login = () => {
-  const { setToken } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
+  const { setTimerID } = useContext(TimerContext);
   const emailProps = useFormInput("");
   const passwordProps = useFormInput("");
   const navigate = useNavigate();
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +33,7 @@ const Login = () => {
     const loginFormData = new FormData();
     loginFormData.append("email", emailProps.value);
     loginFormData.append("password", passwordProps.value);
+    setIsSubmit(true);
 
     try {
       const response = await axios.post(
@@ -45,6 +51,7 @@ const Login = () => {
       clearFormContent({
         input: [emailProps, passwordProps],
       });
+
       navigate(-1);
     } catch (err) {
       if (err.response.status === 401) {
@@ -57,6 +64,14 @@ const Login = () => {
       console.error(err.message);
     }
   };
+
+  useEffect(() => {
+    if (isSubmit) {
+      const timer = autoLogOut(navigate, setToken);
+      setTimerID(timer);
+    }
+  }, [token]);
+
   return (
     <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center min-h-screen dark:bg-sky-800">
       <div className="bg-sky-100 text-sky-900 rounded-3xl dark:bg-sky-200 w-full max-w-md">

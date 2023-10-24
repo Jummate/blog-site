@@ -2,17 +2,17 @@ import { FaTimes, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import jwt_decode from "jwt-decode";
-import baseUrl from "../config/baseUrl";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
-import axios from "axios";
-import logOut from "../../helpers/logOut";
+import { logOut } from "../helpers/logOut";
+import { TimerContext } from "../contexts/TimerProvider";
 
 const ProfileMenu = ({ handleProfileMenu }) => {
   const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
+  const { timerID } = useContext(TimerContext);
   const decoded = token && jwt_decode(token);
 
   return (
@@ -85,7 +85,9 @@ const ProfileMenu = ({ handleProfileMenu }) => {
         {token && (
           <Button
             extraStyles="shadow-pref bg-sky-900 dark:text-slate-50 px-10"
-            onClick={() => logOut(navigate, setToken, handleProfileMenu)}
+            onClick={() =>
+              logOut(navigate, setToken, handleProfileMenu, timerID)
+            }
           >
             Log Out
           </Button>

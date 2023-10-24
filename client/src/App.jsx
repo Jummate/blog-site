@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import PostPage from "./pages/PostPage";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { TimerProvider } from "./contexts/TimerProvider";
 
 import {
   BrowserRouter as Router,
@@ -23,10 +24,12 @@ function App() {
   const Layout = () => (
     <>
       <AuthProvider>
-        <ToastContainer />
-        <Header />
-        <Outlet />
-        <Footer />
+        <TimerProvider>
+          <ToastContainer />
+          <Header />
+          <Outlet />
+          <Footer />
+        </TimerProvider>
       </AuthProvider>
     </>
   );
@@ -53,6 +56,7 @@ function App() {
             path="/edit/:id"
             element={<EditPost />}
           />
+
           <Route
             path="/login"
             element={<Login />}

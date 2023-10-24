@@ -78,7 +78,7 @@ const Header = () => {
         </div>
       </nav>
       {openMenu ? <Menu onClick={() => setOpenMenu(false)} /> : null}
-      {openProfileMenu ? (
+      {openProfileMenu && token ? (
         <ProfileMenu handleProfileMenu={() => setOpenProfileMenu(false)} />
       ) : null}
     </header>

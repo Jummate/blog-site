@@ -18,6 +18,7 @@ const handleLogin = async (req, res) => {
   const matchedPwd = await bcrypt.compare(password, potentialUser.password);
   if (matchedPwd) {
     //use expiry time of 5 or 15mins for access token in production
+
     const accessToken = jwt.sign(
       {
         email: potentialUser.email,
