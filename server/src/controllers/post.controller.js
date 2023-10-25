@@ -2,9 +2,13 @@ const path = require("path");
 const Post = require("../models/Post");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
-const deleteImage = require("../helpers/deleteImage");
+const { deleteImages, deleteFolder } = require("../helpers/deleteImage");
 const { handleAsync } = require("../helpers/handleAsyncError");
 const CustomError = require("../utils/error.custom");
+
+const extractURL = require("../helpers/extractURL");
+const cleanURL = require("../helpers/cleanURL");
+const buildPublicID = require("../helpers/buildPublicID");
 
 const createPost = handleAsync(async (req, res, next) => {
   const { title, summary, content, tag, firstName, lastName, avatar } =
@@ -14,23 +18,35 @@ const createPost = handleAsync(async (req, res, next) => {
   const config = {
     folder: "banner",
   };
-  const dataURI = convertToBase64(buffer, mimetype);
-  const cldRes = await handleUpload(dataURI, config);
+  let dataURI;
+  let cldRes;
 
-  const newPost = {
-    tag,
-    title,
-    summary,
-    content,
-    author: {
-      fullName: `${firstName} ${lastName}`,
-      avatar,
-    },
-    bannerImage: cldRes.secure_url,
-  };
+  try {
+    dataURI = convertToBase64(buffer, mimetype);
+    cldRes = await handleUpload(dataURI, config);
 
-  const result = await Post.create(newPost);
-  res.status(201).json({ message: "Post created successfully", result });
+    const newPost = {
+      tag,
+      title,
+      summary,
+      content,
+      author: {
+        fullName: `${firstName} ${lastName}`,
+        avatar,
+      },
+      bannerImage: cldRes.secure_url,
+    };
+
+    const result = await Post.create(newPost);
+    res.status(201).json({ message: "Post created successfully", result });
+  } catch (err) {
+    //delete images already uploaded
+    const bannerPubID = buildPublicID([cldRes?.secure_url]);
+    const cleanedURL = cleanURL(extractURL(content));
+    const contentPubID = buildPublicID(cleanedURL, "content");
+    await deleteImages([...bannerPubID, ...contentPubID]);
+    next(err);
+  }
 });
 
 const deletePost = handleAsync(async (req, res, next) => {
@@ -39,18 +55,24 @@ const deletePost = handleAsync(async (req, res, next) => {
   const postToDelete = await Post.findOne({ _id: id }).exec();
   if (!postToDelete)
     return res.status(200).json({ message: `No post with an ID ${id}` });
-  const imageID = path.parse(postToDelete.bannerImage).name;
-  const pathToImageFolder = path.parse(postToDelete.bannerImage).dir;
-  const imageFolder = pathToImageFolder.split("/").slice(-1).toString();
+
+  const bannerPubID = buildPublicID([postToDelete.bannerImage]);
+  const cleanedURL = cleanURL(extractURL(postToDelete.content));
+
+  const contentPubID = buildPublicID(cleanedURL, "content");
+  const delImage = await deleteImages([...bannerPubID, ...contentPubID]);
+  // const delFolder = await deleteFolder(
+  //   buildPublicID(cleanedURL)[0].split("/")[0]
+  // );
 
   const result = await Post.deleteOne({ _id: id });
-  await deleteImage(`${imageFolder}/${imageID}`);
 
   res.status(200).json({ message: "Post deleted successfully", result });
 });
 
 const getAllPosts = handleAsync(async (req, res, next) => {
   const posts = await Post.find().sort({ createdAt: -1 });
+
   if (!posts || posts.length < 1)
     return res.status(200).json({ message: "No posts found" });
   res.status(200).json(posts);
@@ -72,10 +94,21 @@ const updatePost = handleAsync(async (req, res, next) => {
   let result;
 
   if (req.file) {
+    const config = {
+      folder: "banner",
+    };
     const { buffer, mimetype } = req.file;
     const dataURI = convertToBase64(buffer, mimetype);
-    const cldRes = await handleUpload(dataURI);
-    result = await editPost(req, res, id, cldRes.secure_url);
+    let cldRes;
+    try {
+      cldRes = await handleUpload(dataURI, config);
+      result = await editPost(req, res, id, cldRes.secure_url);
+    } catch (err) {
+      //delete images already uploaded
+      const bannerPubID = buildPublicID([cldRes?.secure_url]);
+      await deleteImages([...bannerPubID]);
+      next(err);
+    }
   } else {
     result = await editPost(req, res, id);
   }

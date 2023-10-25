@@ -7,7 +7,7 @@ const uploadContentImage = handleAsync(async (req, res, next) => {
   const { contentID } = req.body;
 
   const config = {
-    folder: `content/${contentID}`,
+    folder: `content/id${contentID}id`,
   };
   const dataURI = convertToBase64(buffer, mimetype);
   const cldRes = await handleUpload(dataURI, config);
