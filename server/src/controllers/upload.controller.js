@@ -1,6 +1,6 @@
-const { handleAsync } = require("../../../helpers/handleAsyncError");
-const convertToBase64 = require("../../../helpers/convertToBase64");
-const handleUpload = require("../../../helpers/imageUpload");
+const { handleAsync } = require("../helpers/handleAsyncError");
+const convertToBase64 = require("../helpers/convertToBase64");
+const handleUpload = require("../helpers/imageUpload");
 
 const uploadContentImage = handleAsync(async (req, res, next) => {
   const { buffer, mimetype } = req.file;

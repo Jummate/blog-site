@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cookieOptions = require("../../../config/cookieOptions");
+const cookieOptions = require("../config/cookieOptions");
 const User = require("../models/User");
-const { handleAsync } = require("../../../helpers/handleAsyncError");
-const CustomError = require("../../../utils/error.custom");
+const { handleAsync } = require("../helpers/handleAsyncError");
+const CustomError = require("../utils/error.custom");
 
 // const user = {
 //   _id: "652daa78980d3d1b3e2d159b",
