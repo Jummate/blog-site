@@ -9,9 +9,7 @@ const CustomError = require("../utils/error.custom");
 
 const getRegistrationPage = (req, res) => {
   try {
-    res.sendFile(
-      path.join(__dirname, "..", "..", "..", "..", "public", "register.html")
-    );
+    res.sendFile(path.join(__dirname, "..", "..", "public", "register.html"));
   } catch (err) {
     console.error(err);
   }
