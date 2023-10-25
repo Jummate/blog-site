@@ -6,8 +6,10 @@ import TextArea from "./TextArea";
 import axios from "axios";
 import baseUrl from "../config/baseUrl";
 import { useRef } from "react";
+import { generateID } from "../utils/generateID";
 
 let quillRef;
+let contentID = generateID();
 
 const imageHandler = () => {
   const input = document.createElement("input");
@@ -21,6 +23,7 @@ const imageHandler = () => {
       const formData = new FormData();
 
       formData.append("files", file);
+      formData.append("contentID", contentID);
 
       const quill = quillRef.current.getEditor();
 
@@ -30,6 +33,7 @@ const imageHandler = () => {
       // Move cursor to right side of image (easier to continue typing)
       quill.setSelection(range.index + 1);
 
+      // upload to the server which uploads to cloudinary
       const res = await axios.post(
         `${baseUrl.serverBaseUrl}/upload/`,
         formData
@@ -82,7 +86,9 @@ const Form = ({
   return (
     <form
       className="flex flex-col gap-4"
-      onSubmit={onSubmit}
+      onSubmit={(e) => {
+        onSubmit(e), (contentID = generateID());
+      }}
     >
       <Input
         placeholder="Title"

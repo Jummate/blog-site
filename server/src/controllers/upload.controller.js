@@ -4,9 +4,10 @@ const handleUpload = require("../helpers/imageUpload");
 
 const uploadContentImage = handleAsync(async (req, res, next) => {
   const { buffer, mimetype } = req.file;
+  const { contentID } = req.body;
 
   const config = {
-    folder: "content",
+    folder: `content/${contentID}`,
   };
   const dataURI = convertToBase64(buffer, mimetype);
   const cldRes = await handleUpload(dataURI, config);

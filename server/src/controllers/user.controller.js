@@ -88,9 +88,12 @@ const updateUser = handleAsync(async (req, res, next) => {
   let result;
 
   if (req.file) {
+    const config = {
+      folder: "users",
+    };
     const { buffer, mimetype } = req.file;
     const dataURI = convertToBase64(buffer, mimetype);
-    const cldRes = await handleUpload(dataURI);
+    const cldRes = await handleUpload(dataURI, config);
     result = await editUser(req, res, id, cldRes.secure_url);
   } else {
     result = await editUser(req, res, id);
