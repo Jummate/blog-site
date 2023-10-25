@@ -5,20 +5,6 @@ const User = require("../models/User");
 const { handleAsync } = require("../helpers/handleAsyncError");
 const CustomError = require("../utils/error.custom");
 
-// const user = {
-//   _id: "652daa78980d3d1b3e2d159b",
-//   firstName: "Abeeb",
-//   lastName: "Jumat",
-//   email: "wale@gmail.com",
-//   password: "$2b$10$5kUQeDNSwB74PWU/NVeT2eHywd4N8rmRfmV9sMlLzn3vkjDOmMX9W",
-
-//   roles: [1, 2],
-//   avatar:
-//     "https://res.cloudinary.com/ds5zfwpgv/image/upload/v1697491575/users/k4eu46fiescgsrydwraz.jpg",
-//   __v: 0,
-//   refreshToken: "",
-// };
-
 const handleLogin = handleAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -26,7 +12,6 @@ const handleLogin = handleAsync(async (req, res, next) => {
     return next(new CustomError("Email and password are required.", 400));
   }
   const potentialUser = await User.findOne({ email }).exec();
-  // const potentialUser = user;
   if (!potentialUser) return next(new CustomError("Record not found", 401));
 
   const matchedPwd = await bcrypt.compare(password, potentialUser.password);
@@ -66,12 +51,12 @@ const handleLogin = handleAsync(async (req, res, next) => {
         secure: true,
         sameSite: "strict",
       });
+    } else {
+      res.cookie("jwt", refreshToken, {
+        ...cookieOptions,
+        maxAge: process.env.REFRESH_TOKEN_EXPIRY,
+      });
     }
-
-    res.cookie("jwt", refreshToken, {
-      ...cookieOptions,
-      maxAge: process.env.REFRESH_TOKEN_EXPIRY,
-    });
 
     res.status(200).json({ accessToken, message: "Logged in successfully!" });
   } else {

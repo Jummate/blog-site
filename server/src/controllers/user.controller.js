@@ -8,11 +8,7 @@ const { handleAsync } = require("../helpers/handleAsyncError");
 const CustomError = require("../utils/error.custom");
 
 const getRegistrationPage = (req, res) => {
-  try {
-    res.sendFile(path.join(__dirname, "..", "..", "public", "register.html"));
-  } catch (err) {
-    console.error(err);
-  }
+  res.sendFile(path.join(__dirname, "..", "..", "public", "register.html"));
 };
 
 const resetPassword = handleAsync(async (req, res, next) => {

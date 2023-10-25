@@ -18,8 +18,11 @@ const handleLogout = handleAsync(async (req, res, next) => {
 
   await foundUser.save();
 
-  // !!!!! Add secure:true in production to make it serve only on https protocol
-  res.clearCookie("jwt", cookieOptions);
+  if (process.env.NODE_ENV === "production") {
+    res.clearCookie("jwt", { ...cookieOptions, secure: true });
+  } else {
+    res.clearCookie("jwt", cookieOptions);
+  }
 
   //OK but no content to send back
   return res.sendStatus(204);
