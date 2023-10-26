@@ -8,7 +8,6 @@ cloudinary.config({
 });
 
 const deleteImages = (publicIDArr) => {
-  console.log("deleting image...");
   return cloudinary.api.delete_resources(
     [...publicIDArr],
     function (error, result) {
@@ -19,7 +18,6 @@ const deleteImages = (publicIDArr) => {
 };
 
 const deleteFolder = (folderName) => {
-  console.log("deleting folder....");
   return cloudinary.api.delete_folder(folderName, function (error, result) {
     if (error) throw new Error(error);
     return result;

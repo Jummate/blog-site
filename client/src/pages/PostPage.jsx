@@ -44,7 +44,6 @@ const PostPage = () => {
 
   const location = useLocation();
   const data = location.state;
-  // console.log(data);
 
   return (
     <section className="dark:bg-sky-900/90">
