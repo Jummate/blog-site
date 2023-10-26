@@ -28,12 +28,15 @@ const Main = () => {
 
     (async () => {
       try {
+        console.log("trying to fetch...");
         const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
           cancelToken: source.token,
         });
-        if (response.data.length > 0) {
-          setPosts(response.data);
-        }
+
+        response.data.length > 0
+          ? setPosts(response.data)
+          : setPosts(response.data.data);
+
         setIsLoading(false);
       } catch (err) {
         if (axios.isCancel(err)) {

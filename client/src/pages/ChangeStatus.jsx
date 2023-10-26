@@ -22,7 +22,9 @@ const ChangeStatus = () => {
           cancelToken: source.token,
         });
         setIsLoading(false);
-        setUsers(response.data);
+        response.data.length > 0
+          ? setUsers(response.data)
+          : setUsers(response.data.data);
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log("Axios request aborted");

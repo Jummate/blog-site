@@ -108,7 +108,9 @@ const editUser = async (req, res, userId, newPath = undefined) => {
 
   const userToEdit = await User.findOne({ _id: userId }).exec();
   if (!userToEdit)
-    return res.status(200).json({ message: `No user with an ID ${userId}` });
+    return res
+      .status(200)
+      .json({ message: `No user with an ID ${userId}`, data: null });
 
   userToEdit.email = email;
   userToEdit.firstName = firstName;
@@ -126,7 +128,9 @@ const getUser = handleAsync(async (req, res, next) => {
     .select("-password -refreshToken")
     .exec();
   if (!user)
-    return res.status(200).json({ message: `No user with an ID ${id}` });
+    return res
+      .status(200)
+      .json({ message: `No user with an ID ${id}`, data: null });
   res.status(200).json(user);
 });
 
@@ -135,7 +139,7 @@ const getAllUsers = handleAsync(async (req, res, next) => {
     .select("-password -refreshToken")
     .sort({ createdAt: -1 });
   if (!users || users.length < 1)
-    return res.status(200).json({ message: "No users found" });
+    return res.status(200).json({ message: "No users found", data: [] });
   res.status(200).json(users);
 });
 
@@ -144,7 +148,9 @@ const deleteUser = handleAsync(async (req, res, next) => {
   if (!id) return next(new CustomError("ID parameter is required", 400));
   const userToDelete = await User.findOne({ _id: id }).exec();
   if (!userToDelete)
-    return res.status(200).json({ message: `No user with an ID ${id}` });
+    return res
+      .status(200)
+      .json({ message: `No user with an ID ${id}`, data: null });
 
   const result = await User.deleteOne({ _id: id });
 

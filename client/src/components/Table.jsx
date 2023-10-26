@@ -13,7 +13,6 @@ const deleteUser = async (id, axiosAuth) => {
       `${baseUrl.serverBaseUrl}/users/${id}`
     );
     notify({ msg: response.data.message });
-    // callback();
   } catch (err) {
     console.log(err);
     notify({

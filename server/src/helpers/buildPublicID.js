@@ -1,7 +1,6 @@
 const path = require("path");
 
 const buildPublicID = (URLs, root = undefined) => {
-  console.log("buildpid ", { URLs });
   return URLs && URLs.length > 0 && URLs.every((url) => url)
     ? URLs.map((url) => {
         const imageID = path.parse(url).name;

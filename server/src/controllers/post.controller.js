@@ -56,7 +56,9 @@ const deletePost = handleAsync(async (req, res, next) => {
   if (!id) return next(new CustomError("ID parameter is required", 400));
   const postToDelete = await Post.findOne({ _id: id }).exec();
   if (!postToDelete)
-    return res.status(200).json({ message: `No post with an ID ${id}` });
+    return res
+      .status(200)
+      .json({ message: `No post with an ID ${id}`, data: null });
 
   const bannerPubID = buildPublicID([postToDelete.bannerImage]);
   const cleanedURL = cleanURL(extractURL(postToDelete.content));
@@ -77,7 +79,7 @@ const getAllPosts = handleAsync(async (req, res, next) => {
   const posts = await Post.find().sort({ createdAt: -1 });
 
   if (!posts || posts.length < 1)
-    return res.status(200).json({ message: "No posts found" });
+    return res.status(200).json({ message: "No posts found", data: [] });
   res.status(200).json(posts);
 });
 
@@ -86,7 +88,9 @@ const getPost = handleAsync(async (req, res, next) => {
   if (!id) return next(new CustomError("ID parameter is required", 400));
   const post = await Post.findOne({ _id: id }).exec();
   if (!post)
-    return res.status(200).json({ message: `No post with an ID ${id}` });
+    return res
+      .status(200)
+      .json({ message: `No post with an ID ${id}`, data: null });
   res.status(200).json(post);
 });
 
@@ -124,7 +128,9 @@ const editPost = async (req, res, postId, newPath = undefined) => {
 
   const postToEdit = await Post.findOne({ _id: postId }).exec();
   if (!postToEdit)
-    return res.status(200).json({ message: `No post with an ID ${postId}` });
+    return res
+      .status(200)
+      .json({ message: `No post with an ID ${postId}`, data: null });
 
   postToEdit.title = title;
   postToEdit.summary = summary;

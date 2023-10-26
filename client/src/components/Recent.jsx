@@ -1,6 +1,6 @@
 import { IoTimeOutline } from "react-icons/io5";
 import Button from "./Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import ReactPaginate from "react-paginate";
 import baseUrl from "../config/baseUrl";
@@ -24,7 +24,6 @@ const deletePost = async (id, axiosAuth) => {
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
-    // navigate("/");
   } catch (err) {
     console.error(err);
     notify({
@@ -47,7 +46,6 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const itemsPerPage = appConfig.ITEMS_PER_PAGE;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
