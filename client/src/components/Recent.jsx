@@ -18,13 +18,13 @@ import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 import SERVER_ERR_MSG from "../config/errorMsg";
 
-const deletePost = async (id, axiosAuth, navigate) => {
+const deletePost = async (id, axiosAuth) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
-    navigate("/");
+    // navigate("/");
   } catch (err) {
     console.error(err);
     notify({
@@ -38,7 +38,7 @@ const deletePost = async (id, axiosAuth, navigate) => {
   }
 };
 
-const RecentPost = ({ posts, isLoading }) => {
+const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
 
@@ -151,7 +151,12 @@ const RecentPost = ({ posts, isLoading }) => {
                       <Button
                         extraStyles={"bg-red-500 text-white"}
                         onClick={() =>
-                          alertDelete(post._id, axiosAuth, navigate, deletePost)
+                          alertDelete({
+                            id: post._id,
+                            axiosAuth,
+                            cb_post: setIsPostDeleted,
+                            cb_delete: deletePost,
+                          })
                         }
                       >
                         Delete Post

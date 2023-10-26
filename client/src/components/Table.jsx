@@ -7,13 +7,13 @@ import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import baseUrl from "../config/baseUrl";
 import SERVER_ERR_MSG from "../config/errorMsg";
 
-const deleteUser = async (id, axiosAuth, callback) => {
+const deleteUser = async (id, axiosAuth) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/users/${id}`
     );
     notify({ msg: response.data.message });
-    callback();
+    // callback();
   } catch (err) {
     console.log(err);
     notify({
@@ -101,12 +101,13 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                     <Button
                       extraStyles="bg-red-500 text-white w-30"
                       onClick={(e) =>
-                        alertDelete(
-                          JSON.parse(e.target.closest("tr").dataset.data)._id,
+                        alertDelete({
+                          id: JSON.parse(e.target.closest("tr").dataset.data)
+                            ._id,
                           axiosAuth,
-                          setIsRoleChange,
-                          deleteUser
-                        )
+                          cb_role: setIsRoleChange,
+                          cb_delete: deleteUser,
+                        })
                       }
                     >
                       Delete User

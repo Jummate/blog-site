@@ -15,13 +15,13 @@ import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 import SERVER_ERR_MSG from "../config/errorMsg";
 
-const deletePost = async (id, axiosAuth, navigate) => {
+const deletePost = async (id, axiosAuth) => {
   try {
     const response = await axiosAuth.delete(
       `${baseUrl.serverBaseUrl}/posts/${id}`
     );
     notify({ msg: response.data.message });
-    navigate("/");
+    // navigate("/");
   } catch (err) {
     notify({
       msg:
@@ -63,7 +63,13 @@ const PostPage = () => {
                 <Button
                   extraStyles="bg-red-600 text-white"
                   onClick={() =>
-                    alertDelete(id, axiosAuth, navigate, deletePost)
+                    alertDelete({
+                      id,
+                      axiosAuth,
+                      navigate,
+                      location: "/",
+                      cb_delete: deletePost,
+                    })
                   }
                 >
                   Delete Post

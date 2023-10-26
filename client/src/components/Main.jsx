@@ -18,6 +18,11 @@ const Main = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
+  // I'm using this state to cause Main to re-render to fetch updated items
+  //I did this because it seems impossible to navigate to current page (in this case, /home) after deleting an item
+  //as that is where the deletion happens
+  const [IsPostDeleted, setIsPostDeleted] = useState(false);
+
   useEffect(() => {
     const source = axios.CancelToken.source();
 
@@ -51,12 +56,13 @@ const Main = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [IsPostDeleted]);
   return (
     <main className="flex flex-col md:flex-row">
       <RecentPost
         posts={posts}
         isLoading={isLoading}
+        setIsPostDeleted={() => setIsPostDeleted(!IsPostDeleted)}
       />
       <Aside
         Tag={<Tag tags={collectTags(posts)} />}
