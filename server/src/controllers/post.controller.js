@@ -34,7 +34,7 @@ const createPost = handleAsync(async (req, res, next) => {
         fullName: `${firstName} ${lastName}`,
         avatar,
       },
-      bannerImage: cldRes.secure_url,
+      bannerImage: cldRes?.secure_url,
     };
 
     const result = await Post.create(newPost);
@@ -44,7 +44,8 @@ const createPost = handleAsync(async (req, res, next) => {
     const bannerPubID = buildPublicID([cldRes?.secure_url]);
     const cleanedURL = cleanURL(extractURL(content));
     const contentPubID = buildPublicID(cleanedURL, "content");
-    await deleteImages([...bannerPubID, ...contentPubID]);
+    (bannerPubID.length > 0 || contentPubID.length > 0) &&
+      (await deleteImages([...bannerPubID, ...contentPubID]));
     next(err);
   }
 });
@@ -58,9 +59,10 @@ const deletePost = handleAsync(async (req, res, next) => {
 
   const bannerPubID = buildPublicID([postToDelete.bannerImage]);
   const cleanedURL = cleanURL(extractURL(postToDelete.content));
-
   const contentPubID = buildPublicID(cleanedURL, "content");
-  const delImage = await deleteImages([...bannerPubID, ...contentPubID]);
+  const delImage =
+    (bannerPubID.length > 0 || contentPubID.length > 0) &&
+    (await deleteImages([...bannerPubID, ...contentPubID]));
   // const delFolder = await deleteFolder(
   //   buildPublicID(cleanedURL)[0].split("/")[0]
   // );
@@ -106,7 +108,7 @@ const updatePost = handleAsync(async (req, res, next) => {
     } catch (err) {
       //delete images already uploaded
       const bannerPubID = buildPublicID([cldRes?.secure_url]);
-      await deleteImages([...bannerPubID]);
+      bannerPubID.length > 0 && (await deleteImages([...bannerPubID]));
       next(err);
     }
   } else {

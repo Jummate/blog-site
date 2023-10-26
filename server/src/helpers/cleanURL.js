@@ -1,6 +1,7 @@
 const cleanURL = (URLs) => {
-  return URLs.map((url) =>
-    url.toString().replace("src=", "").replaceAll('"', "")
-  );
+  console.log("cleanurl ", { URLs });
+  return URLs && URLs.length > 0 && URLs.every((url) => url)
+    ? URLs.map((url) => url.toString().replace("src=", "").replaceAll('"', ""))
+    : [];
 };
 module.exports = cleanURL;
