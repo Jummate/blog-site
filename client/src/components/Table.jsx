@@ -6,6 +6,8 @@ import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import baseUrl from "../config/baseUrl";
 import SERVER_ERR_MSG from "../config/errorMsg";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const deleteUser = async (id, axiosAuth) => {
   try {
@@ -67,7 +69,10 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                         className="p-3 font-bold cursor-pointer text-center"
                       >
                         <img
-                          src={row[col.field]}
+                          src={transformImage(
+                            row[col.field],
+                            transformConfig.AUTHOR_AVATAR
+                          )}
                           className="h-8 w-8 rounded-full"
                         />
                       </td>
