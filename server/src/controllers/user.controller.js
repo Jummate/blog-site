@@ -6,6 +6,7 @@ const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
 const { handleAsync } = require("../helpers/handleAsyncError");
 const CustomError = require("../utils/error.custom");
+const { folderName } = require("../config/constant");
 
 const getRegistrationPage = (req, res) => {
   res.sendFile(path.join(__dirname, "..", "..", "public", "register.html"));
@@ -60,7 +61,7 @@ const createUser = handleAsync(async (req, res, next) => {
   if (duplicate) return next(new CustomError("Email already taken", 409));
 
   const config = {
-    folder: "users",
+    folder: folderName.AVATAR,
   };
   const dataURI = convertToBase64(buffer, mimetype);
   const cldRes = await handleUpload(dataURI, config);
@@ -89,7 +90,7 @@ const updateUser = handleAsync(async (req, res, next) => {
 
   if (req.file) {
     const config = {
-      folder: "users",
+      folder: folderName.AVATAR,
     };
     const { buffer, mimetype } = req.file;
     const dataURI = convertToBase64(buffer, mimetype);

@@ -1,13 +1,14 @@
 const { handleAsync } = require("../helpers/handleAsyncError");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
+const { folderName } = require("../config/constant");
 
 const uploadContentImage = handleAsync(async (req, res, next) => {
   const { buffer, mimetype } = req.file;
   const { contentID } = req.body;
 
   const config = {
-    folder: `content/id${contentID}id`,
+    folder: `${folderName.CONTENT_IMG}/id${contentID}id`,
   };
   const dataURI = convertToBase64(buffer, mimetype);
   const cldRes = await handleUpload(dataURI, config);

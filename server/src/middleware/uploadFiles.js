@@ -1,4 +1,5 @@
 const multer = require("multer");
+const { fileName } = require("../config/constant");
 
 const storage = multer.memoryStorage();
 const limits = { fileSize: 3 * 1024 * 1024 };
@@ -6,7 +7,7 @@ const limits = { fileSize: 3 * 1024 * 1024 };
 const upload = multer({
   storage,
   limits,
-}).single("files");
+}).single(fileName.CONTENT_IMG);
 
 const uploadFiles = (req, res, next) => {
   upload(req, res, (err) => {

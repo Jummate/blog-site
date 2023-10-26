@@ -9,6 +9,7 @@ const CustomError = require("../utils/error.custom");
 const extractURL = require("../helpers/extractURL");
 const cleanURL = require("../helpers/cleanURL");
 const buildPublicID = require("../helpers/buildPublicID");
+const { folderName } = require("../config/constant");
 
 const createPost = handleAsync(async (req, res, next) => {
   const { title, summary, content, tag, firstName, lastName, avatar } =
@@ -16,7 +17,7 @@ const createPost = handleAsync(async (req, res, next) => {
   const { buffer, mimetype } = req.file;
 
   const config = {
-    folder: "banner",
+    folder: folderName.BANNER,
   };
   let dataURI;
   let cldRes;
@@ -43,7 +44,7 @@ const createPost = handleAsync(async (req, res, next) => {
     //delete images already uploaded
     const bannerPubID = buildPublicID([cldRes?.secure_url]);
     const cleanedURL = cleanURL(extractURL(content));
-    const contentPubID = buildPublicID(cleanedURL, "content");
+    const contentPubID = buildPublicID(cleanedURL, folderName.CONTENT_IMG);
     (bannerPubID.length > 0 || contentPubID.length > 0) &&
       (await deleteImages([...bannerPubID, ...contentPubID]));
     next(err);
@@ -59,7 +60,7 @@ const deletePost = handleAsync(async (req, res, next) => {
 
   const bannerPubID = buildPublicID([postToDelete.bannerImage]);
   const cleanedURL = cleanURL(extractURL(postToDelete.content));
-  const contentPubID = buildPublicID(cleanedURL, "content");
+  const contentPubID = buildPublicID(cleanedURL, folderName.CONTENT_IMG);
   const delImage =
     (bannerPubID.length > 0 || contentPubID.length > 0) &&
     (await deleteImages([...bannerPubID, ...contentPubID]));
@@ -97,7 +98,7 @@ const updatePost = handleAsync(async (req, res, next) => {
 
   if (req.file) {
     const config = {
-      folder: "banner",
+      folder: folderName.BANNER,
     };
     const { buffer, mimetype } = req.file;
     const dataURI = convertToBase64(buffer, mimetype);
