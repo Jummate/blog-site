@@ -6,6 +6,7 @@ import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 
 import baseUrl from "../config/baseUrl";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const handleChange = (refInput, setUserRoles) => {
   const arr = [];
@@ -32,7 +33,7 @@ const changeRole = async (axiosAuth, onClose, setIsRoleChange, id, roles) => {
     notify({
       msg:
         err.response.status >= 500
-          ? "Something went wrong. Please check your connection or try again."
+          ? SERVER_ERR_MSG
           : err?.response?.data?.message,
       type: "error",
       autoClose: false,

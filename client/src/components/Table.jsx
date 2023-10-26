@@ -5,6 +5,7 @@ import { alertDelete } from "../utils/alert";
 import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import baseUrl from "../config/baseUrl";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const deleteUser = async (id, axiosAuth, callback) => {
   try {
@@ -18,7 +19,7 @@ const deleteUser = async (id, axiosAuth, callback) => {
     notify({
       msg:
         err.response.status >= 500
-          ? "Something went wrong. Please check your connection or try again."
+          ? SERVER_ERR_MSG
           : err?.response?.data?.message,
       type: "error",
       autoClose: false,

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../utils/notify";
 import { TimerContext } from "../contexts/TimerProvider";
 import { autoLogOut } from "../helpers/autoLogOut";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const Login = () => {
   const { token, setToken } = useContext(AuthContext);
@@ -56,7 +57,7 @@ const Login = () => {
       notify({
         msg:
           err.response.status >= 500
-            ? "Something went wrong. Please check your connection or try again."
+            ? SERVER_ERR_MSG
             : err?.response?.data?.message,
         type: "error",
         autoClose: false,

@@ -9,6 +9,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import { logOut } from "../helpers/logOut";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const EditProfile = () => {
   const firstNameInput = useFormInput("");
@@ -53,7 +54,7 @@ const EditProfile = () => {
       notify({
         msg:
           err.response.status >= 500
-            ? "Something went wrong. Please check your connection or try again."
+            ? SERVER_ERR_MSG
             : err?.response?.data?.message,
         type: "error",
         autoClose: false,

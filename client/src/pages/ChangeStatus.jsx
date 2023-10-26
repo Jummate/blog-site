@@ -4,6 +4,7 @@ import baseUrl from "../config/baseUrl";
 import axios from "axios";
 import { columns } from "../data";
 import { notify } from "../utils/notify";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
@@ -30,7 +31,7 @@ const ChangeStatus = () => {
           notify({
             msg:
               !err.response || err?.response?.status >= 500
-                ? "Something went wrong. Please check your connection or try again."
+                ? SERVER_ERR_MSG
                 : err?.response?.data?.message,
             type: "error",
             autoClose: false,

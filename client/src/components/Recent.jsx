@@ -16,6 +16,7 @@ import { formatDate } from "../utils/dateFormatter";
 import { appConfig } from "../config/appClientConfig";
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const deletePost = async (id, axiosAuth, navigate) => {
   try {
@@ -29,7 +30,7 @@ const deletePost = async (id, axiosAuth, navigate) => {
     notify({
       msg:
         err.response.status >= 500
-          ? "Something went wrong. Please check your connection or try again."
+          ? SERVER_ERR_MSG
           : err?.response?.data?.message,
       type: "error",
       autoClose: false,

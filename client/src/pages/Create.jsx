@@ -12,6 +12,7 @@ import {
   validateQuill,
 } from "../utils/validate";
 import { useNavigate } from "react-router-dom";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const CreatePost = () => {
   const { token } = useContext(AuthContext);
@@ -50,7 +51,7 @@ const CreatePost = () => {
       notify({
         msg:
           err.response.status >= 500
-            ? "Something went wrong. Please check your connection or try again."
+            ? SERVER_ERR_MSG
             : err?.response?.data?.message,
         type: "error",
         autoClose: false,
