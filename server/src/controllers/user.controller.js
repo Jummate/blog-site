@@ -69,7 +69,7 @@ const createUser = handleAsync(async (req, res, next) => {
     firstName,
     lastName,
     email,
-    roles: [userRoles.ADMIN, userRoles.EDITOR],
+    roles: [userRoles.ADMIN],
     password: hashedPwd,
     avatar: cldRes.secure_url,
   };
