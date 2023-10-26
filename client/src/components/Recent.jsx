@@ -14,6 +14,8 @@ import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
 import { appConfig } from "../config/appClientConfig";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const deletePost = async (id, axiosAuth, navigate) => {
   try {
@@ -76,7 +78,10 @@ const RecentPost = ({ posts, isLoading }) => {
             >
               <div className="w-full lg:w-1/2">
                 <img
-                  src={post.bannerImage}
+                  src={transformImage(
+                    post.bannerImage,
+                    transformConfig.HOME_BANNER
+                  )}
                   alt=""
                   className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
                 />
@@ -112,7 +117,10 @@ const RecentPost = ({ posts, isLoading }) => {
 
                 <div className="mt-6 flex gap-2">
                   <img
-                    src={post.author.avatar}
+                    src={transformImage(
+                      post.author.avatar,
+                      transformConfig.AUTHOR_AVATAR
+                    )}
                     alt=""
                     className="h-10 w-10 rounded-full"
                   />

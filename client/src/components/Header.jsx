@@ -6,6 +6,8 @@ import ColorMode from "./ColorMode";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import jwt_decode from "jwt-decode";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const Header = () => {
   const { token } = useContext(AuthContext);
@@ -54,9 +56,12 @@ const Header = () => {
           {token &&
             (decoded?.avatar ? (
               <img
-                src={decoded.avatar}
+                src={transformImage(
+                  decoded.avatar,
+                  transformConfig.AUTHOR_AVATAR
+                )}
                 alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
-                className="h-7 w-7 rounded-full cursor-pointer"
+                className="h-7 w-7 rounded-full cursor-pointer text-xs"
                 onClick={() => setOpenProfileMenu(true)}
               />
             ) : (

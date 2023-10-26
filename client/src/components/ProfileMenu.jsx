@@ -9,6 +9,9 @@ import { accessLevel } from "../config/accessLevel";
 import { logOut } from "../helpers/logOut";
 import { TimerContext } from "../contexts/TimerProvider";
 
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
+
 const ProfileMenu = ({ handleProfileMenu }) => {
   const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
@@ -31,9 +34,12 @@ const ProfileMenu = ({ handleProfileMenu }) => {
             target="_blank"
           >
             <img
-              src={decoded.avatar}
+              src={transformImage(
+                decoded.avatar,
+                transformConfig.PROFILE_AVATAR
+              )}
               alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
-              className="h-32 w-32 rounded-full cursor-pointer"
+              className="h-32 w-32 rounded-full cursor-pointer text-xs"
             />
           </a>
         ) : (

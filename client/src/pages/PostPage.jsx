@@ -11,6 +11,8 @@ import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const deletePost = async (id, axiosAuth, navigate) => {
   try {
@@ -46,7 +48,7 @@ const PostPage = () => {
   return (
     <section className="dark:bg-sky-900/90">
       <article>
-        <header>
+        <header className="flex flex-col justify-center items-center">
           {token && (
             <div className="flex items-center justify-center p-5 gap-3 text-sm">
               {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
@@ -71,8 +73,8 @@ const PostPage = () => {
           )}
 
           <img
-            className="max-h-80 w-full"
-            src={data?.bannerImage}
+            className="h-80 max-h-80 md:max-h-none md:h-96 w-full md:w-4/5"
+            src={transformImage(data?.bannerImage, transformConfig.HOME_BANNER)}
             alt=""
           />
         </header>
@@ -80,7 +82,10 @@ const PostPage = () => {
           <div className="flex flex-col md:w-11/12 gap-16 sm:p-12 md:p-16 ">
             <div className="flex gap-2 mt-6 ">
               <img
-                src={data?.author?.avatar}
+                src={transformImage(
+                  data?.author?.avatar,
+                  transformConfig.AUTHOR_AVATAR
+                )}
                 alt=""
                 className="h-10 w-10 rounded-full"
               />
