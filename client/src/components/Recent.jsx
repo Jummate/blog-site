@@ -3,10 +3,8 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import ReactPaginate from "react-paginate";
-import baseUrl from "../config/baseUrl";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-import { notify } from "../utils/notify";
 import { alertDelete } from "../utils/alert";
 import { calculateReadingSpeed } from "../utils/getReadingSpeed";
 import jwt_decode from "jwt-decode";
@@ -16,27 +14,7 @@ import { formatDate } from "../utils/dateFormatter";
 import { appConfig } from "../config/appClientConfig";
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
-import SERVER_ERR_MSG from "../config/errorMsg";
 import truncate from "../utils/truncate";
-
-const deletePost = async (id, axiosAuth) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`
-    );
-    notify({ msg: response.data.message });
-  } catch (err) {
-    console.error(err);
-    notify({
-      msg:
-        err.response.status >= 500
-          ? SERVER_ERR_MSG
-          : err?.response?.data?.message,
-      type: "error",
-      autoClose: false,
-    });
-  }
-};
 
 const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
   const { token } = useContext(AuthContext);
@@ -162,9 +140,9 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
                         onClick={() =>
                           alertDelete({
                             id: post._id,
+                            type: "posts",
                             axiosAuth,
-                            cb_post: setIsPostDeleted,
-                            cb_delete: deletePost,
+                            callback: setIsPostDeleted,
                           })
                         }
                       >

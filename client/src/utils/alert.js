@@ -1,13 +1,13 @@
 import swal from "sweetalert";
+import deleteItem from "../helpers/delete";
 
 export const alertDelete = async ({
   id,
   axiosAuth,
+  type,
   navigate = undefined,
   location = undefined,
-  cb_role = undefined,
-  cb_post = undefined,
-  cb_delete,
+  callback = undefined,
 }) => {
   const willDelete = await swal({
     title: "Are you sure you want to delete this item?",
@@ -18,9 +18,8 @@ export const alertDelete = async ({
     closeOnEsc: false,
   });
   if (willDelete) {
-    await cb_delete(id, axiosAuth);
-    cb_post && cb_post();
-    cb_role && cb_role();
+    await deleteItem({ id, axiosAuth, type });
+    callback && callback();
     location && navigate && navigate(location);
   }
 };

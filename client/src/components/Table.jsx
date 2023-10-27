@@ -2,31 +2,10 @@ import Button from "./Button";
 import { useState } from "react";
 import Modal from "./Modal";
 import { alertDelete } from "../utils/alert";
-import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-import baseUrl from "../config/baseUrl";
-import SERVER_ERR_MSG from "../config/errorMsg";
+
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
-
-const deleteUser = async (id, axiosAuth) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/users/${id}`
-    );
-    notify({ msg: response.data.message });
-  } catch (err) {
-    console.log(err);
-    notify({
-      msg:
-        err.response.status >= 500
-          ? SERVER_ERR_MSG
-          : err?.response?.data?.message,
-      type: "error",
-      autoClose: false,
-    });
-  }
-};
 
 const Table = ({ data, columns, setIsRoleChange }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -109,8 +88,8 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                           id: JSON.parse(e.target.closest("tr").dataset.data)
                             ._id,
                           axiosAuth,
-                          cb_role: setIsRoleChange,
-                          cb_delete: deleteUser,
+                          type: "users",
+                          callback: setIsRoleChange,
                         })
                       }
                     >

@@ -27,11 +27,11 @@ export const profile = {
 export const columns = [
   {
     field: "firstName",
-    header: "First Name",
+    header: "F/Name",
   },
   {
     field: "lastName",
-    header: "Last Name",
+    header: "L/Name",
   },
   {
     field: "avatar",

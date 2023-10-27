@@ -1,39 +1,16 @@
 import Button from "../components/Button";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
-import baseUrl from "../config/baseUrl";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { alertDelete } from "../utils/alert";
-import { notify } from "../utils/notify";
 import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
-import SERVER_ERR_MSG from "../config/errorMsg";
-
-const deletePost = async (id, axiosAuth) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`
-    );
-    notify({ msg: response.data.message });
-    // navigate("/");
-  } catch (err) {
-    notify({
-      msg:
-        err.response.status >= 500
-          ? SERVER_ERR_MSG
-          : err?.response?.data?.message,
-      type: "error",
-      autoClose: false,
-    });
-    console.log(err);
-  }
-};
 
 const PostPage = () => {
   const { token } = useContext(AuthContext);
@@ -66,9 +43,9 @@ const PostPage = () => {
                     alertDelete({
                       id,
                       axiosAuth,
+                      type: "posts",
                       navigate,
                       location: "/",
-                      cb_delete: deletePost,
                     })
                   }
                 >
