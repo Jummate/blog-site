@@ -68,8 +68,18 @@ const Main = () => {
         setIsPostDeleted={() => setIsPostDeleted(!IsPostDeleted)}
       />
       <Aside
-        Tag={<Tag tags={collectTags(posts)} />}
-        Topics={<Topics tags={collectTags(posts)} />}
+        Tag={
+          <Tag
+            tags={collectTags(posts)}
+            isLoading={isLoading}
+          />
+        }
+        Topics={
+          <Topics
+            topics={collectTags(posts)}
+            isLoading={isLoading}
+          />
+        }
       />
     </main>
   );
