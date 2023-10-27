@@ -6,6 +6,7 @@ import { useContext } from "react";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 import jwt_decode from "jwt-decode";
+import { useState } from "react";
 import {
   validateMultipleFields,
   validateFileUpload,
@@ -23,6 +24,8 @@ const CreatePost = () => {
   const contentProps = useFormInput("");
 
   const axiosAuth = useAxiosInterceptor();
+
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,9 +47,11 @@ const CreatePost = () => {
         `${baseUrl.serverBaseUrl}/posts`,
         postFormData
       );
+      setIsSubmit(true);
       notify({ msg: response.data.message });
       navigate("/");
     } catch (err) {
+      setIsSubmit(false);
       console.log(err);
       notify({
         msg:
@@ -74,7 +79,7 @@ const CreatePost = () => {
     }
     if (!validateFileUpload(bannerProps)) {
       notify({
-        msg: "No image was selected!",
+        msg: "No image selected!",
         type: "error",
         autoClose: false,
       });
@@ -93,6 +98,8 @@ const CreatePost = () => {
         <Form
           values={{ titleProps, summaryProps, contentProps, tagProps }}
           onSubmit={handleSubmit}
+          isSubmit={isSubmit}
+          setIsSubmit={() => setIsSubmit(true)}
         >
           <div className="flex flex-col gap-2">
             <label htmlFor="banner">

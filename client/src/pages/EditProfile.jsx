@@ -50,9 +50,11 @@ const EditProfile = () => {
         `${baseUrl.serverBaseUrl}/users/${id}`,
         postFormData
       );
+      setIsProcessing(true);
       notify({ msg: response.data.message });
       logOut({ navigate, url: "/login", setToken });
     } catch (err) {
+      setIsProcessing(false);
       notify({
         msg:
           err.response.status >= 500

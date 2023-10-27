@@ -21,11 +21,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [isProcessing, setIsProcessing] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateMultipleFields([emailProps, passwordProps])) {
+      setIsSubmit(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",
@@ -36,7 +35,6 @@ const Login = () => {
     const loginFormData = new FormData();
     loginFormData.append("email", emailProps.value);
     loginFormData.append("password", passwordProps.value);
-    setIsSubmit(true);
 
     try {
       const response = await axios.post(
@@ -50,12 +48,13 @@ const Login = () => {
 
       notify({ msg: response.data.message });
       setToken(response.data.accessToken);
-
+      setIsSubmit(true);
       clearFormContent({
         input: [emailProps, passwordProps],
       });
       navigate(-1);
     } catch (err) {
+      setIsSubmit(false);
       notify({
         msg:
           err.response.status >= 500
@@ -114,9 +113,9 @@ const Login = () => {
           <Button
             type="submit"
             extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}
-            onClick={() => setIsProcessing(true)}
+            onClick={() => setIsSubmit(true)}
           >
-            {isProcessing ? "Processing..." : "SIGN IN"}
+            {isSubmit ? "Processing..." : "SIGN IN"}
           </Button>
         </form>
       </div>

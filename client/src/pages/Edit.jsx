@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
@@ -19,6 +19,8 @@ const EditPost = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ const EditPost = () => {
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );
+      setIsSubmit(true);
       notify({ msg: response.data.message });
       clearFormContent({
         input: [titleProps, summaryProps, tagProps, bannerProps],
@@ -55,6 +58,7 @@ const EditPost = () => {
       });
       navigate(`/post/${id}`, { state: response.data.result });
     } catch (err) {
+      setIsSubmit(false);
       console.error(err);
       notify({
         msg:
@@ -93,6 +97,8 @@ const EditPost = () => {
         <Form
           values={{ titleProps, summaryProps, contentProps, tagProps }}
           onSubmit={handleSubmit}
+          isSubmit={isSubmit}
+          setIsSubmit={() => setIsSubmit(true)}
         >
           <div className="flex flex-col gap-2">
             <label htmlFor="banner">

@@ -31,10 +31,12 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
         `${baseUrl.serverBaseUrl}/users/change-role/${rowItems._id}`,
         { roles: userRoles }
       );
+      setIsProcessing(true);
       onClose();
       setIsRoleChange();
       notify({ msg: response.data.message });
     } catch (err) {
+      setIsProcessing(false);
       console.error(err);
       notify({
         msg:

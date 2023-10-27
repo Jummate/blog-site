@@ -37,9 +37,10 @@ const ResetPassword = () => {
         }
       );
       notify({ msg: response.data.message });
-
+      setIsProcessing(true);
       logOut({ navigate, url: "/login", setToken });
     } catch (err) {
+      setIsProcessing(false);
       notify({
         msg:
           err.response.status >= 500
