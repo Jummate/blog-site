@@ -17,6 +17,7 @@ import { appConfig } from "../config/appClientConfig";
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 import SERVER_ERR_MSG from "../config/errorMsg";
+import truncate from "../utils/truncate";
 
 const deletePost = async (id, axiosAuth) => {
   try {
@@ -111,7 +112,7 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
                 </Link>
 
                 <p className="text-slate-600 text-sm dark:text-slate-200/90">
-                  {post.summary}
+                  {truncate(post.summary)}
                 </p>
 
                 <div className="mt-6 flex gap-2">
