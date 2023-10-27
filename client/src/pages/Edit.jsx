@@ -77,6 +77,7 @@ const EditPost = () => {
       !validateMultipleFields([titleProps, summaryProps, tagProps]) ||
       !validateQuill(contentProps)
     ) {
+      setIsSubmit(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",

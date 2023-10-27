@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import { logOut } from "../helpers/logOut";
 import SERVER_ERR_MSG from "../config/errorMsg";
+import { validateMultipleFields } from "../utils/validate";
 
 const EditProfile = () => {
   const firstNameInput = useFormInput("");
@@ -69,6 +70,15 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateMultipleFields([firstNameInput, lastNameInput, emailInput])) {
+      setIsProcessing(false);
+      notify({
+        msg: "Empty fields detected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
 
     editProfile();
   };

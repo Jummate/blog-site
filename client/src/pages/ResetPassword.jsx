@@ -56,6 +56,7 @@ const ResetPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateMultipleFields([oldPasswordInput, newPasswordInput])) {
+      setIsProcessing(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",
@@ -64,6 +65,7 @@ const ResetPassword = () => {
       return;
     }
     if (!validatePasswordMatch(newPasswordInput, confirmNewPasswordInput)) {
+      setIsProcessing(false);
       notify({
         msg: "New password confirmation failed",
         type: "error",
