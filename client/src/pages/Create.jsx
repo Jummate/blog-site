@@ -94,12 +94,18 @@ const CreatePost = () => {
           values={{ titleProps, summaryProps, contentProps, tagProps }}
           onSubmit={handleSubmit}
         >
-          <input
-            type="file"
-            className="p-3 text-sky-900 shadow-pref dark:bg-sky-100 rounded-md"
-            onChange={bannerProps.onChange}
-            aria-label="banner"
-          ></input>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="banner">
+              Banner (<small>image only</small>)
+            </label>
+            <input
+              type="file"
+              className="p-3 text-sky-900 shadow-pref dark:bg-sky-100 rounded-md"
+              onChange={bannerProps.onChange}
+              aria-label="banner"
+              id="banner"
+            />
+          </div>
         </Form>
       </div>
     </section>

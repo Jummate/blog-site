@@ -91,37 +91,55 @@ const Form = ({
         onSubmit(e), (contentID = generateID());
       }}
     >
-      <Input
-        placeholder="Title"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Title"
-        value={titleProps.value}
-        onChange={titleProps.onChange}
-      />
-      <TextArea
-        placeholder="Summary"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Summary"
-        value={summaryProps.value}
-        onChange={summaryProps.onChange}
-      />
-      <Input
-        placeholder="Tag"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Tag"
-        value={tagProps.value}
-        onChange={tagProps.onChange}
-      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="title">Title</label>
+        <Input
+          placeholder="Title"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Title"
+          value={titleProps.value}
+          onChange={titleProps.onChange}
+          id="title"
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="summary">Summary</label>
+        <TextArea
+          placeholder="Summary"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Summary"
+          value={summaryProps.value}
+          onChange={summaryProps.onChange}
+          id="summary"
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="tag">Tag</label>
+        <Input
+          placeholder="Tag"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Tag"
+          value={tagProps.value}
+          onChange={tagProps.onChange}
+          id="tag"
+        />
+      </div>
+
       {children}
-      <ReactQuill
-        ref={quillRef}
-        theme="snow"
-        modules={modules}
-        formats={formats}
-        className="h-auto overflow-hidden border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md"
-        value={contentProps.content}
-        onChange={contentProps.onContentChange}
-      />
+
+      <div className="flex flex-col gap-2">
+        <label>Content</label>
+        <ReactQuill
+          ref={quillRef}
+          theme="snow"
+          modules={modules}
+          formats={formats}
+          className="h-auto overflow-hidden border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md"
+          value={contentProps.content}
+          onChange={contentProps.onContentChange}
+        />
+      </div>
 
       <Button
         type="submit"
