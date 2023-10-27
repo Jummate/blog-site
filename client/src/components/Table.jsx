@@ -3,8 +3,8 @@ import { useState } from "react";
 import Modal from "./Modal";
 import { alertDelete } from "../utils/alert";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-// import { FaTrash, FaEdit, FaArrowRight } from "react-icons/fa";
-// import { HiOutlineArrowLongRight } from "react-icons/hi";
+import { FaTrash, FaEdit, FaArrowRight } from "react-icons/fa";
+import { BsArrowRight } from "react-icons/bs";
 
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
@@ -124,9 +124,10 @@ const Table = ({ data, columns, setIsRoleChange }) => {
             ))}
         </tbody>
       </table>
-      {/* <p className="text-right bg-red-500">
-        Swipe <HiOutlineArrowLongRight />
-      </p> */}
+      <div className="flex justify-end md:hidden gap-2">
+        <small>Swipe to see hidden details</small>
+        <BsArrowRight />
+      </div>
 
       {openModal && (
         <Modal
