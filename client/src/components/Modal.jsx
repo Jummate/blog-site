@@ -29,7 +29,7 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
     try {
       const response = await axiosAuth.put(
         `${baseUrl.serverBaseUrl}/users/change-role/${rowItems._id}`,
-        { roles: userRoles }
+        { roles: userRoles.length > 0 ? userRoles : rowItems.roles }
       );
       setIsProcessing(true);
       onClose();
