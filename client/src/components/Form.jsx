@@ -5,7 +5,7 @@ import Button from "./Button";
 import TextArea from "./TextArea";
 import axios from "axios";
 import baseUrl from "../config/baseUrl";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { generateID } from "../utils/generateID";
 
 let quillRef;
@@ -82,6 +82,7 @@ const Form = ({
   children,
 }) => {
   quillRef = useRef(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   return (
     <form
@@ -125,8 +126,9 @@ const Form = ({
       <Button
         type="submit"
         extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold"
+        onClick={() => setIsProcessing(true)}
       >
-        PUBLISH
+        {isProcessing ? "Processing..." : "PUBLISH"}
       </Button>
     </form>
   );

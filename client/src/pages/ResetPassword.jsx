@@ -4,7 +4,7 @@ import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import {
   validateMultipleFields,
@@ -24,6 +24,8 @@ const ResetPassword = () => {
   const axiosAuth = useAxiosInterceptor();
   const { setToken } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const resetPassword = async () => {
     try {
@@ -126,8 +128,9 @@ const ResetPassword = () => {
           <Button
             type="submit"
             extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold mt-10"
+            onClick={() => setIsProcessing(true)}
           >
-            RESET PASSWORD
+            {isProcessing ? "Processing..." : "RESET"}
           </Button>
         </form>
       </div>

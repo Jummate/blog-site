@@ -45,6 +45,7 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
   const [userRoles, setUserRoles] = useState([]);
   const axiosAuth = useAxiosInterceptor();
   const inputRef = useRef([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   return (
     <article className="fixed z-10 font-sans overflow-auto flex flex-col gap-6 w-5/6 max-w-xs h-4/5 max-h-xs px-5 top-20 right-5 bg-sky-100 text-sky-600 dark:bg-sky-600 dark:text-sky-100 py-6 rounded-3xl shadow-pref">
@@ -127,18 +128,20 @@ const Modal = ({ rowItems, onClose, setIsRoleChange }) => {
           <div className="flex gap-3 px-5 mt-6">
             <Button
               extraStyles="shadow-pref bg-green-600 text-sky-50 px-7"
-              onClick={() =>
+              onClick={() => {
                 changeRole(
                   axiosAuth,
                   onClose,
                   setIsRoleChange,
                   rowItems._id,
                   userRoles
-                )
-              }
+                );
+                setIsProcessing(true);
+              }}
             >
-              Save
+              {isProcessing ? "Processing..." : "Save"}
             </Button>
+
             <Button
               extraStyles="shadow-pref bg-red-600 text-sky-50 px-7"
               onClick={onClose}

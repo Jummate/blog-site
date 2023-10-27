@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFormInput } from "../hooks/useFormInput";
@@ -22,6 +22,8 @@ const EditProfile = () => {
   const axiosAuth = useAxiosInterceptor();
 
   const { setToken } = useContext(AuthContext);
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -134,8 +136,9 @@ const EditProfile = () => {
           <Button
             type="submit"
             extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold mt-10"
+            onClick={() => setIsProcessing(true)}
           >
-            UPDATE PROFILE
+            {isProcessing ? "Processing..." : "UPDATE"}
           </Button>
         </form>
       </div>

@@ -21,6 +21,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateMultipleFields([emailProps, passwordProps])) {
@@ -112,8 +114,9 @@ const Login = () => {
           <Button
             type="submit"
             extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}
+            onClick={() => setIsProcessing(true)}
           >
-            SIGN IN
+            {isProcessing ? "Processing..." : "SIGN IN"}
           </Button>
         </form>
       </div>
