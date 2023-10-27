@@ -1,8 +1,10 @@
-import Button from "./Button";
+// import Button from "./Button";
 import { useState } from "react";
 import Modal from "./Modal";
 import { alertDelete } from "../utils/alert";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
+// import { FaTrash, FaEdit, FaArrowRight } from "react-icons/fa";
+// import { HiOutlineArrowLongRight } from "react-icons/hi";
 
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
@@ -13,7 +15,7 @@ const Table = ({ data, columns, setIsRoleChange }) => {
   const axiosAuth = useAxiosInterceptor();
 
   return (
-    <div className="w-full overflow-auto">
+    <div className="w-full max-h-52 overflow-auto">
       <table className="w-full border-collapse text-sm">
         <thead className="bg-sky-700 text-sky-50 p-5">
           <tr>
@@ -70,7 +72,28 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                 })}
                 <td className="p-3 font-bold cursor-pointer text-center">
                   <p className="w-full flex items-center justify-center gap-4">
-                    <Button
+                    <FaEdit
+                      className="text-sky-500 text-lg"
+                      onClick={(e) => {
+                        setOpenModal(true),
+                          setRowItems(
+                            JSON.parse(e.target.closest("tr").dataset.data)
+                          );
+                      }}
+                    />
+                    <FaTrash
+                      className="text-red-500 text-lg"
+                      onClick={(e) =>
+                        alertDelete({
+                          id: JSON.parse(e.target.closest("tr").dataset.data)
+                            ._id,
+                          axiosAuth,
+                          type: "users",
+                          callback: setIsRoleChange,
+                        })
+                      }
+                    />
+                    {/* <Button
                       extraStyles="bg-sky-500 text-white w-30"
                       onClick={(e) => {
                         setOpenModal(true),
@@ -80,8 +103,8 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                       }}
                     >
                       Change Roles
-                    </Button>
-                    <Button
+                    </Button> */}
+                    {/* <Button
                       extraStyles="bg-red-500 text-white w-30"
                       onClick={(e) =>
                         alertDelete({
@@ -94,13 +117,16 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                       }
                     >
                       Delete User
-                    </Button>
+                    </Button> */}
                   </p>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
+      {/* <p className="text-right bg-red-500">
+        Swipe <HiOutlineArrowLongRight />
+      </p> */}
 
       {openModal && (
         <Modal
