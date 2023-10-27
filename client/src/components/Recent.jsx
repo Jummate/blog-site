@@ -88,7 +88,7 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
               </div>
               <div className="p-2">
                 <div className="flex justify-between">
-                  <button className="text-sky-600 mb-3 py-1 px-5 bg-sky-100 dark:bg-sky-600 dark:text-sky-100 rounded-lg text-sm hover:bg-sky-900 hover:text-sky-200 hover:dark:text-sky-900 hover:dark:bg-sky-100">
+                  <button className="text-sky-600 mb-3 py-1 px-3 bg-sky-100 dark:bg-sky-600 dark:text-sky-100 rounded-lg text-sm hover:bg-sky-900 hover:text-sky-200 hover:dark:text-sky-900 hover:dark:bg-sky-100">
                     {post.tag}
                   </button>
                   <span>
@@ -111,9 +111,19 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
                   </h1>
                 </Link>
 
-                <p className="text-slate-600 text-sm dark:text-slate-200/90">
-                  {truncate(post.summary)}
-                </p>
+                <div>
+                  <span className="text-slate-600 text-sm dark:text-slate-200/90">
+                    {truncate(post.summary)}
+                  </span>
+                  <Link
+                    to={`post/${post._id}`}
+                    state={post}
+                  >
+                    <small className="font-bold text-sky-900 dark:text-sky-200">
+                      Read more
+                    </small>
+                  </Link>
+                </div>
 
                 <div className="mt-6 flex gap-2">
                   <img
