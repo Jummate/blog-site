@@ -83,10 +83,10 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
                     transformConfig.HOME_BANNER
                   )}
                   alt=""
-                  className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
+                  className="rounded-2xl h-auto max-h-60 md:h-4/5 w-full hover:opacity-80"
                 />
               </div>
-              <div className="p-2">
+              <div className="p-2 lg:w-1/2 max-w-md">
                 <div className="flex justify-between">
                   <button className="text-sky-600 mb-3 py-1 px-3 bg-sky-100 dark:bg-sky-600 dark:text-sky-100 rounded-lg text-sm hover:bg-sky-900 hover:text-sky-200 hover:dark:text-sky-900 hover:dark:bg-sky-100">
                     {post.tag}
@@ -119,7 +119,7 @@ const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
                     to={`post/${post._id}`}
                     state={post}
                   >
-                    <small className="font-bold text-sky-900 dark:text-sky-200">
+                    <small className="font-bold text-sky-900 dark:text-sky-200 hover:underline">
                       Read more
                     </small>
                   </Link>
