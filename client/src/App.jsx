@@ -1,24 +1,24 @@
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import Footer from "./components/Footer";
-import PostPage from "./pages/PostPage";
-import { AuthProvider } from "./contexts/AuthProvider";
-import { TimerProvider } from "./contexts/TimerProvider";
-
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Outlet,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import PostPage from "./pages/PostPage";
+import { AuthProvider } from "./contexts/AuthProvider";
+import { TimerProvider } from "./contexts/TimerProvider";
 import CreatePost from "./pages/Create";
 import Login from "./pages/Login";
 import EditPost from "./pages/Edit";
 import EditProfile from "./pages/EditProfile";
 import ResetPassword from "./pages/ResetPassword";
 import ChangeStatus from "./pages/ChangeStatus";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const Layout = () => (

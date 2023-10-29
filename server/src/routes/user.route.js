@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user.controller");
-// const { uploadFromFrontend } = require("../middleware/uploadFromFrontend");
 const { uploadMiddleware } = require("../middleware/uploadMiddleware");
 const { fileName } = require("../config/constant");
 

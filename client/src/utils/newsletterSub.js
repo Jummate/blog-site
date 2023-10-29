@@ -1,5 +1,5 @@
-import { notify } from "./notify";
 import axios from "axios";
+import { notify } from "./notify";
 
 export const subscribeToNewsletter = async (email) => {
   const options = {

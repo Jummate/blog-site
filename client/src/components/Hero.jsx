@@ -1,3 +1,5 @@
+import { PiHandWavingDuotone } from "react-icons/pi";
+
 import Button from "./Button";
 import Input from "./Input";
 import IMAGE_ONE from "../assets/image1.jpg";
@@ -5,7 +7,6 @@ import { useFormInput } from "../hooks/useFormInput";
 import { validateSingleField, validateEmail } from "../utils/validate";
 import { notify } from "../utils/notify";
 import { subscribeToNewsletter } from "../utils/newsletterSub";
-import { PiHandWavingDuotone } from "react-icons/pi";
 
 const Hero = () => {
   const emailProps = useFormInput("");

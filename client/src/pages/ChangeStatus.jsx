@@ -1,7 +1,8 @@
-import Table from "../components/Table";
 import { useState, useEffect } from "react";
-import baseUrl from "../config/baseUrl";
 import axios from "axios";
+
+import Table from "../components/Table";
+import baseUrl from "../config/baseUrl";
 import { columns } from "../data";
 import { notify } from "../utils/notify";
 import SERVER_ERR_MSG from "../config/errorMsg";

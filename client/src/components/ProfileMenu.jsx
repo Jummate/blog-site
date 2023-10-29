@@ -1,14 +1,14 @@
+import { useContext } from "react";
 import { FaTimes, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "./Button";
 import jwt_decode from "jwt-decode";
-import { useContext } from "react";
+
+import Button from "./Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { logOut } from "../helpers/logOut";
 import { TimerContext } from "../contexts/TimerProvider";
-
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 

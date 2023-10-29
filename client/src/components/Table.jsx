@@ -1,11 +1,10 @@
-// import Button from "./Button";
 import { useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { BsArrowRight } from "react-icons/bs";
+
 import Modal from "./Modal";
 import { alertDelete } from "../utils/alert";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-import { FaTrash, FaEdit, FaArrowRight } from "react-icons/fa";
-import { BsArrowRight } from "react-icons/bs";
-
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 

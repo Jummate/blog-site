@@ -1,10 +1,10 @@
-import Button from "./Button";
-import { FaTimes } from "react-icons/fa";
-import Input from "./Input";
 import { useRef, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+
+import Button from "./Button";
+import Input from "./Input";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-
 import baseUrl from "../config/baseUrl";
 import SERVER_ERR_MSG from "../config/errorMsg";
 

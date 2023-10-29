@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
 import { AuthContext } from "../contexts/AuthProvider";
-import { useContext } from "react";
 
 const Menu = ({ onClick }) => {
   const { token } = useContext(AuthContext);

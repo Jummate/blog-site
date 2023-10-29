@@ -2,7 +2,7 @@ const path = require("path");
 const Post = require("../models/Post");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
-const { deleteImages, deleteFolder } = require("../helpers/deleteImage");
+const { deleteImages } = require("../helpers/deleteImage");
 const { handleAsync } = require("../helpers/handleAsyncError");
 const CustomError = require("../utils/error.custom");
 

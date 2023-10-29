@@ -1,13 +1,16 @@
 const express = require("express");
 const cors = require("cors");
-const corsOptions = require("./src/config/corsOptions");
-const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
+
+const corsOptions = require("./src/config/corsOptions");
+
 const credentials = require("./src/middleware/credentials");
 const CustomError = require("./src/utils/error.custom");
 const { errorHandler } = require("./src/utils/error");
-require("dotenv").config();
+
+const app = express();
 
 //middleware
 app.use(credentials);

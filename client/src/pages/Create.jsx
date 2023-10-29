@@ -1,18 +1,18 @@
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 import { useFormInput } from "../hooks/useFormInput";
+import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import Form from "../components/Form";
 import baseUrl from "../config/baseUrl";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useContext } from "react";
-import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-import jwt_decode from "jwt-decode";
-import { useState } from "react";
 import {
   validateMultipleFields,
   validateFileUpload,
   validateQuill,
 } from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import SERVER_ERR_MSG from "../config/errorMsg";
 
 const CreatePost = () => {

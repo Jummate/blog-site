@@ -1,10 +1,11 @@
-import { FaEdit } from "react-icons/fa";
+import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
+
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
-import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import {
   validateMultipleFields,

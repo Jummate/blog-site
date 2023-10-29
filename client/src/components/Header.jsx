@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { FaBars, FaUserCircle } from "react-icons/fa";
+import jwt_decode from "jwt-decode";
+
 import Menu from "./Menu";
 import ProfileMenu from "./ProfileMenu";
 import ColorMode from "./ColorMode";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
-import jwt_decode from "jwt-decode";
 import transformImage from "../utils/transformImage";
 import { transformConfig } from "../config/imgTransform";
 

@@ -1,7 +1,7 @@
-import { profile } from "../data";
-
 import { FaLinkedin, FaGlobe, FaTwitter } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
+
+import { profile } from "../data";
 
 const icons = {
   linkedin: <FaLinkedin />,

@@ -1,6 +1,7 @@
 const path = require("path");
-const userRoles = require("../config/userRoles");
 const bcrypt = require("bcrypt");
+
+const userRoles = require("../config/userRoles");
 const User = require("../models/User");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
