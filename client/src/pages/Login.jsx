@@ -1,23 +1,31 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
-import axios from "axios";
 import clearFormContent from "../utils/clearFormContent";
-import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { validateMultipleFields } from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import { notify } from "../utils/notify";
+import { TimerContext } from "../contexts/TimerProvider";
+import { autoLogOut } from "../helpers/autoLogOut";
+import SERVER_ERR_MSG from "../config/errorMsg";
+
 const Login = () => {
-  const { setToken } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
+  const { setTimerID } = useContext(TimerContext);
   const emailProps = useFormInput("");
   const passwordProps = useFormInput("");
   const navigate = useNavigate();
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateMultipleFields([emailProps, passwordProps])) {
+      setIsSubmit(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",
@@ -41,22 +49,32 @@ const Login = () => {
 
       notify({ msg: response.data.message });
       setToken(response.data.accessToken);
-
+      setIsSubmit(true);
       clearFormContent({
         input: [emailProps, passwordProps],
       });
       navigate(-1);
     } catch (err) {
-      if (err.response.status === 401) {
-        notify({
-          msg: err.response.data.message,
-          type: "error",
-          autoClose: false,
-        });
-      }
+      setIsSubmit(false);
+      notify({
+        msg:
+          err.response.status >= 500
+            ? SERVER_ERR_MSG
+            : err?.response?.data?.message,
+        type: "error",
+        autoClose: false,
+      });
       console.error(err.message);
     }
   };
+
+  useEffect(() => {
+    if (isSubmit) {
+      const timer = autoLogOut(navigate, setToken);
+      setTimerID(timer);
+    }
+  }, [token]);
+
   return (
     <section className="p-5 py-10 md:px-10 flex flex-col justify-center items-center min-h-screen dark:bg-sky-800">
       <div className="bg-sky-100 text-sky-900 rounded-3xl dark:bg-sky-200 w-full max-w-md">
@@ -96,8 +114,9 @@ const Login = () => {
           <Button
             type="submit"
             extraStyles={"bg-sky-700 dark:bg-sky-600 dark:text-sky-100"}
+            onClick={() => setIsSubmit(true)}
           >
-            SIGN IN
+            {isSubmit ? "Processing..." : "SIGN IN"}
           </Button>
         </form>
       </div>

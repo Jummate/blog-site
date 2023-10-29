@@ -1,7 +1,8 @@
 const User = require("../models/User");
 const cookieOptions = require("../config/cookieOptions");
+const { handleAsync } = require("../helpers/handleAsyncError");
 
-const handleLogout = async (req, res) => {
+const handleLogout = handleAsync(async (req, res, next) => {
   const { cookies } = req;
 
   if (!cookies?.jwt) return res.sendStatus(204);
@@ -17,11 +18,14 @@ const handleLogout = async (req, res) => {
 
   await foundUser.save();
 
-  // !!!!! Add secure:true in production to make it serve only on https protocol
-  res.clearCookie("jwt", cookieOptions);
+  if (process.env.NODE_ENV === "production") {
+    res.clearCookie("jwt", { ...cookieOptions, secure: true });
+  } else {
+    res.clearCookie("jwt", cookieOptions);
+  }
 
   //OK but no content to send back
   return res.sendStatus(204);
-};
+});
 
 module.exports = { handleLogout };

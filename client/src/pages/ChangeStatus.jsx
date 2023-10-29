@@ -1,12 +1,17 @@
-import Table from "../components/Table";
 import { useState, useEffect } from "react";
-import baseUrl from "../config/baseUrl";
 import axios from "axios";
+
+import Table from "../components/Table";
+import baseUrl from "../config/baseUrl";
 import { columns } from "../data";
+import { notify } from "../utils/notify";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const ChangeStatus = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // this is required to cause the Table to re-render to reflect update immediately
   const [isRoleChange, setIsRoleChange] = useState(false);
 
   useEffect(() => {
@@ -18,12 +23,22 @@ const ChangeStatus = () => {
           cancelToken: source.token,
         });
         setIsLoading(false);
-        setUsers(response.data);
+        response.data.length > 0
+          ? setUsers(response.data)
+          : setUsers(response.data.data);
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log("Axios request aborted");
         } else {
           console.log(err);
+          notify({
+            msg:
+              !err.response || err?.response?.status >= 500
+                ? SERVER_ERR_MSG
+                : err?.response?.data?.message,
+            type: "error",
+            autoClose: false,
+          });
         }
       }
     })();

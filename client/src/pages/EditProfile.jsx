@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { AuthContext } from "../contexts/AuthProvider";
+import { logOut } from "../helpers/logOut";
+import SERVER_ERR_MSG from "../config/errorMsg";
+import { validateMultipleFields } from "../utils/validate";
 
 const EditProfile = () => {
   const firstNameInput = useFormInput("");
@@ -17,6 +22,10 @@ const EditProfile = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+
+  const { setToken } = useContext(AuthContext);
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,22 +52,34 @@ const EditProfile = () => {
         `${baseUrl.serverBaseUrl}/users/${id}`,
         postFormData
       );
+      setIsProcessing(true);
       notify({ msg: response.data.message });
-      navigate(-1);
+      logOut({ navigate, url: "/login", setToken });
     } catch (err) {
-      if (err.response.status === 400) {
-        notify({
-          msg: err.response.data.message,
-          type: "error",
-          autoClose: false,
-        });
-      }
+      setIsProcessing(false);
+      notify({
+        msg:
+          err.response.status >= 500
+            ? SERVER_ERR_MSG
+            : err?.response?.data?.message,
+        type: "error",
+        autoClose: false,
+      });
       console.error(err);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateMultipleFields([firstNameInput, lastNameInput, emailInput])) {
+      setIsProcessing(false);
+      notify({
+        msg: "Empty fields detected!",
+        type: "error",
+        autoClose: false,
+      });
+      return;
+    }
 
     editProfile();
   };
@@ -128,8 +149,9 @@ const EditProfile = () => {
           <Button
             type="submit"
             extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold mt-10"
+            onClick={() => setIsProcessing(true)}
           >
-            UPDATE PROFILE
+            {isProcessing ? "Processing..." : "UPDATE"}
           </Button>
         </form>
       </div>

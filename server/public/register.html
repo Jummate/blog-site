@@ -140,7 +140,6 @@
         [...inputs].forEach((input) => (input.value = ""));
       };
       const validateSingleField = (field) => {
-        console.log(SERVER_REG_BASE_URL);
         if (!field.value) {
           field.style.border = "2px solid red";
           swal({
@@ -168,8 +167,9 @@
         }
         password.style.border = "2px solid red";
         password.style.color = "red";
-        confirmPassword.style.border = "1px solid red";
+        confirmPassword.style.border = "2px solid red";
         confirmPassword.style.color = "red";
+
         swal({
           title: "Error",
           text: "Passwords do not match",
@@ -191,12 +191,13 @@
             body: formData,
           });
           const data = await response.json();
-          clearFormContent(inputFields);
 
+          // Did this because some 4xx errors do not come as errors
+          response.ok && clearFormContent(inputFields);
           swal({
-            title: "Successful",
+            title: response.ok ? "Successful" : "Error",
             text: data.message,
-            icon: "success",
+            icon: response.ok ? "success" : "error",
           });
         } catch (error) {
           swal({

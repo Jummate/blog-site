@@ -1,4 +1,5 @@
 import { BsSun, BsMoon } from "react-icons/bs";
+
 import useRootElementClass from "../hooks/useRootElementClass";
 
 const ColorMode = ({ colorMode, setColorMode }) => {

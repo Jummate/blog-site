@@ -1,8 +1,8 @@
+import { useContext } from "react";
 import axios from "axios";
+
 import baseUrl from "../config/baseUrl";
 import { notify } from "../utils/notify";
-
-import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const useAxiosInterceptor = () => {

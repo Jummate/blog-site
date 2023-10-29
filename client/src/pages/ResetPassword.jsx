@@ -1,15 +1,20 @@
+import { useContext, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+
 import { useFormInput } from "../hooks/useFormInput";
 import baseUrl from "../config/baseUrl";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
+import { AuthContext } from "../contexts/AuthProvider";
 import {
   validateMultipleFields,
   validatePasswordMatch,
 } from "../utils/validate";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { logOut } from "../helpers/logOut";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const ResetPassword = () => {
   const oldPasswordInput = useFormInput("");
@@ -18,6 +23,10 @@ const ResetPassword = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+  const { setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const resetPassword = async () => {
     try {
@@ -29,23 +38,26 @@ const ResetPassword = () => {
         }
       );
       notify({ msg: response.data.message });
-
-      navigate(-1);
+      setIsProcessing(true);
+      logOut({ navigate, url: "/login", setToken });
     } catch (err) {
-      if (err.response.status === 400) {
-        notify({
-          msg: err.response.data.message,
-          type: "error",
-          autoClose: false,
-        });
-      }
-      console.error(err);
+      setIsProcessing(false);
+      notify({
+        msg:
+          err.response.status >= 500
+            ? SERVER_ERR_MSG
+            : err?.response?.data?.message,
+        type: "error",
+        autoClose: false,
+      });
+      console.log(err);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateMultipleFields([oldPasswordInput, newPasswordInput])) {
+      setIsProcessing(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",
@@ -54,6 +66,7 @@ const ResetPassword = () => {
       return;
     }
     if (!validatePasswordMatch(newPasswordInput, confirmNewPasswordInput)) {
+      setIsProcessing(false);
       notify({
         msg: "New password confirmation failed",
         type: "error",
@@ -119,8 +132,9 @@ const ResetPassword = () => {
           <Button
             type="submit"
             extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold mt-10"
+            onClick={() => setIsProcessing(true)}
           >
-            RESET PASSWORD
+            {isProcessing ? "Processing..." : "RESET"}
           </Button>
         </form>
       </div>

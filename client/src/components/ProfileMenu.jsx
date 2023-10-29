@@ -1,30 +1,21 @@
+import { useContext } from "react";
 import { FaTimes, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "./Button";
 import jwt_decode from "jwt-decode";
-import baseUrl from "../config/baseUrl";
-import { useContext } from "react";
+
+import Button from "./Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
-import axios from "axios";
-
-const logOut = async (navigate, setToken, handleProfileMenu) => {
-  try {
-    await axios.get(`${baseUrl.serverBaseUrl}/logout`, {
-      withCredentials: true,
-    });
-    handleProfileMenu();
-    setToken("");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
+import { logOut } from "../helpers/logOut";
+import { TimerContext } from "../contexts/TimerProvider";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const ProfileMenu = ({ handleProfileMenu }) => {
   const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
+  const { timerID } = useContext(TimerContext);
   const decoded = token && jwt_decode(token);
 
   return (
@@ -43,9 +34,12 @@ const ProfileMenu = ({ handleProfileMenu }) => {
             target="_blank"
           >
             <img
-              src={decoded.avatar}
+              src={transformImage(
+                decoded.avatar,
+                transformConfig.PROFILE_AVATAR
+              )}
               alt={`The profile photo of the logged in user: ${decoded.firstName} ${decoded.lastName}`}
-              className="h-32 w-32 rounded-full cursor-pointer"
+              className="h-32 w-32 rounded-full cursor-pointer text-xs"
             />
           </a>
         ) : (
@@ -97,7 +91,9 @@ const ProfileMenu = ({ handleProfileMenu }) => {
         {token && (
           <Button
             extraStyles="shadow-pref bg-sky-900 dark:text-slate-50 px-10"
-            onClick={() => logOut(navigate, setToken, handleProfileMenu)}
+            onClick={() =>
+              logOut({ navigate, setToken, handleProfileMenu, timerID })
+            }
           >
             Log Out
           </Button>

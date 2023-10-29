@@ -1,28 +1,21 @@
-// const fsPromises = require("fs").promises;
-// const path = require("path");
+const { handleAsync } = require("../helpers/handleAsyncError");
 const convertToBase64 = require("../helpers/convertToBase64");
 const handleUpload = require("../helpers/imageUpload");
+const { folderName } = require("../config/constant");
 
-const uploadContentImage = async (req, res) => {
+const uploadContentImage = handleAsync(async (req, res, next) => {
   const { buffer, mimetype } = req.file;
+  const { contentID } = req.body;
 
-  try {
-    const config = {
-      folder: "content",
-    };
-    const dataURI = convertToBase64(buffer, mimetype);
-    const cldRes = await handleUpload(dataURI, config);
+  const config = {
+    folder: `${folderName.CONTENT_IMG}/id${contentID}id`,
+  };
+  const dataURI = convertToBase64(buffer, mimetype);
+  const cldRes = await handleUpload(dataURI, config);
 
-    // const { originalname, path: filePath } = req.file;
-    // const ext = path.extname(originalname);
-    // const newPath = `${filePath}${ext}`;
-    // await fsPromises.rename(filePath, newPath);
-    res
-      .status(200)
-      .json({ message: "Image uploaded successfully", src: cldRes.secure_url });
-  } catch (err) {
-    console.error(err);
-  }
-};
+  res
+    .status(200)
+    .json({ message: "Image uploaded successfully", src: cldRes.secure_url });
+});
 
 module.exports = { uploadContentImage };

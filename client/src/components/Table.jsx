@@ -1,22 +1,12 @@
-import Button from "./Button";
 import { useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { BsArrowRight } from "react-icons/bs";
+
 import Modal from "./Modal";
 import { alertDelete } from "../utils/alert";
-import { notify } from "../utils/notify";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-import baseUrl from "../config/baseUrl";
-
-const deleteUser = async (id, axiosAuth, callback) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/users/${id}`
-    );
-    notify({ msg: response.data.message });
-    callback();
-  } catch (err) {
-    console.log(err);
-  }
-};
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const Table = ({ data, columns, setIsRoleChange }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -24,7 +14,7 @@ const Table = ({ data, columns, setIsRoleChange }) => {
   const axiosAuth = useAxiosInterceptor();
 
   return (
-    <div className="w-full overflow-auto">
+    <div className="w-full max-h-52 overflow-auto">
       <table className="w-full border-collapse text-sm">
         <thead className="bg-sky-700 text-sky-50 p-5">
           <tr>
@@ -59,7 +49,10 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                         className="p-3 font-bold cursor-pointer text-center"
                       >
                         <img
-                          src={row[col.field]}
+                          src={transformImage(
+                            row[col.field],
+                            transformConfig.AUTHOR_AVATAR
+                          )}
                           className="h-8 w-8 rounded-full"
                         />
                       </td>
@@ -78,7 +71,28 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                 })}
                 <td className="p-3 font-bold cursor-pointer text-center">
                   <p className="w-full flex items-center justify-center gap-4">
-                    <Button
+                    <FaEdit
+                      className="text-sky-500 text-lg"
+                      onClick={(e) => {
+                        setOpenModal(true),
+                          setRowItems(
+                            JSON.parse(e.target.closest("tr").dataset.data)
+                          );
+                      }}
+                    />
+                    <FaTrash
+                      className="text-red-500 text-lg"
+                      onClick={(e) =>
+                        alertDelete({
+                          id: JSON.parse(e.target.closest("tr").dataset.data)
+                            ._id,
+                          axiosAuth,
+                          type: "users",
+                          callback: setIsRoleChange,
+                        })
+                      }
+                    />
+                    {/* <Button
                       extraStyles="bg-sky-500 text-white w-30"
                       onClick={(e) => {
                         setOpenModal(true),
@@ -88,26 +102,31 @@ const Table = ({ data, columns, setIsRoleChange }) => {
                       }}
                     >
                       Change Roles
-                    </Button>
-                    <Button
+                    </Button> */}
+                    {/* <Button
                       extraStyles="bg-red-500 text-white w-30"
                       onClick={(e) =>
-                        alertDelete(
-                          JSON.parse(e.target.closest("tr").dataset.data)._id,
+                        alertDelete({
+                          id: JSON.parse(e.target.closest("tr").dataset.data)
+                            ._id,
                           axiosAuth,
-                          setIsRoleChange,
-                          deleteUser
-                        )
+                          type: "users",
+                          callback: setIsRoleChange,
+                        })
                       }
                     >
                       Delete User
-                    </Button>
+                    </Button> */}
                   </p>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
+      <div className="flex justify-end md:hidden gap-2">
+        <small>Swipe to see hidden details</small>
+        <BsArrowRight />
+      </div>
 
       {openModal && (
         <Modal

@@ -1,28 +1,17 @@
-import Button from "../components/Button";
-import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
-import baseUrl from "../config/baseUrl";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import DOMPurify from "dompurify";
+
+import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { alertDelete } from "../utils/alert";
-import { notify } from "../utils/notify";
-import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
-
-const deletePost = async (id, axiosAuth, navigate) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`
-    );
-    notify({ msg: response.data.message });
-    navigate("/");
-  } catch (err) {
-    console.log(err);
-  }
-};
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
 
 const PostPage = () => {
   const { token } = useContext(AuthContext);
@@ -37,7 +26,7 @@ const PostPage = () => {
   return (
     <section className="dark:bg-sky-900/90">
       <article>
-        <header>
+        <header className="flex flex-col justify-center items-center">
           {token && (
             <div className="flex items-center justify-center p-5 gap-3 text-sm">
               {hasPermission(accessLevel.EDIT_POST, decoded?.roles) && (
@@ -52,7 +41,13 @@ const PostPage = () => {
                 <Button
                   extraStyles="bg-red-600 text-white"
                   onClick={() =>
-                    alertDelete(id, axiosAuth, navigate, deletePost)
+                    alertDelete({
+                      id,
+                      axiosAuth,
+                      type: "posts",
+                      navigate,
+                      location: "/",
+                    })
                   }
                 >
                   Delete Post
@@ -62,8 +57,8 @@ const PostPage = () => {
           )}
 
           <img
-            className="max-h-80 w-full"
-            src={data?.bannerImage}
+            className="h-80 max-h-80 md:max-h-none md:h-96 w-full md:w-4/5"
+            src={transformImage(data?.bannerImage, transformConfig.HOME_BANNER)}
             alt=""
           />
         </header>
@@ -71,7 +66,10 @@ const PostPage = () => {
           <div className="flex flex-col md:w-11/12 gap-16 sm:p-12 md:p-16 ">
             <div className="flex gap-2 mt-6 ">
               <img
-                src={data?.author?.avatar}
+                src={transformImage(
+                  data?.author?.avatar,
+                  transformConfig.AUTHOR_AVATAR
+                )}
                 alt=""
                 className="h-10 w-10 rounded-full"
               />
@@ -80,10 +78,7 @@ const PostPage = () => {
                   {data?.author?.fullName}
                 </p>
                 <p className="text-sm text-sky-600/80 dark:text-sky-300">
-                  Posted on{" "}
-                  <time dateTime="2023-04-20">
-                    {formatDate(data?.createdAt)}
-                  </time>
+                  Posted on <time>{formatDate(data?.createdAt)}</time>
                 </p>
               </div>
             </div>

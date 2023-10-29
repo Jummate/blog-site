@@ -1,33 +1,23 @@
 import { IoTimeOutline } from "react-icons/io5";
-import Button from "./Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import ReactPaginate from "react-paginate";
-import baseUrl from "../config/baseUrl";
+import { alertDelete } from "../utils/alert";
+import jwt_decode from "jwt-decode";
+
+import Button from "./Button";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
-import { notify } from "../utils/notify";
-import { alertDelete } from "../utils/alert";
 import { calculateReadingSpeed } from "../utils/getReadingSpeed";
-import jwt_decode from "jwt-decode";
 import { hasPermission } from "../utils/permission";
 import { accessLevel } from "../config/accessLevel";
 import { formatDate } from "../utils/dateFormatter";
 import { appConfig } from "../config/appClientConfig";
+import transformImage from "../utils/transformImage";
+import { transformConfig } from "../config/imgTransform";
+import truncate from "../utils/truncate";
 
-const deletePost = async (id, axiosAuth, navigate) => {
-  try {
-    const response = await axiosAuth.delete(
-      `${baseUrl.serverBaseUrl}/posts/${id}`
-    );
-    notify({ msg: response.data.message });
-    navigate("/");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const RecentPost = ({ posts, isLoading }) => {
+const RecentPost = ({ posts, isLoading, setIsPostDeleted }) => {
   const { token } = useContext(AuthContext);
   const decoded = token && jwt_decode(token);
 
@@ -36,7 +26,6 @@ const RecentPost = ({ posts, isLoading }) => {
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const itemsPerPage = appConfig.ITEMS_PER_PAGE;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -68,14 +57,17 @@ const RecentPost = ({ posts, isLoading }) => {
             >
               <div className="w-full lg:w-1/2">
                 <img
-                  src={post.bannerImage}
+                  src={transformImage(
+                    post.bannerImage,
+                    transformConfig.HOME_BANNER
+                  )}
                   alt=""
-                  className="rounded-2xl h-auto md:h-4/5 w-full hover:opacity-80"
+                  className="rounded-2xl h-auto max-h-60 md:h-4/5 w-full hover:opacity-80"
                 />
               </div>
-              <div className="p-2">
+              <div className="p-2 lg:w-1/2 max-w-md">
                 <div className="flex justify-between">
-                  <button className="text-sky-600 mb-3 py-1 px-5 bg-sky-100 dark:bg-sky-600 dark:text-sky-100 rounded-lg text-sm hover:bg-sky-900 hover:text-sky-200 hover:dark:text-sky-900 hover:dark:bg-sky-100">
+                  <button className="text-sky-600 mb-3 py-1 px-3 bg-sky-100 dark:bg-sky-600 dark:text-sky-100 rounded-lg text-sm hover:bg-sky-900 hover:text-sky-200 hover:dark:text-sky-900 hover:dark:bg-sky-100">
                     {post.tag}
                   </button>
                   <span>
@@ -98,13 +90,26 @@ const RecentPost = ({ posts, isLoading }) => {
                   </h1>
                 </Link>
 
-                <p className="text-slate-600 text-sm dark:text-slate-200/90">
-                  {post.summary}
-                </p>
+                <div>
+                  <span className="text-slate-600 text-sm dark:text-slate-200/90">
+                    {truncate(post.summary)}
+                  </span>
+                  <Link
+                    to={`post/${post._id}`}
+                    state={post}
+                  >
+                    <small className="font-bold text-sky-900 dark:text-sky-200 hover:underline">
+                      Read more
+                    </small>
+                  </Link>
+                </div>
 
                 <div className="mt-6 flex gap-2">
                   <img
-                    src={post.author.avatar}
+                    src={transformImage(
+                      post.author.avatar,
+                      transformConfig.AUTHOR_AVATAR
+                    )}
                     alt=""
                     className="h-10 w-10 rounded-full"
                   />
@@ -134,7 +139,12 @@ const RecentPost = ({ posts, isLoading }) => {
                       <Button
                         extraStyles={"bg-red-500 text-white"}
                         onClick={() =>
-                          alertDelete(post._id, axiosAuth, navigate, deletePost)
+                          alertDelete({
+                            id: post._id,
+                            type: "posts",
+                            axiosAuth,
+                            callback: setIsPostDeleted,
+                          })
                         }
                       >
                         Delete Post

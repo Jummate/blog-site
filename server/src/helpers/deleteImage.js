@@ -1,10 +1,24 @@
-const cloudinary = require("cloudinary");
+const cloudinary = require("../config/cloudinary");
 
-const deleteImage = (publicID) => {
-  return cloudinary.v2.uploader.destroy(publicID, function (error, result) {
-    if (error) throw new Error(error);
-    return result;
-  });
+const deleteImages = (publicIDArr) => {
+  return (
+    publicIDArr &&
+    publicIDArr.length > 0 &&
+    cloudinary.api.delete_resources([...publicIDArr], function (error, result) {
+      if (error) throw new Error(error);
+      return result;
+    })
+  );
 };
 
-module.exports = deleteImage;
+const deleteFolder = (folderName) => {
+  return (
+    folderName &&
+    cloudinary.api.delete_folder(folderName, function (error, result) {
+      if (error) throw new Error(error);
+      return result;
+    })
+  );
+};
+
+module.exports = { deleteImages, deleteFolder };

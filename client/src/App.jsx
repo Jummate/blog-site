@@ -1,32 +1,35 @@
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import Footer from "./components/Footer";
-import PostPage from "./pages/PostPage";
-import { AuthProvider } from "./contexts/AuthProvider";
-
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Outlet,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import PostPage from "./pages/PostPage";
+import { AuthProvider } from "./contexts/AuthProvider";
+import { TimerProvider } from "./contexts/TimerProvider";
 import CreatePost from "./pages/Create";
 import Login from "./pages/Login";
 import EditPost from "./pages/Edit";
 import EditProfile from "./pages/EditProfile";
 import ResetPassword from "./pages/ResetPassword";
 import ChangeStatus from "./pages/ChangeStatus";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const Layout = () => (
     <>
       <AuthProvider>
-        <ToastContainer />
-        <Header />
-        <Outlet />
-        <Footer />
+        <TimerProvider>
+          <ToastContainer />
+          <Header />
+          <Outlet />
+          <Footer />
+        </TimerProvider>
       </AuthProvider>
     </>
   );
@@ -53,6 +56,7 @@ function App() {
             path="/edit/:id"
             element={<EditPost />}
           />
+
           <Route
             path="/login"
             element={<Login />}

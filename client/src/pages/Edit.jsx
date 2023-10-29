@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+
 import { useFormInput } from "../hooks/useFormInput";
 import Form from "../components/Form";
 import baseUrl from "../config/baseUrl";
@@ -8,6 +9,7 @@ import clearFormContent from "../utils/clearFormContent";
 import useAxiosInterceptor from "../hooks/useAxiosInterceptor";
 import { notify } from "../utils/notify";
 import { validateMultipleFields, validateQuill } from "../utils/validate";
+import SERVER_ERR_MSG from "../config/errorMsg";
 
 const EditPost = () => {
   const titleProps = useFormInput("");
@@ -18,6 +20,8 @@ const EditPost = () => {
 
   const { id } = useParams();
   const axiosAuth = useAxiosInterceptor();
+
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,21 +51,24 @@ const EditPost = () => {
         `${baseUrl.serverBaseUrl}/posts/${id}`,
         postFormData
       );
+      setIsSubmit(true);
       notify({ msg: response.data.message });
       clearFormContent({
         input: [titleProps, summaryProps, tagProps, bannerProps],
         quill: [contentProps],
       });
-      navigate(`/post/${id}`);
+      navigate(`/post/${id}`, { state: response.data.result });
     } catch (err) {
-      if (err.response.status === 400) {
-        notify({
-          msg: err.response.data.message,
-          type: "error",
-          autoClose: false,
-        });
-      }
+      setIsSubmit(false);
       console.error(err);
+      notify({
+        msg:
+          err.response.status >= 500
+            ? SERVER_ERR_MSG
+            : err?.response?.data?.message,
+        type: "error",
+        autoClose: false,
+      });
     }
   };
 
@@ -71,6 +78,7 @@ const EditPost = () => {
       !validateMultipleFields([titleProps, summaryProps, tagProps]) ||
       !validateQuill(contentProps)
     ) {
+      setIsSubmit(false);
       notify({
         msg: "Empty fields detected!",
         type: "error",
@@ -91,13 +99,21 @@ const EditPost = () => {
         <Form
           values={{ titleProps, summaryProps, contentProps, tagProps }}
           onSubmit={handleSubmit}
+          isSubmit={isSubmit}
+          setIsSubmit={() => setIsSubmit(true)}
         >
-          <input
-            type="file"
-            className="p-3 text-sky-900 shadow-pref dark:bg-sky-100 rounded-md"
-            onChange={bannerProps.onChange}
-            aria-label="banner"
-          ></input>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="banner">
+              Banner (<small>image only</small>)
+            </label>
+            <input
+              type="file"
+              className="p-3 text-sky-900 shadow-pref dark:bg-sky-100 rounded-md"
+              onChange={bannerProps.onChange}
+              aria-label="banner"
+              id="banner"
+            />
+          </div>
         </Form>
       </div>
     </section>

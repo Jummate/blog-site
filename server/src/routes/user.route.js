@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user.controller");
-const { uploadFromFrontend } = require("../middleware/uploadFromFrontend");
+const { uploadMiddleware } = require("../middleware/uploadMiddleware");
+const { fileName } = require("../config/constant");
+
 const verifyToken = require("../middleware/verifyToken");
 const verifyRoles = require("../middleware/verifyRoles");
 const ROLES_LIST = require("../config/userRoles");
 
 router
   .route("/")
-  .get(uploadFromFrontend, userController.getAllUsers)
-  .post(uploadFromFrontend, userController.createUser);
+  .get(userController.getAllUsers)
+  .post(uploadMiddleware(fileName.AVATAR), userController.createUser);
 
 router.route("/register").get(userController.getRegistrationPage);
 router
@@ -28,7 +30,7 @@ router
   .put(
     verifyToken,
     verifyRoles(ROLES_LIST.ADMIN, ROLES_LIST.EDITOR),
-    uploadFromFrontend,
+    uploadMiddleware(fileName.AVATAR),
     userController.updateUser
   )
   .delete(

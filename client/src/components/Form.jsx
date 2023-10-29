@@ -1,13 +1,16 @@
+import { useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
+
 import Input from "./Input";
 import Button from "./Button";
 import TextArea from "./TextArea";
-import axios from "axios";
 import baseUrl from "../config/baseUrl";
-import { useRef } from "react";
+import { generateID } from "../utils/generateID";
 
 let quillRef;
+let contentID = generateID();
 
 const imageHandler = () => {
   const input = document.createElement("input");
@@ -21,6 +24,7 @@ const imageHandler = () => {
       const formData = new FormData();
 
       formData.append("files", file);
+      formData.append("contentID", contentID);
 
       const quill = quillRef.current.getEditor();
 
@@ -30,6 +34,7 @@ const imageHandler = () => {
       // Move cursor to right side of image (easier to continue typing)
       quill.setSelection(range.index + 1);
 
+      // upload to the server which uploads to cloudinary
       const res = await axios.post(
         `${baseUrl.serverBaseUrl}/upload/`,
         formData
@@ -75,52 +80,76 @@ const formats = [
 const Form = ({
   values: { titleProps, contentProps, summaryProps, tagProps },
   onSubmit,
+  isSubmit,
+  setIsSubmit,
   children,
 }) => {
   quillRef = useRef(null);
+  // const [isProcessing, setIsProcessing] = useState(false);
 
   return (
     <form
       className="flex flex-col gap-4"
-      onSubmit={onSubmit}
+      onSubmit={(e) => {
+        onSubmit(e), (contentID = generateID());
+      }}
     >
-      <Input
-        placeholder="Title"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Title"
-        value={titleProps.value}
-        onChange={titleProps.onChange}
-      />
-      <TextArea
-        placeholder="Summary"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Summary"
-        value={summaryProps.value}
-        onChange={summaryProps.onChange}
-      />
-      <Input
-        placeholder="Tag"
-        extraStyles="shadow-pref rounded-md"
-        ariaLabel="Tag"
-        value={tagProps.value}
-        onChange={tagProps.onChange}
-      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="title">Title</label>
+        <Input
+          placeholder="Title"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Title"
+          value={titleProps.value}
+          onChange={titleProps.onChange}
+          id="title"
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="summary">Summary</label>
+        <TextArea
+          placeholder="Summary"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Summary"
+          value={summaryProps.value}
+          onChange={summaryProps.onChange}
+          id="summary"
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="tag">Tag</label>
+        <Input
+          placeholder="Tag"
+          extraStyles="shadow-pref rounded-md"
+          ariaLabel="Tag"
+          value={tagProps.value}
+          onChange={tagProps.onChange}
+          id="tag"
+        />
+      </div>
+
       {children}
-      <ReactQuill
-        ref={quillRef}
-        theme="snow"
-        modules={modules}
-        formats={formats}
-        className="h-auto overflow-hidden border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md"
-        value={contentProps.content}
-        onChange={contentProps.onContentChange}
-      />
+
+      <div className="flex flex-col gap-2">
+        <label>Content</label>
+        <ReactQuill
+          ref={quillRef}
+          theme="snow"
+          modules={modules}
+          formats={formats}
+          className="h-auto overflow-hidden border-2 dark:bg-sky-100 dark:text-sky-900 rounded-md"
+          value={contentProps.content}
+          onChange={contentProps.onContentChange}
+        />
+      </div>
 
       <Button
         type="submit"
         extraStyles="bg-sky-900 dark:bg-sky-500 font-extrabold"
+        onClick={setIsSubmit}
       >
-        PUBLISH
+        {isSubmit ? "Processing..." : "PUBLISH"}
       </Button>
     </form>
   );
