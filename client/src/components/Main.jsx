@@ -29,7 +29,6 @@ const Main = () => {
 
     (async () => {
       try {
-        console.log("trying to fetch...");
         const response = await axios.get(`${baseUrl.serverBaseUrl}/posts/`, {
           cancelToken: source.token,
         });
