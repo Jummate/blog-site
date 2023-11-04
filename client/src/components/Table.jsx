@@ -124,7 +124,7 @@ const Table = ({ data, columns, setIsRoleChange }) => {
         </tbody>
       </table>
       <div className="flex justify-end md:hidden gap-2">
-        <small>Swipe to see hidden details</small>
+        <small>Swipe table to see details</small>
         <BsArrowRight />
       </div>
 
