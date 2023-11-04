@@ -51,7 +51,7 @@ const ChangeStatus = () => {
   return (
     <section className="flex justify-center p-5 pb-10 text-sky-900 dark:bg-sky-800 dark:text-sky-100 min-h-screen">
       <div className="flex flex-col w-full max-w-4xl">
-        <h1 className="text-center text-xl p-3 font-extrabold">
+        <h1 className="text-center text-sm md:text-xl p-3 font-extrabold">
           USERS AND ROLES
         </h1>
 
