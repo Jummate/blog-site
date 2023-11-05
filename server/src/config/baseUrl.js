@@ -1,5 +1,7 @@
 const baseUrl = {
-  clientBaseUrl: "http://localhost:3600",
-  serverBaseUrl: "http://localhost:3500",
+  clientBaseUrlDev: "http://localhost:3600",
+  clientBaseUrl: "https://macroblog.onrender.com",
+  serverBaseUrlDev: "http://localhost:3500",
+  serverBaseUrl: "https://macroblog-api.onrender.com",
 };
 module.exports = baseUrl;
