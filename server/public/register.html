@@ -119,12 +119,18 @@
           id="avatar"
         />
 
-        <button type="submit">Create User</button>
+        <button
+          type="submit"
+          id="btn-submit"
+        >
+          Create User
+        </button>
       </form>
     </main>
 
     <script>
       const form = document.querySelector("form");
+      const btnSubmit = document.querySelector("#btn-submit");
       const firstName = document.querySelector("#first-name");
       const lastName = document.querySelector("#last-name");
       const email = document.querySelector("#email");
@@ -133,10 +139,8 @@
       const avatar = document.querySelector("#avatar");
       const passwordFields = document.querySelectorAll(".password-field");
       const inputFields = document.querySelectorAll(".input-field");
-      console.log(document.baseURI);
 
       const SERVER_REG_BASE_URL = document.baseURI.replace("/register", "");
-      console.log(SERVER_REG_BASE_URL);
 
       const clearFormContent = (inputs) => {
         [...inputs].forEach((input) => (input.value = ""));
@@ -182,6 +186,7 @@
 
       const handleSubmit = async () => {
         try {
+          btnSubmit.textContent = "Processing...";
           const formData = new FormData();
           formData.append("firstName", firstName.value);
           formData.append("lastName", lastName.value);
@@ -196,12 +201,16 @@
 
           // Did this because some 4xx errors do not come as errors
           response.ok && clearFormContent(inputFields);
+          if (response.ok) {
+            btnSubmit.textContent = "Create User";
+          }
           swal({
             title: response.ok ? "Successful" : "Error",
             text: data.message,
             icon: response.ok ? "success" : "error",
           });
         } catch (error) {
+          btnSubmit.textContent = "Create User";
           swal({
             title: "Operation failed!",
             text: "Something went wrong!",
