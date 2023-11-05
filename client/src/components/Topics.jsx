@@ -10,7 +10,7 @@ const Topics = ({ topics, isLoading }) => {
       <div className="flex flex-wrap gap-2 max-h-60 max-w-sm overflow-auto">
         {isLoading ? (
           <p className="text-sky-900 dark:text-sky-100">Loading...</p>
-        ) : topics.length < 1 ? (
+        ) : !topics || topics.length < 1 ? (
           <p className="text-sky-900 dark:text-sky-100">No topics to display</p>
         ) : (
           topics.map((tag, index) => (
