@@ -3,6 +3,7 @@ const whitelist = [
   "http://127.0.0.1:3006",
   "http://localhost:3500",
   "https://macroblog.onrender.com",
+  "https://macroblog-api.onrender.com",
 ];
 
 module.exports = whitelist;

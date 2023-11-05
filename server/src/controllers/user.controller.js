@@ -52,6 +52,7 @@ const changeRole = handleAsync(async (req, res, next) => {
 });
 
 const createUser = handleAsync(async (req, res, next) => {
+  console.log("okay");
   const { email, password, firstName, lastName } = req.body;
   const { buffer, mimetype } = req.file;
 

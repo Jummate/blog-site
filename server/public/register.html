@@ -133,8 +133,10 @@
       const avatar = document.querySelector("#avatar");
       const passwordFields = document.querySelectorAll(".password-field");
       const inputFields = document.querySelectorAll(".input-field");
+      console.log(document.baseURI);
 
       const SERVER_REG_BASE_URL = document.baseURI.replace("/register", "");
+      console.log(SERVER_REG_BASE_URL);
 
       const clearFormContent = (inputs) => {
         [...inputs].forEach((input) => (input.value = ""));
